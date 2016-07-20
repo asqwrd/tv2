@@ -1,0 +1,10 @@
+<div class="online-user-list">
+    <ul class="online-users">
+        <li class="online-user" *ngFor="let userid of users">
+            <img [title]="'Anonymous Robot #' + userid" [alt]="'Anonymous Robot #' + userid" [src]="'//robohash.org/' + userid + '?set=set2&bgset=bg2&size=70x70'" class="avatar" />
+        </li>
+        <li class="online-user">
+            <span class="online-users-number">{{users.length}}</span>
+        </li>
+    </ul>
+</div>

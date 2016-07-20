@@ -1,0 +1,45 @@
+.taggle_input{
+  border:none;
+  width:100% !important;
+  padding:10px 0 2px !important;
+  @include font-size(14px);
+}
+
+.taggle_list{
+  margin-top:15px;
+}
+.taggle_sizer{
+  display:none;
+}
+
+.taggle{
+  display: inline-block;
+  border-radius: 100px;
+  background:#f2f4f6;
+  margin-right:10px;
+  margin-bottom:10px;
+  padding:0px 10px;
+  height: 33px;
+  .close{
+    font-family: 'webdam';
+    background:transparent;
+    border:none;
+    color:#e5e5e5;
+    @include font-size(10px);
+    &:before{
+      content: "\e901";
+      color: #000;
+      position: absolute;
+      @include font-size(13px);
+    }
+  }
+}
+.taggle_placeholder{
+  display:none;
+}
+
+.taggle_text{
+  line-height: 30px;
+  display:inline-block;
+  @include font-size(13px);
+}

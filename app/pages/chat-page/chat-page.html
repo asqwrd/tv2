@@ -1,0 +1,6 @@
+<div class="main-container">
+    <user-header [userid]="userid" [users]="users" [lng]="lng"></user-header>
+    <chat-window [lng]="lng" [userid]="userid" [messages]="messages"></chat-window>
+    <chat-users-typing [usersTyping]="usersTyping"></chat-users-typing>
+    <chat-input [userid]="userid" (typing)="isTyping($event)"></chat-input>
+</div>

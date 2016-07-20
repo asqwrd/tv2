@@ -1,0 +1,97 @@
+//Library Styles
+@import '../node_modules/node-reset-scss/scss/_reset.scss';
+@import './mixin';
+@import './components';
+
+
+//Component Partial Styles
+
+@import '../app/components/user-header/user-header';
+@import '../app/components/chat-input/chat-input';
+@import '../app/components/chat-users-typing/chat-users-typing';
+@import '../app/components/chat-window/chat-window';
+
+
+//Layouts css
+@import '../app/layout/layout';
+
+//Directive partial styles
+@import "../app/directives/taggle-directive/taggle";
+
+
+//Pages Partial Styles
+
+@import '../app/pages/chat-page/chat-page';
+
+//General Styles
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  font-size:15px;
+  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  height:100%;
+  line-height:1.4;
+
+}
+
+.avatar{
+  margin: 0;
+  width: 100%;
+  opacity: .5;
+}
+
+.title{
+  display: block;
+  font-weight: 600;
+  font-size: 18px;
+  padding:20px 40px 0;
+}
+
+.waldo-float-btn {
+  position: relative;
+  background: #3fb8dc;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: none;
+  overflow: hidden;
+  color: #fff;
+
+  .avatar-btn {
+    position: absolute;
+    max-width: 100%;
+    z-index: 1;
+    transition: opacity .2s ease;
+    top: 0;
+    left: 0;
+    border-radius: 100%;
+  }
+
+  &:hover {
+    .avatar-btn {
+      opacity: 0;
+    }
+  }
+
+  .material-icons {
+    margin: 2px 0 0 5px;
+  }
+
+}
+
+.mdl-textfield__input{
+  border-color:#fff;
+}
+
+.mdl-textfield__label{
+  color:#ccc;
+  &:after {
+    background-color: $hl-color;
+  }
+}
+
+
+
+

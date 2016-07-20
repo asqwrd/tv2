@@ -1,0 +1,16 @@
+node_modules/
+
+app/**/*.js
+app/**/*.map
+script/**/*.gz
+script/**/*.js
+css/
+
+.idea/
+
+typings/
+
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
