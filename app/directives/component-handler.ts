@@ -13,12 +13,12 @@ export class ComponentHandler implements OnInit{
     el:ElementRef;
     constructor(el: ElementRef, renderer: Renderer) {
         this.el = el;
-        
+
     }
 
 
     ngOnInit() {
-        componentHandler.upgradeElement(this.el.nativeElement);
+        componentHandler.upgradeElements(this.el.nativeElement);
     }
 
 }

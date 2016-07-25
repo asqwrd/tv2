@@ -1,0 +1,13 @@
+<div class="guide-container" #parent>
+  <!--<section class="side-bar times">
+    <figure class="logo">
+      <i class="material-icons">settings_remote</i>
+    </figure>
+    <ul class="airtimes">
+      <li class="airtime" *ngFor="let airtime of airtimes">{{airtime}}</li>
+    </ul>
+  </section>-->
+  <section class="guide-content">
+    <shows [shows]="shows" [airtimes]='airtimes' (view)="detail($event)" [selectedshow]="selectedshow" [search]="search"></shows>
+  </section>
+</div>

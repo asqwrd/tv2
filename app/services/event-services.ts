@@ -7,12 +7,30 @@ import 'rxjs/add/operator/catch';
 
 export class EventService {
     public addMessage: Subject<any>;
-   
+    public swiper = new Subject();
+    public search = new Subject();
+
 
     constructor() {
         this.addMessage = new Subject();
 
     }
+
+    updateSwiper(data){
+      this.swiper.next('update');
+    }
+
+
+  debounce(fn, delay) {
+    var timer = null;
+    return function () {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
 
     smoothScroll(element, target, duration):Promise<any> {
         target = Math.round(target);
@@ -82,6 +100,6 @@ export class EventService {
         });
     }
 
-    
+
 
 }

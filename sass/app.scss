@@ -6,10 +6,7 @@
 
 //Component Partial Styles
 
-@import '../app/components/user-header/user-header';
-@import '../app/components/chat-input/chat-input';
-@import '../app/components/chat-users-typing/chat-users-typing';
-@import '../app/components/chat-window/chat-window';
+@import '../app/components/shows/shows';
 
 
 //Layouts css
@@ -21,7 +18,7 @@
 
 //Pages Partial Styles
 
-@import '../app/pages/chat-page/chat-page';
+@import '../app/pages/guide/guide';
 
 //General Styles
 *{
@@ -30,10 +27,9 @@
 
 html,body{
   font-size:15px;
-  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   height:100%;
   line-height:1.4;
-
 }
 
 .avatar{
@@ -91,7 +87,3 @@ html,body{
     background-color: $hl-color;
   }
 }
-
-
-
-

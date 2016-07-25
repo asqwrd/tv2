@@ -1,1 +1,32 @@
-<router-outlet></router-outlet>
+  <main class="main">
+    <div class="content">
+      <header class="primary-header">
+          <div class="header-logo">àwárí TV</div>
+            <figure class="date-time">
+              <span class="date-span"><h1 class="clock">{{time}}</h1>{{date}}</span>
+            </figure>
+            <figure class="time-lists" component-handler>
+              <button id="dates" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">access_time</i>
+               </button>
+               <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" data-mdl-for="dates">
+                 <li *ngFor="let time of airtimes" class="mdl-menu__item">{{time}}</li>
+               </ul>
+            </figure>
+      </header>
+      <section class="layout-header">
+        <div class="search-field mdl-textfield mdl-js-textfield" component-handler [class.open]="search">
+         <input class="mdl-textfield__input" type="text" id="search" autocomplete="off" (input)="searching(input)" #input>
+         <label class="mdl-textfield__label" for="search">Search...</label>
+       </div>
+        <nav class="layout-nav">
+          <ul class="nav-items">
+              <li class="nav-item active">Guide</li>
+              <li class="nav-item">Favorites</li>
+              <li class="nav-item" (click)="toggleSearch()">Search</li>
+          </ul>
+        </nav>
+      </section>
+      <router-outlet></router-outlet>
+  </div>
+</main>

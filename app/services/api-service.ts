@@ -11,29 +11,29 @@ import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs/Subject';
 
 
-declare var PUBNUB:any;
+declare var moment:any;
 @Injectable()
 
 export class ApiService {
-    
+
     private headers = new Headers();
     private app: Object;
     private eventService;
     domain:string;
-    userid:string;
-    private pubnub:any;
-    
+    guide:Object;
+    airtimes:Array<string>;
+
 
     constructor(private http:Http,eventService:EventService) {
         this.headers.append('Content-Type', 'application/json');
-        this.domain = '/webdamws/';
+        this.domain = 'http://api.tvmaze.com';
         this.eventService = eventService;
-        
+
 
     }
 
     init() : Observable<Object>{
-       
+
         if(!this.app) {
             return Observable.forkJoin(
             ).flatMap((data)=> {
@@ -44,31 +44,75 @@ export class ApiService {
             return this.createObservable(this.app);
         }
     }
-    
-    initPubnub(){
-        this.pubnub = PUBNUB({
-            publish_key: 'pub-c-4d0f43b0-ff8d-4143-9fce-8adb0639c9f3',
-            subscribe_key: 'sub-c-779a8948-3e64-11e6-85a4-0619f8945a4f',
-            //ssl: (location.protocol.toLowerCase() === 'https:'),
-            uuid: this.getUserId(),
-        });
+
+    search(value:string):Observable<Object[]>{
+      return this.http.get(this.domain+'/search/shows?q='+value).map((res:Response)=>{
+        let data = res.json();
+        let shows = [];
+        data.forEach((item)=>{
+          let show = {
+            image: item.show.image,
+            showname: item.show.name,
+            network: item.show.network ? item.show.network.name:"N/A",
+            status: item.show.status,
+            summary:item.show.summary,
+            showid:item.show.id
+          };
+
+          shows.push(show);
+        })
+        return shows;
+      });
     }
-    
-    getPubnub(){
-        return this.pubnub;
+
+    showDetail(showid):Observable<Object>{
+      return this.http.get(this.domain+'/shows/'+showid+'?embed=nextepisode').map((res:Response)=>{
+        let data = res.json();
+        if(data._embedded){
+          data._embedded.nextepisode.airtime = moment(data._embedded.nextepisode.airtime, 'hh:mm a').format('hh:mm a');
+          data._embedded.nextepisode.airdate = moment(data._embedded.nextepisode.airdate).format('DD MMM, YYYY');
+        }
+        return data;
+      });
     }
-    
-    getDomain(){
-        return this.domain;
+
+    getSchedule() : Observable<Object>{
+      if(!this.guide){
+        return this.http.get(this.domain+'/schedule?country=US').map((res:Response)=>{
+            let data = res.json();
+            let shows = [];
+            let airtimes = [];
+            data.forEach((item)=>{
+              let show = {
+                epsname:item.name,
+                id:this.guid(),
+                airtime: moment(item.airtime, 'hh:mm a').format('hh:mm a'),
+                runtime: item.runtime,
+                season: item.season,
+                epsnumber: item.number,
+                image: item.show.image,
+                showname: item.show.name,
+                network: item.show.network.name,
+                status: item.show.status,
+                summary:item.show.summary,
+                showid:item.show.id
+              };
+              if(airtimes.indexOf(show.airtime) ==  -1){
+                airtimes.push(moment(show.airtime, 'hh:mm a').format('hh:mm a'));
+              }
+              shows.push(show);
+            });
+            let guide ={
+              shows: shows,
+              airtimes:airtimes
+            }
+            this.guide = guide;
+            return this.guide;
+          });
+      }else{
+        return this.createObservable(this.guide);
+      }
     }
-    
-    setDomain(domain:string){
-        this.domain = domain;
-    }
-    
-    translate(text:string){
-    }
-    
 
     private createObservable(data: any) : Observable<any> {
         return Observable.create((observer: Observer<any>) => {
@@ -82,18 +126,9 @@ export class ApiService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    //uuid function
-
-    setUserId():string {
-        
-        this.userid = this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +
+    guid():string {
+        return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +
             this.s4() + '-' + this.s4() + this.s4() + this.s4();
-        
-        return this.userid;
-    }
-    
-    getUserId():string{
-        return this.userid;
     }
 
     private s4():string {
@@ -101,4 +136,5 @@ export class ApiService {
             .toString(16)
             .substring(1);
     }
+
 }

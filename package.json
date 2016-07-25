@@ -10,7 +10,7 @@
     "scripts": "gulp scripts",
     "typings": "typings",
     "lite": "lite-server",
-    "postinstall": "typings install"
+    "postinstall": "typings install && npm run build"
   },
   "license": "private",
   "dependencies": {

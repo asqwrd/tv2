@@ -1,0 +1,71 @@
+<div *ngIf="!search">
+  <div class="" *ngFor="let time of airtimes">
+    <h1 class="time-slot">{{time}}</h1>
+    <div class="swiper-container" swiperjs [next]="next" [prev]="prev" [scrollbar]="scrollbar" [guid]="time">
+      <div class="shows-grid swiper-wrapper">
+        <div class="show-card-container swiper-slide" *ngFor="let show of shows" (click)="open_card(modal,show)" #card [hidden]="show.airtime !== time">
+          <figure class="show-card">
+              <div class="show-info" #showinfo>
+                <img [src]="show.image?.original" alt="" class="show-img" onerror="this.src='/images/no-img.svg'"/>
+              </div>
+          </figure>
+        </div>
+      </div>
+      <div class="swiper-scrollbar" #scrollbar></div>
+      <div class="swiper-button-next" #next></div>
+      <div class="swiper-button-prev" #prev></div>
+    </div>
+  </div>
+</div>
+
+<div class="swiper-container" swiperjs [next]="next" [prev]="prev" [scrollbar]="scrollbar" *ngIf="search">
+  <div class="shows-grid swiper-wrapper">
+    <div class="show-card-container swiper-slide" *ngFor="let show of shows" (click)="open_card(modal,show)" #card>
+      <figure class="show-card">
+          <div class="show-info" #showinfo>
+            <img [src]="show.image?.original" alt="" class="show-img" onerror="this.src='/images/no-img.svg'"/>
+          </div>
+      </figure>
+    </div>
+  </div>
+  <div class="swiper-scrollbar" #scrollbar></div>
+  <div class="swiper-button-next" #next></div>
+  <div class="swiper-button-prev" #prev></div>
+</div>
+
+<figure class="show-modal"  [ngStyle]="{'background-image': 'linear-gradient(rgba(0,0,0,.5), #333 75%)'}"#modal>
+  <figure class="close-modal" (click)="close(modal)"><i class="material-icons">close</i></figure>
+  <div class="show-modal-content">
+    <div class="show-modal-image">
+      <img [src]="selectedshow?.image?.original" alt="" class="show-modal-img" onerror="this.src='/images/no-img.svg'"/>
+    </div>
+    <div class="show-modal-text">
+        <h1 class="show-modal-name">
+          {{selectedshow?.showname}}
+        </h1>
+        <span class="show-modal-info">
+           {{selectedshow?.status}}
+        </span>
+        <span class="show-modal-info">
+           {{selectedshow?.runtime}}min
+        </span>
+        <span class="show-modal-info" *ngIf="!search">
+           S{{selectedshow?.season}}Ep{{selectedshow?.epsnumber}}
+        </span>
+        <div class="show-summary" [innerHTML]="selectedshow?.summary"></div>
+
+        <ul class="next-details" *ngIf="search && selectedshow?._embedded">
+          <li class="next-detail">
+            <span class="next-label">Next episode</span> {{selectedshow?._embedded.nextepisode.name}}
+          </li>
+          <li class="next-detail">
+            <span class="next-label">Number:</span>  S{{selectedshow?._embedded.nextepisode.season}}Ep{{selectedshow?._embedded.nextepisode.number}}
+          </li>
+          <li class="next-detail">
+            <span class="next-label">Airdate:</span> {{selectedshow?._embedded.nextepisode.airdate}} {{selectedshow?._embedded.nextepisode.airtime}}
+          </li>
+      </ul>
+
+    </div>
+  </div>
+</figure>

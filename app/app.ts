@@ -21,6 +21,7 @@ import { APP_ROUTER_PROVIDERS } from './routes/main.routes';
 //shared components
 import {EventService} from './services/event-services';
 import {ApiService} from "./services/api-service";
+import {Layout} from "./layout/layout";
 
 
 
@@ -28,13 +29,14 @@ import {ApiService} from "./services/api-service";
   selector: "app",
   template: "<router-outlet></router-outlet>",
   directives: [ROUTER_DIRECTIVES],
+  precompile: [Layout]
 })
 
 export class App {
   currentUser:Object;
 
   constructor(private api:ApiService,private router: Router, private location: Location) {
-     
+
   }
   ngOnInit(){
   }

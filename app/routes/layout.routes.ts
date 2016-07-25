@@ -1,8 +1,8 @@
 import { RouterConfig }          from '@angular/router';
-import {ChatPage} from '../pages/chat-page/chat-page';
+import {Guide} from '../pages/guide/guide';
 
 
 export const LayoutRoutes: RouterConfig = [
-    { path: "chat", component: ChatPage },
-    
+    { path: "guide", component: Guide },
+
 ];

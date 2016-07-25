@@ -16,7 +16,7 @@ var gulpif = require('gulp-if');
 var filter = require('gulp-filter');
 var cached = require('gulp-cached');
 
-const vendor_path = findup('/public');
+const vendor_path = findup('/tv2');
 const libs = findup('libs');
 
 var runSequence = require('run-sequence');
@@ -96,7 +96,7 @@ gulp.task('scripts', function() {
         libs + '/moment/moment.min.js',
         libs + '/autocomplete/auto-complete.min.js',
         libs + '/autocomplete/auto-complete.min.js',
-        libs + '/pubnub.js',
+        libs + '/swiperjs/swiper.min.js',
         'node_modules/core-js/client/shim.min.js',
         'node_modules/zone.js/dist/zone.js',
         'node_modules/reflect-metadata/Reflect.js',
