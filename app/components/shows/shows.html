@@ -6,7 +6,7 @@
         <div class="show-card-container swiper-slide" *ngFor="let show of shows" (click)="open_card(modal,show)" #card [hidden]="show.airtime !== time">
           <figure class="show-card">
               <div class="show-info" #showinfo>
-                <img [src]="show.image?.original" alt="" class="show-img" onerror="this.src='/images/no-img.svg'"/>
+                <img [src]="show.image?.original" alt="" class="show-img" onerror="this.src='/tv2/images/no-img.svg'"/>
               </div>
           </figure>
         </div>
@@ -23,7 +23,7 @@
     <div class="show-card-container swiper-slide" *ngFor="let show of shows" (click)="open_card(modal,show)" #card>
       <figure class="show-card">
           <div class="show-info" #showinfo>
-            <img [src]="show.image?.original" alt="" class="show-img" onerror="this.src='/images/no-img.svg'"/>
+            <img [src]="show.image?.original" alt="" class="show-img" onerror="this.src='/tv2/images/no-img.svg'"/>
           </div>
       </figure>
     </div>
@@ -37,7 +37,7 @@
   <figure class="close-modal" (click)="close(modal)"><i class="material-icons">close</i></figure>
   <div class="show-modal-content">
     <div class="show-modal-image">
-      <img [src]="selectedshow?.image?.original" alt="" class="show-modal-img" onerror="this.src='/images/no-img.svg'"/>
+      <img [src]="selectedshow?.image?.original" alt="" class="show-modal-img" onerror="this.src='/tv2/images/no-img.svg'"/>
     </div>
     <div class="show-modal-text">
         <h1 class="show-modal-name">
