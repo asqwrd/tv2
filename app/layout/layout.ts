@@ -44,13 +44,8 @@ export class Layout{
   search:Boolean;
   shows:Array<Object>;
   constructor(private api:ApiService, router: Router, private location: Location,private eventService:EventService) {
-    this.date = moment().format('dddd MMM DD');
-    this.time = moment().format('hh:mm a');
-    this.search=false;
-    this.api.getSchedule().subscribe((data)=>{
-      this.airtimes = data['airtimes'];
-      this.shows = data['shows'];
-    });
+
+
   }
 
   toggleSearch(){
@@ -59,15 +54,5 @@ export class Layout{
   ngOnInit(){
   }
 
-  searching(input:HTMLInputElement){
-    if(input.value.trim().length == 0){
-      this.eventService.search.next({data:this.shows,search:false})
-      this.search = false;
-    }else{
-      this.api.search(input.value).debounceTime(500).subscribe((data)=>{
-        this.eventService.search.next({data:data,search:true})
-      });
-    }
-  }
 
 }
