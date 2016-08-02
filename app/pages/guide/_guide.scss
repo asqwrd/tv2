@@ -230,6 +230,7 @@
       }
     }
     .guide-grid{
+      height: calc(100% - 60px);
       width:100%;
       .guide-grid-items{
         .guide-grid-item{

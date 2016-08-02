@@ -1,4 +1,4 @@
-<div class="show-image mdl-card mdl-shadow--2dp" [ngStyle]="{'background-image': 'radial-gradient(
+<div class="show-image mdl-card mdl-shadow--2dp" [class.no-img]="!show.image" [ngStyle]="{'background-image': 'radial-gradient(
       rgba(0, 0, 0, 0),
       rgba(0, 0, 0, 0.5)
     ),url('+show.image?.original+')'}">
