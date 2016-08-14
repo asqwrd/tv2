@@ -11,7 +11,7 @@
 
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
-        'app':                           { main: 'app',  defaultExtension: 'ts' },
+        'app':                           { main: 'main',  defaultExtension: 'ts' },
         'rxjs':                          { defaultExtension: 'js' },
         'angular2-in-memory-web-api':    { defaultExtension: 'js' },
 
@@ -25,7 +25,6 @@
         '@angular/platform-browser',
         '@angular/platform-browser-dynamic',
         '@angular/router',
-        '@angular/router-deprecated'
     ];
 
     // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }

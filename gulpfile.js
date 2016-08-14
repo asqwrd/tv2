@@ -48,7 +48,7 @@ gulp.task('vendors',function(){
             var outputFile = 'script/vendors.min.js';
             return builder.buildStatic('app', outputFile, {
                 minify: true,
-                mangle: true,
+                mangle: false,
                 rollup: true,
                 sourceMaps: false,
             });

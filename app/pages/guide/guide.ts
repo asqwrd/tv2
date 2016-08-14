@@ -1,6 +1,5 @@
 import {Component, Input, ViewChild, NgZone,ElementRef} from "@angular/core";
 import {HTTP_PROVIDERS} from "@angular/http";
-import {NgStyle,NgFor} from '@angular/common';
 
 
 import 'rxjs/Rx';
@@ -9,19 +8,15 @@ import {Router} from "@angular/router";
 //shared components and service
 import {ApiService} from "../../services/api-service";
 import {EventService} from "../../services/event-services";
-import {ComponentHandler} from "../../directives/component-handler";
 
 
-import {ShowCard} from "../../components/show-card/show-card";
 import {Subject} from "rxjs/Rx";
 declare var moment:any;
 
 
 @Component({
     selector: 'guide',
-    viewProviders: [HTTP_PROVIDERS],
-    templateUrl: 'app/pages/guide/guide.html',
-    directives:[NgStyle,NgFor,ShowCard,ComponentHandler]
+    templateUrl: 'guide.html',
 })
 
 
