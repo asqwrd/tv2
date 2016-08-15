@@ -17,7 +17,7 @@
   <section #detail class="guide-details" [ngStyle]="{'background-image': 'radial-gradient(
         rgba(0, 0, 0, 0),
         rgba(0, 0, 0, 0.81)
-      ),url('+selectedshow['image'].original+')'}">
+      ),url('+selectedshow?.image?.original+')'}">
       <button (click)="close_detail()" class="mdl-button mdl-js-button mdl-button--icon back-button" component-handler>
         <i class="material-icons" >arrow_backward</i>
       </button>
@@ -29,26 +29,26 @@
       <!--<div class="show-summary" [innerHTML]="selectedshow?.summary"></div>-->
       <div class="detail-info">
         <h1 class="detail-name">
-          {{selectedshow['showname']}}
+          {{selectedshow?.showname}}
         </h1>
         <span class="detail-info-text" >
-          {{selectedshow['runtime']}} min
+          {{selectedshow?.runtime}} min
         </span>
         <span class="detail-info-text" *ngIf="searchResults">
-            | {{selectedshow['status']}}
+            | {{selectedshow?.status}}
         </span>
         <span class="detail-info-text" *ngIf="!searchResults">
-          | Season {{selectedshow['season']}} | Episode {{selectedshow['epsnumber']}}
+          | Season {{selectedshow?.season}} | Episode {{selectedshow?.epsnumber}}
         </span>
-        <ul class="next-details" *ngIf="searchResults && selectedshow['_embedded']">
+        <ul class="next-details" *ngIf="searchResults && selectedshow?._embedded">
           <li class="next-detail">
-            <span class="next-label">Next episode</span> {{selectedshow['_embedded'].nextepisode.name}}
+            <span class="next-label">Next episode</span> {{selectedshow?._embedded.nextepisode.name}}
           </li>
           <li class="next-detail">
-            <span class="next-label">Number:</span>  S{{selectedshow['_embedded'].nextepisode.season}}Ep{{selectedshow['_embedded'].nextepisode.number}}
+            <span class="next-label">Number:</span>  S{{selectedshow?._embedded.nextepisode.season}}Ep{{selectedshow?._embedded.nextepisode.number}}
           </li>
           <li class="next-detail">
-            <span class="next-label">Airdate:</span> {{selectedshow['_embedded'].nextepisode.airdate}} {{selectedshow['_embedded'].nextepisode.airtime}}
+            <span class="next-label">Airdate:</span> {{selectedshow?._embedded.nextepisode.airdate}} {{selectedshow?._embedded.nextepisode.airtime}}
           </li>
       </ul>
 

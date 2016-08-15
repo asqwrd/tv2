@@ -1,10 +1,10 @@
-<div class="show-image mdl-card mdl-shadow--2dp" [class.no-img]="!show['image']" [ngStyle]="{'background-image': 'radial-gradient(
+<div class="show-image mdl-card mdl-shadow--2dp" [class.no-img]="!show.image" [ngStyle]="{'background-image': 'radial-gradient(
       rgba(0, 0, 0, 0),
       rgba(0, 0, 0, 0.5)
-    ),url('+show['image'].original+')'}">
+    ),url('+show.image?.original+')'}">
   <div class="mdl-card__title mdl-card--expand"></div>
   <div class="mdl-card__actions">
-    <p class="show-info">{{show['showname']}}</p>
-    <p class="show-info time" *ngIf="show['airtime']">{{show['airtime']}}</p>
+    <p class="show-info">{{show?.showname}}</p>
+    <p class="show-info time" *ngIf="show?.airtime">{{show?.airtime}}</p>
   </div>
 </div>

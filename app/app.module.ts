@@ -50,6 +50,13 @@ import {routing} from './routes/main.routes';
     MomentPipe,
     Translate
   ],
+  exports:[
+    BrowserModule,
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    HttpModule,
+  ],
   providers:[
     ApiService,
     EventService,

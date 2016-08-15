@@ -1,8 +1,8 @@
 import {Component, Input, ViewChild, NgZone,ElementRef} from "@angular/core";
 import {HTTP_PROVIDERS} from "@angular/http";
+import {Show} from "../../classes/show";
 
 
-import 'rxjs/Rx';
 import {Router} from "@angular/router";
 
 //shared components and service
@@ -22,9 +22,9 @@ declare var moment:any;
 
 export class Guide {
     router:Router;
-    shows:Array<Object>;
+    shows:Array<Show>;
     airtimes:Array<string>;
-    selectedshow:Object;
+    selectedshow:Show;
     search:Boolean;
     searching:Boolean;
     searchResults:Boolean;
@@ -68,7 +68,7 @@ export class Guide {
       this.detail.nativeElement.classList.remove('open');
     }
 
-    select_show(show:Object){
+    select_show(show:Show){
       this.detail.nativeElement.classList.add('opacity');
       this.detail.nativeElement.classList.add('open');
       setTimeout(()=>{
