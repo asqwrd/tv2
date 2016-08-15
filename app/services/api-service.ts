@@ -1,6 +1,7 @@
-import {Injectable,EventEmitter} from '@angular/core';
-import {Http, Headers, Response, RequestOptions} from "@angular/http";
+import {Injectable} from '@angular/core';
+import {Http, Headers, Response} from "@angular/http";
 import {EventService} from "./event-services";
+import {Show} from "../classes/show";
 
 
 import { Observable } from 'rxjs/Observable';
@@ -45,7 +46,7 @@ export class ApiService {
         }
     }
 
-    search(value:string):Observable<Object[]>{
+    search(value:string):Observable<Show[]>{
       return this.http.get(this.domain+'/search/shows?q='+value).map((res:Response)=>{
         let data = res.json();
         let shows = [];
@@ -65,7 +66,7 @@ export class ApiService {
       });
     }
 
-    showDetail(showid):Observable<Object>{
+    showDetail(showid):Observable<Show>{
       return this.http.get(this.domain+'/shows/'+showid+'?embed=nextepisode').map((res:Response)=>{
         let data = res.json();
         if(data._embedded){

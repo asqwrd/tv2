@@ -1,35 +1,30 @@
 import {Component, Input, ViewChild, NgZone,ElementRef} from "@angular/core";
 import {HTTP_PROVIDERS} from "@angular/http";
-import {NgStyle,NgFor} from '@angular/common';
+import {Show} from "../../classes/show";
 
 
-import 'rxjs/Rx';
 import {Router} from "@angular/router";
 
 //shared components and service
 import {ApiService} from "../../services/api-service";
 import {EventService} from "../../services/event-services";
-import {ComponentHandler} from "../../directives/component-handler";
 
 
-import {ShowCard} from "../../components/show-card/show-card";
 import {Subject} from "rxjs/Rx";
 declare var moment:any;
 
 
 @Component({
     selector: 'guide',
-    viewProviders: [HTTP_PROVIDERS],
-    templateUrl: 'app/pages/guide/guide.html',
-    directives:[NgStyle,NgFor,ShowCard,ComponentHandler]
+    templateUrl: 'guide.html',
 })
 
 
 export class Guide {
     router:Router;
-    shows:Array<Object>;
+    shows:Array<Show>;
     airtimes:Array<string>;
-    selectedshow:Object;
+    selectedshow:Show;
     search:Boolean;
     searching:Boolean;
     searchResults:Boolean;
@@ -73,7 +68,7 @@ export class Guide {
       this.detail.nativeElement.classList.remove('open');
     }
 
-    select_show(show:Object){
+    select_show(show:Show){
       this.detail.nativeElement.classList.add('opacity');
       this.detail.nativeElement.classList.add('open');
       setTimeout(()=>{

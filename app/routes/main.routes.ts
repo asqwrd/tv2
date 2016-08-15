@@ -1,12 +1,13 @@
-import { provideRouter, RouterConfig } from '@angular/router';
 import {Layout} from "../layout/layout";
 import {LayoutRoutes} from "./layout.routes";
+import { Routes, RouterModule } from '@angular/router';
 
-export const routes: RouterConfig = [
-    { path: "", component: Layout,
-        children: LayoutRoutes
-    },
+
+
+export const appRoutes: Routes = [
+  { path: "", component: Layout,
+      children: LayoutRoutes
+  },
 ];
-export const APP_ROUTER_PROVIDERS = [
-    provideRouter(routes)
-];
+
+export const routing = RouterModule.forRoot(appRoutes,{useHash:true});
