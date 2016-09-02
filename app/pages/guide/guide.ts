@@ -111,14 +111,18 @@ export class Guide {
           this.searchResults = true;
           this.shows = shows;
           this.guide.nativeElement.classList.add('opacity');
-          this.api.showDetail( this.shows[0]['showid']).subscribe((data)=>{
-            this.selectedshow = data;
-            this.selectedshow['showname'] = this.shows[0]['showname'];
-            setTimeout(()=>{
-              this.guide.nativeElement.classList.remove('opacity');
-            },400)
+          if(this.shows.length > 0){
+            this.api.showDetail( this.shows[0]['showid']).subscribe((data)=>{
+              this.selectedshow = data;
+              this.selectedshow['showname'] = this.shows[0]['showname'];
+              setTimeout(()=>{
+                this.guide.nativeElement.classList.remove('opacity');
+              },400)
 
-          })
+            })
+          }else{
+              this.guide.nativeElement.classList.remove('opacity');
+          }
           this.searchForm.nativeElement.reset();
         });
 
