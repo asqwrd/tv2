@@ -13,29 +13,29 @@ import * as import5 from '@angular/core/src/linker/view_utils';
 import * as import6 from '@angular/core/src/di/injector';
 import * as import7 from '@angular/core/src/linker/view_type';
 import * as import8 from '@angular/core/src/change_detection/change_detection';
-import * as import9 from '@angular/core/src/linker/component_factory';
-import * as import10 from '@angular/common/src/directives/ng_style';
-import * as import11 from '@angular/core/src/linker/template_ref';
-import * as import12 from '@angular/common/src/directives/ng_if';
-import * as import13 from '@angular/core/src/change_detection/differs/keyvalue_differs';
-import * as import14 from '@angular/core/src/linker/element_ref';
-import * as import15 from '@angular/core/src/metadata/view';
+import * as import9 from '@angular/core/src/metadata/view';
+import * as import10 from '@angular/core/src/linker/component_factory';
+import * as import11 from '@angular/common/src/directives/ng_style';
+import * as import12 from '@angular/core/src/linker/template_ref';
+import * as import13 from '@angular/common/src/directives/ng_if';
+import * as import14 from '@angular/core/src/change_detection/differs/keyvalue_differs';
+import * as import15 from '@angular/core/src/linker/element_ref';
 const nodeDebugInfos_ShowCard_Host0:import0.StaticNodeDebugInfo[] = [new import0.StaticNodeDebugInfo([import1.ShowCard],import1.ShowCard,{})];
-var renderType_ShowCard_Host:import2.RenderComponentType = null;
+var renderType_ShowCard_Host:import2.RenderComponentType = (null as any);
 class _View_ShowCard_Host0 extends import3.DebugAppView<any> {
   _el_0:any;
-  private _appEl_0:import4.AppElement;
+  /*private*/ _appEl_0:import4.AppElement;
   _ShowCard_0_4:import1.ShowCard;
   constructor(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement) {
     super(_View_ShowCard_Host0,renderType_ShowCard_Host,import7.ViewType.HOST,viewUtils,parentInjector,declarationEl,import8.ChangeDetectorStatus.CheckAlways,nodeDebugInfos_ShowCard_Host0);
   }
   createInternal(rootSelector:string):import4.AppElement {
     this._el_0 = this.selectOrCreateHostElement('show-card',rootSelector,this.debug(0,0,0));
-    this._appEl_0 = new import4.AppElement(0,null,this,this._el_0);
+    this._appEl_0 = new import4.AppElement(0,(null as any),this,this._el_0);
     var compView_0:any = viewFactory_ShowCard0(this.viewUtils,this.injector(0),this._appEl_0);
     this._ShowCard_0_4 = new import1.ShowCard();
     this._appEl_0.initComponent(this._ShowCard_0_4,[],compView_0);
-    compView_0.create(this._ShowCard_0_4,this.projectableNodes,null);
+    compView_0.create(this._ShowCard_0_4,this.projectableNodes,(null as any));
     this.init([].concat([this._el_0]),[this._el_0],[],[]);
     return this._appEl_0;
   }
@@ -54,35 +54,35 @@ class _View_ShowCard_Host0 extends import3.DebugAppView<any> {
   }
 }
 function viewFactory_ShowCard_Host0(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement):import3.AppView<any> {
-  if ((renderType_ShowCard_Host === null)) { (renderType_ShowCard_Host = viewUtils.createRenderComponentType('',0,null,[],{})); }
+  if ((renderType_ShowCard_Host === (null as any))) { (renderType_ShowCard_Host = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,[],{})); }
   return new _View_ShowCard_Host0(viewUtils,parentInjector,declarationEl);
 }
-export const ShowCardNgFactory:import9.ComponentFactory<import1.ShowCard> = new import9.ComponentFactory<import1.ShowCard>('show-card',viewFactory_ShowCard_Host0,import1.ShowCard);
+export const ShowCardNgFactory:import10.ComponentFactory<import1.ShowCard> = new import10.ComponentFactory<import1.ShowCard>('show-card',viewFactory_ShowCard_Host0,import1.ShowCard);
 const styles_ShowCard:any[] = [];
 const nodeDebugInfos_ShowCard0:import0.StaticNodeDebugInfo[] = [
-  new import0.StaticNodeDebugInfo([import10.NgStyle],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
+  new import0.StaticNodeDebugInfo([import11.NgStyle],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
   new import0.StaticNodeDebugInfo([
-    import11.TemplateRef,
-    import12.NgIf
+    import12.TemplateRef,
+    import13.NgIf
   ]
-  ,null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{})
+  ,(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{})
 ]
 ;
-var renderType_ShowCard:import2.RenderComponentType = null;
+var renderType_ShowCard:import2.RenderComponentType = (null as any);
 class _View_ShowCard0 extends import3.DebugAppView<import1.ShowCard> {
   _el_0:any;
-  _NgStyle_0_3:import10.NgStyle;
+  _NgStyle_0_3:import11.NgStyle;
   _text_1:any;
   _el_2:any;
   _text_3:any;
@@ -92,17 +92,17 @@ class _View_ShowCard0 extends import3.DebugAppView<import1.ShowCard> {
   _text_7:any;
   _text_8:any;
   _anchor_9:any;
-  private _appEl_9:import4.AppElement;
+  /*private*/ _appEl_9:import4.AppElement;
   _TemplateRef_9_5:any;
-  _NgIf_9_6:import12.NgIf;
+  _NgIf_9_6:import13.NgIf;
   _text_10:any;
   _text_11:any;
   _text_12:any;
-  private _expr_0:any;
+  /*private*/ _expr_0:any;
   _map_0:any;
-  private _expr_1:any;
-  private _expr_2:any;
-  private _expr_3:any;
+  /*private*/ _expr_1:any;
+  /*private*/ _expr_2:any;
+  /*private*/ _expr_3:any;
   constructor(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement) {
     super(_View_ShowCard0,renderType_ShowCard,import7.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import8.ChangeDetectorStatus.CheckAlways,nodeDebugInfos_ShowCard0);
   }
@@ -110,7 +110,7 @@ class _View_ShowCard0 extends import3.DebugAppView<import1.ShowCard> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
     this._el_0 = this.renderer.createElement(parentRenderNode,'div',this.debug(0,0,0));
     this.renderer.setElementAttribute(this._el_0,'class','show-image mdl-card mdl-shadow--2dp');
-    this._NgStyle_0_3 = new import10.NgStyle(this.parentInjector.get(import13.KeyValueDiffers),new import14.ElementRef(this._el_0),this.renderer);
+    this._NgStyle_0_3 = new import11.NgStyle(this.parentInjector.get(import14.KeyValueDiffers),new import15.ElementRef(this._el_0),this.renderer);
     this._text_1 = this.renderer.createText(this._el_0,'\n  ',this.debug(1,3,39));
     this._el_2 = this.renderer.createElement(this._el_0,'div',this.debug(2,4,2));
     this.renderer.setElementAttribute(this._el_2,'class','mdl-card__title mdl-card--expand');
@@ -124,8 +124,8 @@ class _View_ShowCard0 extends import3.DebugAppView<import1.ShowCard> {
     this._text_8 = this.renderer.createText(this._el_4,'\n    ',this.debug(8,6,47));
     this._anchor_9 = this.renderer.createTemplateAnchor(this._el_4,this.debug(9,7,4));
     this._appEl_9 = new import4.AppElement(9,4,this,this._anchor_9);
-    this._TemplateRef_9_5 = new import11.TemplateRef_(this._appEl_9,viewFactory_ShowCard1);
-    this._NgIf_9_6 = new import12.NgIf(this._appEl_9.vcRef,this._TemplateRef_9_5);
+    this._TemplateRef_9_5 = new import12.TemplateRef_(this._appEl_9,viewFactory_ShowCard1);
+    this._NgIf_9_6 = new import13.NgIf(this._appEl_9.vcRef,this._TemplateRef_9_5);
     this._text_10 = this.renderer.createText(this._el_4,'\n  ',this.debug(10,7,73));
     this._text_11 = this.renderer.createText(this._el_0,'\n',this.debug(11,8,8));
     this._text_12 = this.renderer.createText(parentRenderNode,'\n',this.debug(12,9,6));
@@ -152,24 +152,24 @@ class _View_ShowCard0 extends import3.DebugAppView<import1.ShowCard> {
       this._text_12
     ]
     ,[],[]);
-    return null;
+    return (null as any);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import11.TemplateRef) && (9 === requestNodeIndex))) { return this._TemplateRef_9_5; }
-    if (((token === import12.NgIf) && (9 === requestNodeIndex))) { return this._NgIf_9_6; }
-    if (((token === import10.NgStyle) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 11)))) { return this._NgStyle_0_3; }
+    if (((token === import12.TemplateRef) && (9 === requestNodeIndex))) { return this._TemplateRef_9_5; }
+    if (((token === import13.NgIf) && (9 === requestNodeIndex))) { return this._NgIf_9_6; }
+    if (((token === import11.NgStyle) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 11)))) { return this._NgStyle_0_3; }
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
     this.debug(0,0,78);
-    const currVal_1:any = this._map_0((('radial-gradient(\n      rgba(0, 0, 0, 0),\n      rgba(0, 0, 0, 0.5)\n    ),url(' + ((this.context.show.image == null)? null: this.context.show.image.original)) + ')'));
+    const currVal_1:any = this._map_0((('radial-gradient(\n      rgba(0, 0, 0, 0),\n      rgba(0, 0, 0, 0.5)\n    ),url(' + ((this.context.show.image == (null as any))? (null as any): this.context.show.image.original)) + ')'));
     if (import5.checkBinding(throwOnChange,this._expr_1,currVal_1)) {
       this._NgStyle_0_3.ngStyle = currVal_1;
       this._expr_1 = currVal_1;
     }
     if (!throwOnChange) { this._NgStyle_0_3.ngDoCheck(); }
     this.debug(9,7,30);
-    const currVal_3:any = ((this.context.show == null)? null: this.context.show.airtime);
+    const currVal_3:any = ((this.context.show == (null as any))? (null as any): this.context.show.airtime);
     if (import5.checkBinding(throwOnChange,this._expr_3,currVal_3)) {
       this._NgIf_9_6.ngIf = currVal_3;
       this._expr_3 = currVal_3;
@@ -182,7 +182,7 @@ class _View_ShowCard0 extends import3.DebugAppView<import1.ShowCard> {
       this._expr_0 = currVal_0;
     }
     this.debug(7,6,25);
-    const currVal_2:any = import5.interpolate(1,'',((this.context.show == null)? null: this.context.show.showname),'');
+    const currVal_2:any = import5.interpolate(1,'',((this.context.show == (null as any))? (null as any): this.context.show.showname),'');
     if (import5.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
       this.renderer.setText(this._text_7,currVal_2);
       this._expr_2 = currVal_2;
@@ -191,23 +191,23 @@ class _View_ShowCard0 extends import3.DebugAppView<import1.ShowCard> {
   }
 }
 export function viewFactory_ShowCard0(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement):import3.AppView<import1.ShowCard> {
-  if ((renderType_ShowCard === null)) { (renderType_ShowCard = viewUtils.createRenderComponentType('/mnt/c/Users/asqwrd/Documents/GitHub/tv2/app/components/show-card/show-card.html',0,import15.ViewEncapsulation.None,styles_ShowCard,{})); }
+  if ((renderType_ShowCard === (null as any))) { (renderType_ShowCard = viewUtils.createRenderComponentType('/mnt/c/Users/asqwrd/Documents/GitHub/tv2/app/components/show-card/show-card.html',0,import9.ViewEncapsulation.None,styles_ShowCard,{})); }
   return new _View_ShowCard0(viewUtils,parentInjector,declarationEl);
 }
 const nodeDebugInfos_ShowCard1:import0.StaticNodeDebugInfo[] = [
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{})
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{})
 ]
 ;
 class _View_ShowCard1 extends import3.DebugAppView<any> {
   _el_0:any;
   _text_1:any;
-  private _expr_0:any;
+  /*private*/ _expr_0:any;
   constructor(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement) {
     super(_View_ShowCard1,renderType_ShowCard,import7.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import8.ChangeDetectorStatus.CheckAlways,nodeDebugInfos_ShowCard1);
   }
   createInternal(rootSelector:string):import4.AppElement {
-    this._el_0 = this.renderer.createElement(null,'p',this.debug(0,7,4));
+    this._el_0 = this.renderer.createElement((null as any),'p',this.debug(0,7,4));
     this.renderer.setElementAttribute(this._el_0,'class','show-info time');
     this._text_1 = this.renderer.createText(this._el_0,'',this.debug(1,7,52));
     this._expr_0 = import8.UNINITIALIZED;
@@ -216,12 +216,12 @@ class _View_ShowCard1 extends import3.DebugAppView<any> {
       this._text_1
     ]
     ,[],[]);
-    return null;
+    return (null as any);
   }
   detectChangesInternal(throwOnChange:boolean):void {
     this.detectContentChildrenChanges(throwOnChange);
     this.debug(1,7,52);
-    const currVal_0:any = import5.interpolate(1,'',((this.parent.context.show == null)? null: this.parent.context.show.airtime),'');
+    const currVal_0:any = import5.interpolate(1,'',((this.parent.context.show == (null as any))? (null as any): this.parent.context.show.airtime),'');
     if (import5.checkBinding(throwOnChange,this._expr_0,currVal_0)) {
       this.renderer.setText(this._text_1,currVal_0);
       this._expr_0 = currVal_0;

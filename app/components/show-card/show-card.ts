@@ -1,5 +1,5 @@
 import {Component,Input,ViewChild} from "@angular/core";
-import {HTTP_PROVIDERS} from "@angular/http";
+
 import {Show} from "../../classes/show";
 
 

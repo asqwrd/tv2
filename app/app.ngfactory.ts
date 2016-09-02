@@ -13,27 +13,27 @@ import * as import5 from '@angular/core/src/linker/view_utils';
 import * as import6 from '@angular/core/src/di/injector';
 import * as import7 from '@angular/core/src/linker/view_type';
 import * as import8 from '@angular/core/src/change_detection/change_detection';
-import * as import9 from '@angular/core/src/linker/component_factory';
-import * as import10 from '@angular/router/src/directives/router_outlet';
-import * as import11 from '@angular/router/src/router_outlet_map';
-import * as import12 from '@angular/core/src/linker/component_factory_resolver';
-import * as import13 from '@angular/core/src/metadata/view';
+import * as import9 from '@angular/core/src/metadata/view';
+import * as import10 from '@angular/core/src/linker/component_factory';
+import * as import11 from '@angular/router/src/directives/router_outlet';
+import * as import12 from '@angular/router/src/router_outlet_map';
+import * as import13 from '@angular/core/src/linker/component_factory_resolver';
 const nodeDebugInfos_App_Host0:import0.StaticNodeDebugInfo[] = [new import0.StaticNodeDebugInfo([import1.App],import1.App,{})];
-var renderType_App_Host:import2.RenderComponentType = null;
+var renderType_App_Host:import2.RenderComponentType = (null as any);
 class _View_App_Host0 extends import3.DebugAppView<any> {
   _el_0:any;
-  private _appEl_0:import4.AppElement;
+  /*private*/ _appEl_0:import4.AppElement;
   _App_0_4:import1.App;
   constructor(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement) {
     super(_View_App_Host0,renderType_App_Host,import7.ViewType.HOST,viewUtils,parentInjector,declarationEl,import8.ChangeDetectorStatus.CheckAlways,nodeDebugInfos_App_Host0);
   }
   createInternal(rootSelector:string):import4.AppElement {
     this._el_0 = this.selectOrCreateHostElement('app',rootSelector,this.debug(0,0,0));
-    this._appEl_0 = new import4.AppElement(0,null,this,this._el_0);
+    this._appEl_0 = new import4.AppElement(0,(null as any),this,this._el_0);
     var compView_0:any = viewFactory_App0(this.viewUtils,this.injector(0),this._appEl_0);
     this._App_0_4 = new import1.App();
     this._appEl_0.initComponent(this._App_0_4,[],compView_0);
-    compView_0.create(this._App_0_4,this.projectableNodes,null);
+    compView_0.create(this._App_0_4,this.projectableNodes,(null as any));
     this.init([].concat([this._el_0]),[this._el_0],[],[]);
     return this._appEl_0;
   }
@@ -48,30 +48,30 @@ class _View_App_Host0 extends import3.DebugAppView<any> {
   }
 }
 function viewFactory_App_Host0(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement):import3.AppView<any> {
-  if ((renderType_App_Host === null)) { (renderType_App_Host = viewUtils.createRenderComponentType('',0,null,[],{})); }
+  if ((renderType_App_Host === (null as any))) { (renderType_App_Host = viewUtils.createRenderComponentType('',0,import9.ViewEncapsulation.None,[],{})); }
   return new _View_App_Host0(viewUtils,parentInjector,declarationEl);
 }
-export const AppNgFactory:import9.ComponentFactory<import1.App> = new import9.ComponentFactory<import1.App>('app',viewFactory_App_Host0,import1.App);
+export const AppNgFactory:import10.ComponentFactory<import1.App> = new import10.ComponentFactory<import1.App>('app',viewFactory_App_Host0,import1.App);
 const styles_App:any[] = [];
-const nodeDebugInfos_App0:import0.StaticNodeDebugInfo[] = [new import0.StaticNodeDebugInfo([import10.RouterOutlet],null,{})];
-var renderType_App:import2.RenderComponentType = null;
+const nodeDebugInfos_App0:import0.StaticNodeDebugInfo[] = [new import0.StaticNodeDebugInfo([import11.RouterOutlet],(null as any),{})];
+var renderType_App:import2.RenderComponentType = (null as any);
 class _View_App0 extends import3.DebugAppView<import1.App> {
   _el_0:any;
-  private _appEl_0:import4.AppElement;
-  _RouterOutlet_0_5:import10.RouterOutlet;
+  /*private*/ _appEl_0:import4.AppElement;
+  _RouterOutlet_0_5:import11.RouterOutlet;
   constructor(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement) {
     super(_View_App0,renderType_App,import7.ViewType.COMPONENT,viewUtils,parentInjector,declarationEl,import8.ChangeDetectorStatus.CheckAlways,nodeDebugInfos_App0);
   }
   createInternal(rootSelector:string):import4.AppElement {
     const parentRenderNode:any = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);
     this._el_0 = this.renderer.createElement(parentRenderNode,'router-outlet',this.debug(0,0,0));
-    this._appEl_0 = new import4.AppElement(0,null,this,this._el_0);
-    this._RouterOutlet_0_5 = new import10.RouterOutlet(this.parentInjector.get(import11.RouterOutletMap),this._appEl_0.vcRef,this.parentInjector.get(import12.ComponentFactoryResolver),null);
+    this._appEl_0 = new import4.AppElement(0,(null as any),this,this._el_0);
+    this._RouterOutlet_0_5 = new import11.RouterOutlet(this.parentInjector.get(import12.RouterOutletMap),this._appEl_0.vcRef,this.parentInjector.get(import13.ComponentFactoryResolver),(null as any));
     this.init([],[this._el_0],[],[]);
-    return null;
+    return (null as any);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import10.RouterOutlet) && (0 === requestNodeIndex))) { return this._RouterOutlet_0_5; }
+    if (((token === import11.RouterOutlet) && (0 === requestNodeIndex))) { return this._RouterOutlet_0_5; }
     return notFoundResult;
   }
   destroyInternal():void {
@@ -80,6 +80,6 @@ class _View_App0 extends import3.DebugAppView<import1.App> {
   }
 }
 export function viewFactory_App0(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement):import3.AppView<import1.App> {
-  if ((renderType_App === null)) { (renderType_App = viewUtils.createRenderComponentType('/mnt/c/Users/asqwrd/Documents/GitHub/tv2/app/app.ts class App - inline template',0,import13.ViewEncapsulation.None,styles_App,{})); }
+  if ((renderType_App === (null as any))) { (renderType_App = viewUtils.createRenderComponentType('/mnt/c/Users/asqwrd/Documents/GitHub/tv2/app/app.ts class App - inline template',0,import9.ViewEncapsulation.None,styles_App,{})); }
   return new _View_App0(viewUtils,parentInjector,declarationEl);
 }

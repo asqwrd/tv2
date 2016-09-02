@@ -15,27 +15,27 @@ import * as import7 from '@angular/core/src/linker/view_type';
 import * as import8 from '@angular/core/src/change_detection/change_detection';
 import * as import9 from '../services/api-service';
 import * as import10 from '../services/event-services';
-import * as import11 from '@angular/core/src/linker/component_factory';
-import * as import12 from '@angular/router/src/directives/router_outlet';
-import * as import13 from '@angular/router/src/router_outlet_map';
-import * as import14 from '@angular/core/src/linker/component_factory_resolver';
-import * as import15 from '@angular/core/src/metadata/view';
+import * as import11 from '@angular/core/src/metadata/view';
+import * as import12 from '@angular/core/src/linker/component_factory';
+import * as import13 from '@angular/router/src/directives/router_outlet';
+import * as import14 from '@angular/router/src/router_outlet_map';
+import * as import15 from '@angular/core/src/linker/component_factory_resolver';
 const nodeDebugInfos_Layout_Host0:import0.StaticNodeDebugInfo[] = [new import0.StaticNodeDebugInfo([import1.Layout],import1.Layout,{})];
-var renderType_Layout_Host:import2.RenderComponentType = null;
+var renderType_Layout_Host:import2.RenderComponentType = (null as any);
 class _View_Layout_Host0 extends import3.DebugAppView<any> {
   _el_0:any;
-  private _appEl_0:import4.AppElement;
+  /*private*/ _appEl_0:import4.AppElement;
   _Layout_0_4:import1.Layout;
   constructor(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement) {
     super(_View_Layout_Host0,renderType_Layout_Host,import7.ViewType.HOST,viewUtils,parentInjector,declarationEl,import8.ChangeDetectorStatus.CheckAlways,nodeDebugInfos_Layout_Host0);
   }
   createInternal(rootSelector:string):import4.AppElement {
     this._el_0 = this.selectOrCreateHostElement('layout',rootSelector,this.debug(0,0,0));
-    this._appEl_0 = new import4.AppElement(0,null,this,this._el_0);
+    this._appEl_0 = new import4.AppElement(0,(null as any),this,this._el_0);
     var compView_0:any = viewFactory_Layout0(this.viewUtils,this.injector(0),this._appEl_0);
     this._Layout_0_4 = new import1.Layout(this.parentInjector.get(import9.ApiService),this.parentInjector.get(import10.EventService));
     this._appEl_0.initComponent(this._Layout_0_4,[],compView_0);
-    compView_0.create(this._Layout_0_4,this.projectableNodes,null);
+    compView_0.create(this._Layout_0_4,this.projectableNodes,(null as any));
     this.init([].concat([this._el_0]),[this._el_0],[],[]);
     return this._appEl_0;
   }
@@ -50,31 +50,31 @@ class _View_Layout_Host0 extends import3.DebugAppView<any> {
   }
 }
 function viewFactory_Layout_Host0(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement):import3.AppView<any> {
-  if ((renderType_Layout_Host === null)) { (renderType_Layout_Host = viewUtils.createRenderComponentType('',0,null,[],{})); }
+  if ((renderType_Layout_Host === (null as any))) { (renderType_Layout_Host = viewUtils.createRenderComponentType('',0,import11.ViewEncapsulation.None,[],{})); }
   return new _View_Layout_Host0(viewUtils,parentInjector,declarationEl);
 }
-export const LayoutNgFactory:import11.ComponentFactory<import1.Layout> = new import11.ComponentFactory<import1.Layout>('layout',viewFactory_Layout_Host0,import1.Layout);
+export const LayoutNgFactory:import12.ComponentFactory<import1.Layout> = new import12.ComponentFactory<import1.Layout>('layout',viewFactory_Layout_Host0,import1.Layout);
 const styles_Layout:any[] = [];
 const nodeDebugInfos_Layout0:import0.StaticNodeDebugInfo[] = [
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([import12.RouterOutlet],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{}),
-  new import0.StaticNodeDebugInfo([],null,{})
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([import13.RouterOutlet],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{}),
+  new import0.StaticNodeDebugInfo([],(null as any),{})
 ]
 ;
-var renderType_Layout:import2.RenderComponentType = null;
+var renderType_Layout:import2.RenderComponentType = (null as any);
 class _View_Layout0 extends import3.DebugAppView<import1.Layout> {
   _el_0:any;
   _text_1:any;
   _el_2:any;
   _text_3:any;
   _el_4:any;
-  private _appEl_4:import4.AppElement;
-  _RouterOutlet_4_5:import12.RouterOutlet;
+  /*private*/ _appEl_4:import4.AppElement;
+  _RouterOutlet_4_5:import13.RouterOutlet;
   _text_5:any;
   _text_6:any;
   _text_7:any;
@@ -91,7 +91,7 @@ class _View_Layout0 extends import3.DebugAppView<import1.Layout> {
     this._text_3 = this.renderer.createText(this._el_2,'\n    ',this.debug(3,1,27));
     this._el_4 = this.renderer.createElement(this._el_2,'router-outlet',this.debug(4,2,4));
     this._appEl_4 = new import4.AppElement(4,2,this,this._el_4);
-    this._RouterOutlet_4_5 = new import12.RouterOutlet(this.parentInjector.get(import13.RouterOutletMap),this._appEl_4.vcRef,this.parentInjector.get(import14.ComponentFactoryResolver),null);
+    this._RouterOutlet_4_5 = new import13.RouterOutlet(this.parentInjector.get(import14.RouterOutletMap),this._appEl_4.vcRef,this.parentInjector.get(import15.ComponentFactoryResolver),(null as any));
     this._text_5 = this.renderer.createText(this._el_2,'\n  ',this.debug(5,2,35));
     this._text_6 = this.renderer.createText(this._el_0,'\n',this.debug(6,3,12));
     this._text_7 = this.renderer.createText(parentRenderNode,'\n',this.debug(7,4,7));
@@ -106,10 +106,10 @@ class _View_Layout0 extends import3.DebugAppView<import1.Layout> {
       this._text_7
     ]
     ,[],[]);
-    return null;
+    return (null as any);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import12.RouterOutlet) && (4 === requestNodeIndex))) { return this._RouterOutlet_4_5; }
+    if (((token === import13.RouterOutlet) && (4 === requestNodeIndex))) { return this._RouterOutlet_4_5; }
     return notFoundResult;
   }
   destroyInternal():void {
@@ -118,6 +118,6 @@ class _View_Layout0 extends import3.DebugAppView<import1.Layout> {
   }
 }
 export function viewFactory_Layout0(viewUtils:import5.ViewUtils,parentInjector:import6.Injector,declarationEl:import4.AppElement):import3.AppView<import1.Layout> {
-  if ((renderType_Layout === null)) { (renderType_Layout = viewUtils.createRenderComponentType('/mnt/c/Users/asqwrd/Documents/GitHub/tv2/app/layout/layout.html',0,import15.ViewEncapsulation.None,styles_Layout,{})); }
+  if ((renderType_Layout === (null as any))) { (renderType_Layout = viewUtils.createRenderComponentType('/mnt/c/Users/asqwrd/Documents/GitHub/tv2/app/layout/layout.html',0,import11.ViewEncapsulation.None,styles_Layout,{})); }
   return new _View_Layout0(viewUtils,parentInjector,declarationEl);
 }

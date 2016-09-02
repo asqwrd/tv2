@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import {HTTP_PROVIDERS, HttpModule} from '@angular/http';
+import {HttpModule} from '@angular/http';
 
 
 import { App }  from './app';
@@ -59,8 +59,7 @@ import {routing} from './routes/main.routes';
   ],
   providers:[
     ApiService,
-    EventService,
-    HTTP_PROVIDERS
+    EventService
   ],
   bootstrap:    [ App ]
 })
