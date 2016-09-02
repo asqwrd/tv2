@@ -1,9 +1,12 @@
 node_modules/
 
 app/**/*.js
+app/**/*.ngfactory.*
+app/**/*.metadata.json
 app/**/*.map
 script/**/*.gz
 script/**/*.js
+npm-debug.log
 css/
 
 .idea/
