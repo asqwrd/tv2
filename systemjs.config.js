@@ -38,7 +38,7 @@
         defaultJSExtensions: true,
         transpiler: "typescript",
         typescriptOptions: {
-            module: "system",
+            module: "commonjs",
             sourceMap: true,
             resolveTypings: true,
             emitDecoratorMetadata: true,

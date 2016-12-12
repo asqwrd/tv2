@@ -30,7 +30,7 @@ gulp.task('typescript', function() {
 });
 
 //compiles typescript files for developement
-gulp.task('typescript_dev', function() {
+gulp.task('typescript-dev', function() {
     return gulp.src('app')
         .pipe(shell([
             'npm run ts_dev'

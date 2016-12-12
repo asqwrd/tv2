@@ -1,6 +1,7 @@
 node_modules/
 
 app/**/*.js
+app/**/*.ngsummary.json
 app/**/*.ngfactory.*
 app/**/*.metadata.json
 app/**/*.map
