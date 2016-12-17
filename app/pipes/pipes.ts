@@ -65,27 +65,46 @@ export class MomentPipe implements PipeTransform{
 
 
 @Pipe({
-    name: "translate",
-    pure:false
+    name: "groupBy"
 })
-export class Translate implements PipeTransform{
-    private headers = new Headers();
-    private translated: string = null;
-    private prevtext = '';
 
-    constructor(private http: Http) {
-        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    }
-    transform(text: string): string {
-        if (text !== this.prevtext) {
-            this.prevtext = text;
-            this.translated = null;
-            this.http.post('https://translate.yandex.net/api/v1.5/tr.json/translate?lang=es-en&key=trnsl.1.1.20160702T062231Z.b01e74e50f545073.41cbb76d976818cfaa0e1ac3ac78b561079e3420&text='+text,{},{headers:this.headers}).map((response:Response)=>{
-                return response.json();
-            }).subscribe((data)=>{
-                this.translated= data.text[0];
-            });
+export class GroupByPipe {
+
+    transform( collection: Object[] , term: string ) {
+
+        var newValue = [];
+
+        for (let i = 0; i < collection.length; i++) {
+            let keyVal = GroupByPipe.deepFind(collection[i], term);
+            let index = newValue.findIndex( myObj => myObj.key == keyVal);
+            if (index >= 0) {
+                newValue[index].value.push(collection[i]);
+            } else {
+                newValue.push({key: keyVal, value: [collection[i]]});
+            }
         }
-        return this.translated;
+        console.log(newValue);
+
+        return newValue;
+
     }
+
+    static deepFind(obj, path) {
+
+        var paths = path.toString().split(/[\.\[\]]/);
+        var current = obj;
+
+        for (let i = 0; i < paths.length; ++i) {
+            if (paths[i] !== "") {
+                if (current[paths[i]] == undefined) {
+                    return undefined;
+                } else {
+                    current = current[paths[i]];
+                }
+            }
+        }
+        return current;
+
+    }
+
 }

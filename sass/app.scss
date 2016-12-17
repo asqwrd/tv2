@@ -27,11 +27,11 @@
 }
 
 html,body{
-  font-size:15px;
+  font-size:16px;
   font-family: 'Roboto', sans-serif;
   height:100%;
   line-height:1.4;
-  background: #111;
+  background: #fafafa;
 }
 app{
   .mdl-spinner{
@@ -93,5 +93,58 @@ app{
   color:#ccc;
   &:after {
     background-color: $hl-color;
+  }
+}
+
+.dynamic-background{
+  background-color: #fafafa;
+  position: fixed;
+  width:100%;
+  top:0;
+  left:0;
+  height: 100%;
+  z-index: -1;
+  will-change: transform;
+  .background-color{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(14, 14, 12);
+  }
+
+  .background-images{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .background-gradient{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgb(14, 14, 12), rgba(14, 14, 12, 0)), linear-gradient(to right, rgb(14, 14, 12), rgba(14, 14, 12, 0));
+  }
+
+  .background-image{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    opacity: 0;
+    @include transition(opacity 0.5s ease);
+    &.show{
+      opacity:1;
+    }
+  }
+
+  .background-image-container{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30vw;
+    width: 60vw;
+    pointer-events: none;
   }
 }

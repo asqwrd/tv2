@@ -1,10 +1,10 @@
-<div class="show-image mdl-card mdl-shadow--2dp" [class.no-img]="!show.image" [ngStyle]="{'background-image': 'radial-gradient(
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 0.5)
-    ),url('+show.image?.original+')'}">
-  <div class="mdl-card__title mdl-card--expand"></div>
-  <div class="mdl-card__actions">
-    <p class="show-info">{{show?.showname}}</p>
-    <p class="show-info time" *ngIf="show?.airtime">{{show?.airtime}}</p>
+<div class="show-card">
+  <div class="show-image mdl-card mdl-shadow--2dp" [class.no-img]="!show.image" [ngStyle]="{'background-image':'url('+show.image?.original+')'}">
+
+  </div>
+  <div class="show-info-container">
+    <p class="show-info name">{{show?.showname}}</p>
+    <p class="show-info network">{{show?.network}}</p>
+    <p class="show-info">S {{show?.season}} :  Ep {{show?.epsnumber}} . {{show?.epsname}}</p>
   </div>
 </div>

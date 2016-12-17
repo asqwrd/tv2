@@ -1,4 +1,4 @@
-<div class="search-container" [class.search]="search" #searchEl>
+<!--<div class="search-container" [class.search]="search" #searchEl>
   <form class="search-form" (submit)="search_show($event)" #searchForm>
     <input class="search-field" placeholder="Search shows..." (input)="typing(input)" #input/>
     <button type="submit" class="mdl-button mdl-js-button mdl-button--icon" component-handler>
@@ -6,15 +6,21 @@
       <i class="material-icons" *ngIf="!searching">close</i>
     </button>
   </form>
-</div>
-<div class="guide-container" #guide [class.search]="search">
-  <header class="guide-header">
-    <div class="logo">
+</div>-->
+<div class="guide-container" [class.search]="search">
+  <div class="dynamic-background">
+    <div class="background-color" [ngStyle]="{'background-color':backgroundcolor}"></div>
+
+    <div class="background-image-container">
+      <div class="background-images">
+        <div class="background-image" *ngFor="let image of backgroundimages; let k = index" [class.show]="scroll_id == k" [style.background-image]="'url('+
+        image +')'"></div>
+      </div>
+      <div class="background-gradient" [ngStyle]="{'background':'linear-gradient(to top,'+ backgroundcolor +', rgba(14, 14, 12, 0)), linear-gradient(to right, ' + backgroundcolor + ', rgba(14, 14, 12, 0))'}"></div>
     </div>
-    <span class="date-time">{{date}}</span>
-  </header>
-  <div class="search-overlay"></div>
-  <section #detail class="guide-details" [ngStyle]="{'background-image': 'radial-gradient(
+
+  </div>
+  <!--<section #detail class="guide-details" [ngStyle]="{'background-image': 'radial-gradient(
         rgba(0, 0, 0, 0),
         rgba(0, 0, 0, 0.81)
       ),url('+selectedshow?.image?.original+')'}">
@@ -26,7 +32,7 @@
         </div>
         <span class="date-time">{{date}}</span>
       </header>
-      <!--<div class="show-summary" [innerHTML]="selectedshow?.summary"></div>-->
+      <!--<div class="show-summary" [innerHTML]="selectedshow?.summary"></div>
       <div class="detail-info">
         <h1 class="detail-name">
           {{selectedshow?.showname}}
@@ -54,19 +60,27 @@
 
       </div>
 
-  </section>
-  <section class="guide-grid">
-    <ul class="guide-grid-items">
-      <li class="guide-grid-item" *ngFor="let show of shows" (click)="select_show(show)">
-        <show-card [show]="show" ></show-card>
-      </li>
-    </ul>
-    <button (click)="open_search()"  class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" component-handler>
+  </section>-->
+  <section class="guide-grid" #guide *ngIf="shows" (scroll)="scrolling($event)">
+    <div id="time_{{i}}" class="show-groups" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
+      <div class="show-groups-wrapper">
+        <h1 class="time-h1">{{show.key}}</h1>
+        <ul class="guide-grid-items">
+          <li class="guide-grid-item" (click)="select_show(show)" *ngFor="let show of show.value">
+            <show-card [show]="show" ></show-card>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <nav class="nav nav--ubax">
+      <button (click)="scrollView('time_'+j,j,time)" class="nav__item" [class.nav__item--current]="scroll_id == j" *ngFor="let time of airtimes; let j = index"><span class="nav__item-title">{{time}}</span></button>
+    </nav>
+    <!--<button (click)="open_search()"  class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" component-handler>
       <i class="material-icons">search</i>
     </button>
 
     <button (click)="clear_search()"  *ngIf="searchResults" class="clear-search mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" component-handler>
       <i class="material-icons">clear</i>
-    </button>
+    </button>-->
   </section>
 </div>

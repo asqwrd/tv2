@@ -8,7 +8,6 @@
     "build-watch": "gulp",
     "sass": "gulp styles",
     "scripts": "gulp scripts",
-    "typings": "typings",
     "lite": "lite-server"
   },
   "license": "private",

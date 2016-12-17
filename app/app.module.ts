@@ -19,7 +19,7 @@ import {
   OrderByPipe,
   OrderByDatePipe,
   MomentPipe,
-  Translate
+  GroupByPipe
 } from './pipes/pipes';
 
 import {Guide} from './pages/guide/guide';
@@ -48,7 +48,7 @@ import {routing} from './routes/main.routes';
     OrderByPipe,
     OrderByDatePipe,
     MomentPipe,
-    Translate
+    GroupByPipe
   ],
   exports:[
     BrowserModule,

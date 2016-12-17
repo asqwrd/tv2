@@ -9,6 +9,7 @@ export class EventService {
     public addMessage: Subject<any>;
     public swiper = new Subject();
     public search = new Subject();
+    public background = new Subject();
 
 
     constructor() {
@@ -18,6 +19,10 @@ export class EventService {
 
     updateSwiper(data){
       this.swiper.next('update');
+    }
+
+    changeBackground(data){
+      this.background.next(data);
     }
 
 
@@ -31,6 +36,8 @@ export class EventService {
       }, delay);
     };
   }
+
+
 
     smoothScroll(element, target, duration):Promise<any> {
         target = Math.round(target);

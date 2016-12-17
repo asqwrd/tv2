@@ -13,6 +13,7 @@ import { Subject } from 'rxjs/Subject';
 
 
 declare var moment:any;
+declare var ColorThief:any;
 @Injectable()
 
 export class ApiService {
@@ -83,6 +84,7 @@ export class ApiService {
             let data = res.json();
             let shows = [];
             let airtimes = [];
+            let backgroundimages = [];
             data.forEach((item)=>{
               let show = {
                 epsname:item.name,
@@ -100,12 +102,15 @@ export class ApiService {
               };
               if(airtimes.indexOf(show.airtime) ==  -1){
                 airtimes.push(moment(show.airtime, 'hh:mm a').format('hh:mm a'));
+                backgroundimages.push(show.image.original);
+
               }
               shows.push(show);
             });
             let guide ={
               shows: shows,
-              airtimes:airtimes
+              airtimes:airtimes,
+              backgroundimages:backgroundimages
             }
             this.guide = guide;
             return this.guide;

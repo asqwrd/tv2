@@ -4,6 +4,7 @@ import {
     ViewChild,
     ElementRef
 } from "@angular/core";
+ import {DomSanitizer,SafeUrl} from '@angular/platform-browser'
 
 import {Guide} from "../pages/guide/guide";
 import 'rxjs/Rx';
@@ -30,8 +31,14 @@ export class Layout{
   airtimes:Array<string>;
   search:Boolean;
   shows:Array<Object>;
-  constructor(private api:ApiService, private eventService:EventService) {
-
+  backgroundimage:string;
+  constructor(private api:ApiService, private eventService:EventService, private sanitizer:DomSanitizer) {
+    this.eventService.background.subscribe((data)=>{
+      console.log(data);
+      if(data['url']){
+        this.backgroundimage = data['url'];
+      }
+    })
 
   }
 

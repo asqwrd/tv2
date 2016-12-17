@@ -12,6 +12,7 @@ import {EventService} from "../../services/event-services";
 
 import {Subject} from "rxjs/Rx";
 declare var moment:any;
+declare var ColorThief:any;
 
 
 @Component({
@@ -30,6 +31,12 @@ export class Guide {
     searchResults:Boolean;
     date:any;
     time:any;
+    scroll_id:string | number;
+    backgroundimages:Array<string>;
+    backgroundcolor:string;
+    backgroundcolors:Array<string>;
+    colorthief:any;
+    _timeout:any;
 
     @ViewChild('guide') guide:ElementRef;
     @ViewChild('searchEl') searchEl:ElementRef;
@@ -44,17 +51,26 @@ export class Guide {
         this.date = moment().format('dddd MMM DD hh:mm a');
         this.time = moment().format('hh:mm a');
         this.eventService = eventService;
+        this.scroll_id = 0;
+        this.colorthief = new ColorThief();
         this.api.getSchedule().subscribe((data)=>{
           console.log(data);
           this.shows = data['shows'];
           this.airtimes = data['airtimes'];
-          this.api.showDetail( this.shows[0]['showid']).subscribe((data)=>{
+          this.backgroundimages = data['backgroundimages'];
+          this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
+            this.backgroundcolors = colors;
+            this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+            console.log(colors);
+          });
+
+        /*  this.api.showDetail( this.shows[0]['showid']).subscribe((data)=>{
             this.selectedshow = data;
             this.selectedshow['season'] = this.shows[0]['season'];
             this.selectedshow['epsnumber'] = this.shows[0]['epsnumber'];
             this.selectedshow['epsname'] = this.shows[0]['epsname'];
             this.selectedshow['showname'] = this.shows[0]['showname'];
-          });
+          });*/
         });
 
     }
@@ -62,99 +78,74 @@ export class Guide {
     ngOnInit(){
     }
     ngAfterViewInit(){
-    }
-
-    close_detail(){
-      this.detail.nativeElement.classList.remove('open');
-    }
-
-    select_show(show:Show){
-      this.detail.nativeElement.classList.add('opacity');
-      this.detail.nativeElement.classList.add('open');
-      setTimeout(()=>{
-        this.api.showDetail(show['showid']).subscribe((data)=>{
-          this.selectedshow = data;
-          if(this.search == false){
-            this.selectedshow['season'] = show['season'];
-            this.selectedshow['epsnumber'] = show['epsnumber'];
-            this.selectedshow['epsname'] = show['epsname'];
-            this.selectedshow['showname'] = show['showname'];
+      /*let anchor = 'time_0';
+      let anchorTarget:HTMLElement = document.getElementById(anchor);
+      console.log(anchor);
+      console.log(anchorTarget);
+        if (anchorTarget !== null) {
+          let scroll = anchorTarget.offsetTop -
+                    anchorTarget.scrollTop +
+                    anchorTarget.clientTop;
+          console.log(scroll);
+          if(this.guide.nativeElement.scrollTop == scroll){
+            this.scroll_id = 0;
           }
-          this.detail.nativeElement.classList.remove('opacity');
-
-          console.log(this.selectedshow);
-        });
-      },400);
+          console.log(this.scroll_id);
+        }*/
     }
 
-    typing(input:HTMLInputElement){
-      if(input.value.trim().length == 0){
-        this.searching = false;
-      }else{
-        this.searching = true;
-      }
+    scrolling(e){
+      if(this._timeout){ //if there is already a timeout in process cancel it
+          window.clearTimeout(this._timeout);
+        }
+        this._timeout = setTimeout(() => {
+          this._timeout = undefined;
+          console.log('scroll stopped');
+          let anchorTarget =[].slice.call( document.querySelectorAll('.show-groups'));
+          anchorTarget.forEach((element,index)=>{
+            let scroll = element.offsetTop -
+                      element.scrollTop +
+                      element.clientTop - 164;
+            if(this.guide.nativeElement.scrollTop >= scroll){
+              let shows = this.shows.filter((show)=>{
+                return show.airtime == this.airtimes[index];
+
+              });
+              this.backgroundcolor = 'rgb('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+')';
+              this.scroll_id = index;
+            }
+          });
+            /*if (anchorTarget !== null) {
+              let scroll = anchorTarget.offsetTop -
+                        anchorTarget.scrollTop +
+                        anchorTarget.clientTop;
+              console.log(scroll);
+              if(this.guide.nativeElement.scrollTop == scroll){
+                this.scroll_id = 0;
+              }
+              console.log(this.scroll_id);
+            }*/
+        },500);
     }
 
-    search_show(e){
-      e.preventDefault();
-      if(this.input.nativeElement.value.trim().length == 0){
-        this.searching = false;
-        this.searchResults = false;
-        this.searchEl.nativeElement.classList.remove('search');
-        this.guide.nativeElement.classList.remove('search');
 
-      }else{
-        this.searchEl.nativeElement.classList.remove('search');
-        this.guide.nativeElement.classList.remove('search');
-        this.api.search(this.input.nativeElement.value).subscribe((shows)=>{
-          this.search = false;
-          this.searchResults = true;
-          this.shows = shows;
-          this.guide.nativeElement.classList.add('opacity');
-          if(this.shows.length > 0){
-            this.api.showDetail( this.shows[0]['showid']).subscribe((data)=>{
-              this.selectedshow = data;
-              this.selectedshow['showname'] = this.shows[0]['showname'];
-              setTimeout(()=>{
-                this.guide.nativeElement.classList.remove('opacity');
-              },400)
+    scrollView(anchor:string,index:number,time:string){
+      let anchorTarget:HTMLElement = document.getElementById(anchor);
+      console.log(anchor);
+      console.log(anchorTarget);
+        if (anchorTarget !== null) {
+          let scroll = anchorTarget.offsetTop -
+                    anchorTarget.scrollTop +
+                    anchorTarget.clientTop;
+          console.log(scroll);
+          this.eventService.smoothScroll(this.guide.nativeElement,scroll,450);
+          let showtimes = this.shows.filter((show)=>{
+            return show.airtime == time;
 
-            })
-          }else{
-              this.guide.nativeElement.classList.remove('opacity');
-          }
-          this.searchForm.nativeElement.reset();
-        });
+          });
+          this.backgroundcolor = 'rgb('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+')';
+          this.scroll_id = index;
 
-      }
-    }
-
-    clear_search(){
-      this.guide.nativeElement.classList.add('opacity');
-      setTimeout(()=>{
-        this.api.getSchedule().subscribe((data)=>{
-          this.shows = data['shows'];
-          this.airtimes = data['airtimes'];
-          this.selectedshow = this.shows[0];
-          this.searching = false;
-          this.search = false;
-          this.searchResults = false;
-
-            this.guide.nativeElement.classList.remove('opacity');
-
-
-        });
-      },500)
-    }
-
-    open_search(){
-      this.searchEl.nativeElement.classList.add('search');
-      this.guide.nativeElement.classList.add('search');
-      this.input.nativeElement.focus();
-    }
-
-    open_card(card:HTMLElement){
-      console.log(card);
-      card.classList.toggle('open');
+        }
     }
 }
