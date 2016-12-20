@@ -14,6 +14,64 @@
     background-color: transparent;
     display: block;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    .mdl-navigation__link{
+      color:#000;
+    }
+
+    .mdl-button--icon {
+      font-size: 32px;
+      height: 40px;
+      min-width: 40px;
+      width: 40px;
+      .material-icons {
+        position: absolute;
+        @include centerElement('both');
+        line-height: 32px;
+        width: 32px;
+        font-size: 32px;
+      }
+    }
+
+    .material-icons{
+      color:$accentcolor;
+    }
+
+    .mdl-layout__header-row{
+      padding:0 0 0 50px;
+    }
+
+    .mdl-navigation__link{
+      opacity: 1;
+    }
+
+    .header-avatar{
+      width: 32px;
+      border-radius: 100%;
+      vertical-align: middle;
+      position: absolute;
+      @include centerElement('both');
+    }
+
+    .mdl-menu__item{
+      img{
+        width: 17px;
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+
+      .facebook-img{
+        padding: 0 4px;
+        width:auto;
+        height: 17px;
+      }
+
+      .google-img{
+        margin-right:10px;
+      }
+      span{
+        vertical-align: middle;
+      }
+    }
 
     .logo{
       height: 30px;
@@ -24,6 +82,62 @@
       display: inline-block;
       vertical-align: middle;
 
+    }
+    .search-btn{
+      width: 100%;
+      text-align: left;
+      background: #eee;
+      height: 50px;
+
+      .search-input{
+        border:none;
+        color:#666;
+        @include font-size(18px);
+        background: transparent;
+        vertical-align: middle;
+        width:calc(100% - 28px);
+      }
+
+      .material-icons{
+        color:#666;
+      }
+      &.focused{
+        background: #fff;
+        z-index: 9999;
+        box-shadow: 0 0px 0px 0 rgba(0,0,0,.14),0 3px 3px -5px rgba(0,0,0,.2),0 -2px 5px 0 rgba(0,0,0,.12);
+        border-bottom:1px solid #ddd;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+    .search-container{
+      position: relative;
+      width:50%;
+      display: inline-block;
+      text-align: center;
+    }
+    .mdl-layout-spacer{
+      position: relative;
+      text-align: center;
+
+      .mdl-menu__container {
+        width: 100% !important;
+        right: auto !important;
+        height:auto !important;
+      }
+      .mdl-menu {
+        left: 0 !important;
+        right: 0 !important;
+        position: relative;
+        background: #fff;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+      }
+
+      .mdl-menu__outline {
+          width: 100% !important;
+          height: 100% !important;
+      }
     }
   }
 

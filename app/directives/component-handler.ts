@@ -7,7 +7,6 @@ import {Directive, ElementRef, Renderer, OnInit, NgZone,EventEmitter} from '@ang
 declare var componentHandler:any;
 @Directive({
     selector: '[component-handler]',
-    inputs: [],
 })
 export class ComponentHandler implements OnInit{
     el:ElementRef;

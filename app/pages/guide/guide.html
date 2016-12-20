@@ -62,18 +62,20 @@
 
   </section>-->
   <section class="guide-grid" #guide *ngIf="shows" (scroll)="scrolling($event)">
-    <div id="time_{{i}}" class="show-groups" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
+    <div id="time_{{i}}" class="show-groups" [style.margin-bottom]="(i == (airtimes.length - 1) && show.value.length < 4) ? '250px': '100px'" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
       <div class="show-groups-wrapper">
-        <h1 class="time-h1">{{show.key}}</h1>
+        <h1 class="time-h1" [style.color]="fontcolor">{{show.key}}</h1>
         <ul class="guide-grid-items">
           <li class="guide-grid-item" (click)="select_show(show)" *ngFor="let show of show.value">
-            <show-card [show]="show" ></show-card>
+            <show-card [show]="show" [fontcolor]="fontcolor"></show-card>
           </li>
         </ul>
       </div>
     </div>
     <nav class="nav nav--ubax">
-      <button (click)="scrollView('time_'+j,j,time)" class="nav__item" [class.nav__item--current]="scroll_id == j" *ngFor="let time of airtimes; let j = index"><span class="nav__item-title">{{time}}</span></button>
+      <button (click)="scrollView('time_'+j,j,time)" class="nav__item" [class.nav__item--current]="scroll_id == j" *ngFor="let time of airtimes; let j = index" [style.background]="fontcolor">
+        <span class="nav__item-title" [style.color]="fontcolor">{{time}}</span>
+      </button>
     </nav>
     <!--<button (click)="open_search()"  class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" component-handler>
       <i class="material-icons">search</i>

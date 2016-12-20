@@ -34,9 +34,10 @@ export class Guide {
     scroll_id:string | number;
     backgroundimages:Array<string>;
     backgroundcolor:string;
-    backgroundcolors:Array<string>;
+    backgroundcolors:Array<string[]>;
     colorthief:any;
     _timeout:any;
+    fontcolor:string;
 
     @ViewChild('guide') guide:ElementRef;
     @ViewChild('searchEl') searchEl:ElementRef;
@@ -53,6 +54,7 @@ export class Guide {
         this.eventService = eventService;
         this.scroll_id = 0;
         this.colorthief = new ColorThief();
+        this.fontcolor = "#000";
         this.api.getSchedule().subscribe((data)=>{
           console.log(data);
           this.shows = data['shows'];
@@ -61,7 +63,8 @@ export class Guide {
           this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
             this.backgroundcolors = colors;
             this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
-            console.log(colors);
+            this.changefontcolor(this.backgroundcolors[0]);
+
           });
 
         /*  this.api.showDetail( this.shows[0]['showid']).subscribe((data)=>{
@@ -73,6 +76,16 @@ export class Guide {
           });*/
         });
 
+    }
+
+    changefontcolor(rgb:Array<any>){
+      let c = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+      let o = Math.round(((parseInt(rgb[0]) * 299) + (parseInt(rgb[1]) * 587) + (parseInt(rgb[2]) * 114)) / 1000);
+      if(o > 125){
+        this.fontcolor = '#000';
+      }else{
+        this.fontcolor = '#fff';
+      }
     }
 
     ngOnInit(){
@@ -113,6 +126,7 @@ export class Guide {
               });
               this.backgroundcolor = 'rgb('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+')';
               this.scroll_id = index;
+              this.changefontcolor(this.backgroundcolors[index]);
             }
           });
             /*if (anchorTarget !== null) {
@@ -145,6 +159,7 @@ export class Guide {
           });
           this.backgroundcolor = 'rgb('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+')';
           this.scroll_id = index;
+          this.changefontcolor(this.backgroundcolors[index]);
 
         }
     }

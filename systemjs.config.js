@@ -6,13 +6,18 @@
         'rxjs':                       'node_modules/rxjs',
         'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
         '@angular':                   'node_modules/@angular',
-        "typescript":                 "node_modules/typescript/lib/typescript"
+        'angularfire2':               'node_modules/angularfire2',
+        "typescript":                 "node_modules/typescript/lib/typescript",
+        'firebase':                   'node_modules/firebase',
+
     };
 
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
         'app':                           { main: 'main',  defaultExtension: 'ts' },
         'rxjs':                          { defaultExtension: 'js' },
+        'angularfire2':                  { main: 'angularfire2.js', defaultExtension: 'js' },
+        'firebase':                      { main: 'firebase-browser.js', defaultExtension: 'js' },
         'angular2-in-memory-web-api':    { defaultExtension: 'js' },
 
     };

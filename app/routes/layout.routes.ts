@@ -3,6 +3,6 @@ import {Guide} from '../pages/guide/guide';
 
 
 export const LayoutRoutes: Routes = [
-    { path: "guide", component: Guide },
+    { path: "", component: Guide },
 
 ];

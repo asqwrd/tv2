@@ -74,7 +74,7 @@
       margin-left: 10px;
       font-size: 32px;
       line-height: 4rem;
-      border-bottom: 3px solid red;
+      border-bottom: 3px solid $accentcolor;
       margin-bottom: 40px;
       }
 
@@ -86,18 +86,6 @@
         position: relative;
         margin:10px;
         display: inline-block;
-        &:before{
-          content:'';
-          padding-top:80%;
-          display: block;
-        }
-        show-card{
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
       }
     }
   }
@@ -208,13 +196,14 @@
   /*** Ubax ***/
 
   .nav--ubax .nav__item {
-  	width: 6px;
-  	height: 6px;
+  	width: 10px;
+  	height: 10px;
     margin:3px;
+    background: #fff;
+    border-radius: 100%;
   }
 
   .nav--ubax .nav__item::after {
-  	content: '';
   	position: absolute;
   	top: 2px;
   	left: 2px;
@@ -225,14 +214,14 @@
     border-radius: 100%;
   }
 
-  .nav--ubax .nav__item--current::after {
+  .nav--ubax .nav__item.nav__item--current {
   	z-index: 10;
-  	background: red;
+  	background: $accentcolor !important;
     @include transition(transform 0.3s, background-color 0.3s, border-color 0.3s);
   }
 
-  .nav--ubax .nav__item:hover::after {
-  	background: red;
+  .nav--ubax .nav__item.nav__item:hover {
+  	background: $accentcolor !important;
     @include transition( transform 0.3s, background-color 0.3s);
 
   }
@@ -251,7 +240,6 @@
     z-index:1;
     top:-4px;
     color: #fff;
-    background: rgba(0,0,0,.8);
   }
 
   .nav--ubax .nav__item:hover .nav__item-title {
@@ -326,50 +314,5 @@
   .nav--zahi .nav__item--current .nav__item-title {
   	opacity: 1;
   	color: #fff;
-  }
-}
-
-.search-container{
-  position: absolute;
-  width: 100%;
-  top:0;
-  left: 0;
-  height: 100px;
-  background: #111;
-  @include transform(translateY(-100%));
-  @include transition(transform ease .35s);
-  &.search{
-    @include transform(translateY(0%));
-  }
-  .search-form{
-    height: 100%;
-    .search-field{
-      width:calc(100% - 50px);
-      position: relative;
-      border:none;
-      padding:0px 30px;
-      color:#888;
-      @include font-size(35px);
-      background: transparent;
-      @include centerElement('vertical');
-      outline: none;
-      font-weight: 300;
-    }
-
-    .mdl-button{
-      position: absolute;
-      right:10px;
-      @include centerElement('vertical');
-      color:#888;
-      width:50px;
-      height: 50px;
-      .material-icons{
-        @include font-size(40px);
-        @include centerElement()
-        width:50px;
-        line-height: 50px;
-      }
-    }
-
   }
 }

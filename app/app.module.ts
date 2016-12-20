@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import {HttpModule} from '@angular/http';
+import { AngularFireModule } from 'angularfire2';
 
 
 import { App }  from './app';
@@ -27,6 +28,15 @@ import {Layout} from './layout/layout';
 
 import {routing} from './routes/main.routes';
 
+export const firebaseConfig = {
+  apiKey: 'AIzaSyAuccXGpEWjAMVkDYQsi7ewFAVmDXIGjRQ',
+  authDomain: 'awaritv-2b373.firebaseapp.com',
+  databaseURL: 'https://awaritv-2b373.firebaseio.com',
+  storageBucket: 'awaritv-2b373.appspot.com',
+  messagingSenderId: "533309421994"
+
+};
+
 @NgModule({
   imports:      [
     BrowserModule,
@@ -34,6 +44,7 @@ import {routing} from './routes/main.routes';
     CommonModule,
     FormsModule,
     HttpModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     routing
   ],
   declarations: [

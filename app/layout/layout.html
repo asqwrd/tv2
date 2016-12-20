@@ -1,20 +1,50 @@
 <main class="main">
   <header class="mdl-layout__header">
-   <div class="mdl-layout__header-row">
-     <!-- Title -->
-     <span class="mdl-layout-title"> <div class="logo">
-      </div></span>
-     <!-- Add spacer, to align navigation to the right -->
-     <div class="mdl-layout-spacer"></div>
-     <!-- Navigation -->
-     <nav class="mdl-navigation">
-       <a class="mdl-navigation__link" href="">Link</a>
-       <a class="mdl-navigation__link" href="">Link</a>
-       <a class="mdl-navigation__link" href="">Link</a>
-       <a class="mdl-navigation__link" href="">Link</a>
-     </nav>
-   </div>
- </header>
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">
+        <div class="logo"></div>
+      </span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer">
+        <div class="search-container">
+          <button component-handler id="search-input" class="search-btn mdl-button mdl-js-button" [class.focused]="focused" (click)="focusInput()">
+            <i class="material-icons">search</i>
+            <input class="search-input" placeholder="Search" (focus)="onFocus()" (blur)="onBlur()" #search_input (input)="searching()"/>
+          </button>
+
+          <ul component-handler class="mdl-menu mdl-js-menu"
+              for="search-input">
+            <li class="mdl-menu__item"  (click)="seach()" *ngFor="let result of results"><img class="result-img" [src]="result.image?.medium" /><span>{{result.showname}}</span></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" *ngIf="!user">
+          <button component-handler id="header-login" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">account_circle</i>
+          </button>
+
+          <ul component-handler class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+              for="header-login">
+            <li class="mdl-menu__item"  (click)="loginGoogle()"><img class="google-img" src="images/new-google-favicon.svg" /><span>Google</span></li>
+            <li class="mdl-menu__item"><img class="facebook-img" src="images/social-facebook.png" /><span>Facebook</span></li>
+          </ul>
+        </a>
+        <a class="mdl-navigation__link"  *ngIf="user">
+          <button component-handler id="header-login" class="mdl-button mdl-js-button mdl-button--icon">
+            <img class="header-avatar" [src]="user?.photoURL" />
+          </button>
+
+          <ul component-handler class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+              for="header-login">
+            <li class="mdl-menu__item"><span>Sign Out</span></li>
+          </ul>
+        </a>
+      </nav>
+    </div>
+  </header>
 
  <!--<header class="guide-header">
    <div class="logo">

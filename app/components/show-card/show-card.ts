@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 
 export class ShowCard {
     @Input() show:Show;
+    @Input() fontcolor:string;
 
 
 

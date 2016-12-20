@@ -3,8 +3,8 @@
 
   </div>
   <div class="show-info-container">
-    <p class="show-info name">{{show?.showname}}</p>
-    <p class="show-info network">{{show?.network}}</p>
-    <p class="show-info">S {{show?.season}} :  Ep {{show?.epsnumber}} . {{show?.epsname}}</p>
+    <p class="show-info name" [style.color]="fontcolor">{{show?.showname}}</p>
+    <p class="show-info network"  [style.color]="fontcolor">{{show?.network}}</p>
+    <p class="show-info"  [style.color]="fontcolor">S {{show?.season}} :  Ep {{show?.epsnumber}} . {{show?.epsname}}</p>
   </div>
 </div>
