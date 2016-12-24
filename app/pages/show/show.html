@@ -1,0 +1,39 @@
+<div class="show-page-container">
+  <div class="dynamic-background">
+    <div class="background-color" [ngStyle]="{'background-color':backgroundcolor}"></div>
+
+    <div class="background-image-container">
+      <div class="background-images">
+        <div class="background-image show" [ngStyle]="{'background-image':'url('+
+        backgroundimage +')'}"></div>
+      </div>
+      <div class="background-gradient" [ngStyle]="{'background':'linear-gradient(to top,'+ backgroundcolor +', rgba(14, 14, 12, 0)), linear-gradient(to right, ' + backgroundcolor + ', rgba(14, 14, 12, 0))'}"></div>
+    </div>
+  </div>
+  <div class="show-detail-container" *ngIf="show" #showdetail (scroll)="scrolling($event)">
+    <div class="show-detail-content">
+      <div class="show-info-container">
+        <div class="show-image" [ngStyle]="{'background-image':'url('+show?.image?.original+')'}" [class.no-img]="!show?.image"></div>
+        <div class="show-info-content">
+          <h1 class="show-name">{{show?.showname}}</h1>
+          <p class="show-network">{{show?.network}}</p>
+
+          <p class="show-premier">Premiered: {{show?.premiered | moment:'MMMM Do, YYYY'}} &middot; {{show?._embedded?.seasons.length}} Seasons</p>
+
+          <p class="show-info" *ngIf="show._embedded.nextepisode">Next Episode: {{show?._embedded?.nextepisode?.name || 'N/A'}} &middot; Episode Number: S{{show?._embedded?.nextepisode?.season || 'N/A'}} Ep{{show?._embedded?.nextepisode?.number || 'N/A'}} &middot; Airdate:  {{show?._embedded?.nextepisode?.airstamp | moment:'MMMM Do, YYYY'}}</p>
+
+          <div class="show-summary" *ngIf="show?.summary" [innerHTML]="show?.summary">
+          </div>
+        </div>
+      </div>
+      <div class="show-episodes-container">
+        <div class="show-episodes" *ngFor="let season of show?._embedded?.episodes | groupBy:'season'">
+          <h1 class="season-num">Season {{season.key}}</h1>
+          <ul class="season-episodes">
+            <li class="season-episode" *ngFor="let episode of season.value">{{episode.number}}. {{episode.name}} <span *ngIf="episode.airstamp">({{episode.airstamp | moment:'MMMM Do, YYYY'}})</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -21,7 +21,9 @@
    ]
   },
   "files":[
-    "app/app.module.ts"
+    "app/app.module.ts",
+    "app/classes/episode.ts",
+    "app/classes/show.ts"
   ],
 
   "include":[

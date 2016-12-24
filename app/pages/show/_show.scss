@@ -1,0 +1,102 @@
+.show-page-container{
+  position:relative;
+  height:calc(100% - 64px);
+  margin-top: 64px;
+  opacity: 1;
+  @include transform(translateY(0%));
+  @include transition(all ease .35s);
+
+  .dynamic-background{
+    height:45vw;
+  }
+  .show-detail-container{
+    width:100%;
+    height: 100%;
+    overflow: auto;
+    padding:50px;
+    @include flex();
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+    .show-detail-content{
+      background:#fff;
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+      min-height:100%;
+      width:95%;
+      position: relative;
+      margin-top: calc(30vw - 64px - 132px);
+
+      .show-episodes-container {
+        padding: 30px 0;
+      }
+      .show-episodes {
+        margin: 0 0 24px 0;
+      }
+      .season-num {
+        @include font-size(18px);
+        font-weight: 600;
+        padding: 0 30px;
+      }
+      .season-episodes {
+        margin-top: 10px;
+      }
+      .season-episode {
+        @include font-size(15px);
+        color: #888;
+        padding:15px 30px;
+        border-bottom:1px solid #ddd;
+        &:last-child{
+          border:none;
+        }
+      }
+      .show-info-container{
+        @include flex();
+        flex-wrap: nowrap;
+      }
+
+      .show-info-content {
+        padding: 25px 60px 25px 25px;
+        width: calc(100% - 264px);
+      }
+
+      .show-name {
+        @include font-size(32px);
+        margin-bottom: 15px;
+      }
+
+      .show-network {
+        @include font-size(14px);
+        margin-bottom: 5px;
+      }
+      .show-premier {
+        @include font-size(14px);
+        margin-bottom: 5px;
+        color:#888;
+      }
+
+      .show-summary {
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+      }
+      .show-info {
+        @include font-size(14px);
+        color: #888;
+        margin-bottom: 5px;
+        width: 100%;
+      }
+
+      .show-image{
+        width:264px;
+        height: 264px;
+        background-size: cover;
+        background-position: center;
+        &.no-img{
+          background-image:url('../images/no-img.svg') !important;
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+}

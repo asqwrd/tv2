@@ -8,7 +8,7 @@
     "build-watch": "gulp",
     "sass": "gulp styles",
     "scripts": "gulp scripts",
-    "lite": "lite-server"
+    "serve": "serve"
   },
   "license": "private",
   "dependencies": {
@@ -26,10 +26,12 @@
     "angularfire2": "^2.0.0-beta.6",
     "core-js": "^2.4.1",
     "firebase": "^3.6.4",
+    "getmdl-select": "^1.0.4",
     "material-design-lite": "^1.1.3",
     "node-reset-scss": "^1.0.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-rc.4",
+    "serve": "^2.1.2",
     "systemjs": "0.19.40",
     "zone.js": "^0.7.2"
   },

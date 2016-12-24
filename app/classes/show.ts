@@ -1,3 +1,5 @@
+import {NetworkType} from './network';
+
 export class Show {
   image: {
     original:string
@@ -13,5 +15,18 @@ export class Show {
   status:string;
   summary:string;
   epsname:string;
-  _embedded:Object
+  year:string;
+  premiered:string;
+  _embedded:{
+    episodes?: Array<Object>,
+    seasons?: Array<Object>,
+    nextepisode?:{
+      season:number,
+      number:number,
+      airtime:string,
+      name:string,
+      airstamp:string
+
+    }
+  };
 }

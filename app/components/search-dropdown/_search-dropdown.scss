@@ -1,0 +1,90 @@
+.search-dropdown{
+  cursor: pointer;
+  border-radius: 2px;
+  background: rgba(221,221,221,.5);
+  text-align: left;
+  @include transition(all ease .2s);
+  &.active{
+    background: #fff;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    .search-dropdown-input{
+      color: #000 !important;
+      box-shadow: 0px -1px 9px 0px rgba(0,0,0,.3);
+    }
+    .material-icons{
+      color:#000 !important;
+    }
+  }
+
+
+  .form-select{
+    position: relative;
+    .select-box{
+      display:none;
+    }
+
+    .material-icons{
+      vertical-align: middle;
+      position: absolute;
+      @include centerElement('vertical');
+      left:16px;
+    }
+
+    .styled-options{
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      box-shadow: 0px 4px 7px 0px rgba(0,0,0,.3);
+      width: 100%;
+      max-height: 500px;
+      border-bottom-right-radius: 2px;
+      border-bottom-left-radius: 2px;
+      padding-top: 8px;
+      border-top: 1px solid #eee;
+      @include transition(all ease .2s);
+      &.show-dropdown{
+        opacity: 1;
+        pointer-events: auto;
+      }
+      &.filter{
+        top:51px !important;
+      }
+      .dropdown-option{
+        padding:10px 16px;
+        cursor: pointer;
+        white-space: nowrap;
+        width:100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color:#000;
+        &:hover,&.selected{
+          background:#e5e5e5;
+        }
+        &.option-empty{
+          text-align: center;
+          &:hover,&.selected{
+            background:#fff;
+          }
+        }
+      }
+    }
+    .search-dropdown-input{
+      background: transparent;
+      border: none;
+      @include font-size(18px);
+      width: 100%;
+      padding: 16px 16px 16px 45px;
+      position: relative;
+      @include transition(all ease .2s);
+    }
+  }
+  &.form-group {
+    width: 100%;
+    min-width: 100px;
+  }
+}

@@ -1,73 +1,33 @@
-<!--<div class="search-container" [class.search]="search" #searchEl>
-  <form class="search-form" (submit)="search_show($event)" #searchForm>
-    <input class="search-field" placeholder="Search shows..." (input)="typing(input)" #input/>
-    <button type="submit" class="mdl-button mdl-js-button mdl-button--icon" component-handler>
-      <i class="material-icons" *ngIf="searching">search</i>
-      <i class="material-icons" *ngIf="!searching">close</i>
-    </button>
-  </form>
-</div>-->
 <div class="guide-container" [class.search]="search">
   <div class="dynamic-background">
     <div class="background-color" [ngStyle]="{'background-color':backgroundcolor}"></div>
 
     <div class="background-image-container">
       <div class="background-images">
-        <div class="background-image" *ngFor="let image of backgroundimages; let k = index" [class.show]="scroll_id == k" [style.background-image]="'url('+
-        image +')'"></div>
+        <div class="background-image" *ngFor="let image of backgroundimages; let k = index" [class.show]="scroll_id == k" [ngStyle]="{'background-image':'url('+
+        image +')'}"></div>
       </div>
       <div class="background-gradient" [ngStyle]="{'background':'linear-gradient(to top,'+ backgroundcolor +', rgba(14, 14, 12, 0)), linear-gradient(to right, ' + backgroundcolor + ', rgba(14, 14, 12, 0))'}"></div>
     </div>
 
   </div>
-  <!--<section #detail class="guide-details" [ngStyle]="{'background-image': 'radial-gradient(
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.81)
-      ),url('+selectedshow?.image?.original+')'}">
-      <button (click)="close_detail()" class="mdl-button mdl-js-button mdl-button--icon back-button" component-handler>
-        <i class="material-icons" >arrow_backward</i>
-      </button>
-      <header class="guide-header">
-        <div class="logo">
-        </div>
-        <span class="date-time">{{date}}</span>
-      </header>
-      <!--<div class="show-summary" [innerHTML]="selectedshow?.summary"></div>
-      <div class="detail-info">
-        <h1 class="detail-name">
-          {{selectedshow?.showname}}
-        </h1>
-        <span class="detail-info-text" >
-          {{selectedshow?.runtime}} min
-        </span>
-        <span class="detail-info-text" *ngIf="searchResults">
-            | {{selectedshow?.status}}
-        </span>
-        <span class="detail-info-text" *ngIf="!searchResults">
-          | Season {{selectedshow?.season}} | Episode {{selectedshow?.epsnumber}}
-        </span>
-        <ul class="next-details" *ngIf="searchResults && selectedshow?._embedded">
-          <li class="next-detail">
-            <span class="next-label">Next episode</span> {{selectedshow?._embedded.nextepisode.name}}
-          </li>
-          <li class="next-detail">
-            <span class="next-label">Number:</span>  S{{selectedshow?._embedded.nextepisode.season}}Ep{{selectedshow?._embedded.nextepisode.number}}
-          </li>
-          <li class="next-detail">
-            <span class="next-label">Airdate:</span> {{selectedshow?._embedded.nextepisode.airdate}} {{selectedshow?._embedded.nextepisode.airtime}}
-          </li>
+
+  <section class="guide-grid" #guide *ngIf="shows" (scroll)="scrolling($event)">
+    <div class="favorite-shows scroll-groups" *ngIf="(user && favorites) && favorites.length > 0">
+      <h1 class="favorites-h1" [style.color]="fontcolor"><span>Favorite shows on today</span></h1>
+      <ul class="guide-grid-items">
+        <li class="guide-grid-item" (click)="select_show(show)" *ngFor="let show of shows | filter:favorites">
+          <show-card [favorites]="favorites" [show]="show" [fontcolor]="fontcolor" (detail)="goToDetail($event)" (watch)="watch($event)" (unwatch)="unwatch($event)"></show-card>
+        </li>
       </ul>
 
-      </div>
-
-  </section>-->
-  <section class="guide-grid" #guide *ngIf="shows" (scroll)="scrolling($event)">
-    <div id="time_{{i}}" class="show-groups" [style.margin-bottom]="(i == (airtimes.length - 1) && show.value.length < 4) ? '250px': '100px'" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
+    </div>
+    <div id="time_{{i}}" class="show-groups scroll-groups" [style.margin-bottom]="(i == (airtimes.length - 1) && show.value.length < 4) ? '250px': '100px'" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
       <div class="show-groups-wrapper">
         <h1 class="time-h1" [style.color]="fontcolor">{{show.key}}</h1>
         <ul class="guide-grid-items">
           <li class="guide-grid-item" (click)="select_show(show)" *ngFor="let show of show.value">
-            <show-card [show]="show" [fontcolor]="fontcolor"></show-card>
+            <show-card [favorites]="favorites" [show]="show" [fontcolor]="fontcolor" (detail)="goToDetail($event)" (watch)="watch($event)" (unwatch)="unwatch($event)"></show-card>
           </li>
         </ul>
       </div>
@@ -77,12 +37,5 @@
         <span class="nav__item-title" [style.color]="fontcolor">{{time}}</span>
       </button>
     </nav>
-    <!--<button (click)="open_search()"  class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" component-handler>
-      <i class="material-icons">search</i>
-    </button>
-
-    <button (click)="clear_search()"  *ngIf="searchResults" class="clear-search mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" component-handler>
-      <i class="material-icons">clear</i>
-    </button>-->
   </section>
 </div>

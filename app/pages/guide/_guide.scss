@@ -1,6 +1,7 @@
 .guide-container{
   position:relative;
-  height:100%;
+  height:calc(100% - 64px);
+  margin-top: 64px;
   opacity: 1;
   @include transform(translateY(0%));
   @include transition(all ease .35s);
@@ -60,7 +61,7 @@
       }
     }
 
-    .show-groups {
+    .show-groups,.favorite-shows {
       width: 100%;
       position: relative;
       max-width: 917px;
@@ -68,6 +69,7 @@
       left:50%;
       margin-bottom: 100px;
     }
+
 
     .time-h1 {
       display: inline-block;
@@ -88,77 +90,29 @@
         display: inline-block;
       }
     }
-  }
-  .guide-details{
-    width:40%;
-    height:100%;
-    opacity: 1;
-    background-color: #111;
-    background-size: cover;
-    background-position: center;
-    position:absolute;
-    padding:20px;
-    top:0;
-    left:0;
-    @include transition(all ease .35s);
-    @include transform(translateX(0));
-    .back-button{
-      position: absolute;
-      top:20px;
-      left:20px;
-      display: none;
-      color:#fff;
-      width:50px;
-      height:50px;
-      .material-icons{
-        @include font-size(35px);
-        @include centerElement();
-        width: 30px;
-        line-height: 50px;
-      }
-    }
-    .guide-header{
-      display:block;
-    }
 
-    &.opacity{
-      opacity: 0 !important;
-    }
-
-    .next-details{
-      .next-detail{
-        @include font-size(15px);
-        .next-label{
-          font-weight: 400;
-          text-align: right;
-          width: 83px;
-          display: inline-block;
-          margin: 2px 10px 0 0;
+    .favorite-shows{
+      .favorites-h1{
+        margin:10px;
+        cursor: pointer;
+        &:hover{
+          text-decoration: underline;
         }
-
       }
-
-    }
-
-    .show-summary{
-      position: absolute;
-      @include centerElement();
-      color:#fff;
-    }
-
-    .detail-info{
-      position:absolute;
-      bottom:0;
-      left:0;
-      width:100%;
-      color:#fff;
-      padding:20px;
-      .detail-name{
-        @include font-size(40px);
-        font-weight: 300;
+      .guide-grid-items{
+        .guide-grid-item{
+          width:120px;
+          height: 120px;
+        }
       }
-      .detail-info-text{
-        font-weight: 100;
+      .show-card{
+        .show-image{
+          &.mdl-card{
+            width:120px;
+            height: 120px;
+            min-height: 0;
+          }
+        }
       }
     }
   }

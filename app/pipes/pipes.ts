@@ -56,13 +56,34 @@ export class OrderByDatePipe implements PipeTransform{
     pure:true
 })
 export class MomentPipe implements PipeTransform{
-    transform(date: string): string {
-        var date_ms = parseInt(date) * 1000;
-        return moment(date).format('MM/DD/YYYY, hh:mm a');
+    transform(date: string, format:string): string {
+        //var date_ms = parseInt(date) * 1000;
+        if(date){
+          return moment(date).format(format);
+        }else{
+          return 'No time available'
+        }
 
     }
 }
 
+@Pipe({
+    name: "filter"
+})
+
+export class FilterPipe {
+
+  transform( collection: Object[] , filter: Array<string> ) {
+    if(filter.length > 0){
+      let newcollection = collection.filter((item)=>{
+        return filter.indexOf(item['showid']) >= 0;
+      });
+      return newcollection;
+    }
+    return collection;
+  }
+
+}
 
 @Pipe({
     name: "groupBy"
@@ -83,7 +104,6 @@ export class GroupByPipe {
                 newValue.push({key: keyVal, value: [collection[i]]});
             }
         }
-        console.log(newValue);
 
         return newValue;
 

@@ -30,6 +30,8 @@ export class ApiService {
     latitude:number;
     longitude:number;
     af:AngularFire;
+    user = new Subject();
+    currentUser:Object;
 
     constructor(private http:Http,eventService:EventService,af:AngularFire) {
         this.headers.append('Content-Type', 'application/json');
@@ -38,11 +40,28 @@ export class ApiService {
         this.latitude = 0;
         this.longitude = 0;
         this.af = af;
+        this.af.auth.subscribe((auth) =>{
+          console.log(auth);
+          if(auth.google){
+            this.currentUser = auth.google;
+            this.user.next(auth.google);
+          }
+
+        });
     }
+
 
     setCoords(lat,long){
       this.latitude =lat;
       this.longitude = long;
+    }
+
+    getLat(){
+      return this.latitude;
+    }
+
+    getLong(){
+      return this.longitude;
     }
 
     init() : Observable<Object>{
@@ -65,10 +84,31 @@ export class ApiService {
       })
     }
 
-    search(value:string):Observable<Show[]>{
+    setUser(user){
+      this.user = user;
+    }
+    getUser():Object{
+      return this.currentUser;
+    }
+    search(value:string):Observable<Object>{
       return this.http.get(this.domain+'/search/shows?q='+value).map((res:Response)=>{
         let data = res.json();
         let shows = [];
+        let time_of_day = SunCalc.getTimes(new Date(), this.latitude, this.longitude);
+        let now = new Date();
+        let day_image = "";
+        if((now >= time_of_day.sunrise) && (now <= time_of_day.sunriseEnd)){
+          day_image = "images/morning.jpg";
+        }else if((now > time_of_day.sunriseEnd) && (now <= time_of_day.goldenHourEnd)){
+          day_image = "images/afternoon.jpg";
+        }else if((now > time_of_day.goldenHourEnd) && (now <= time_of_day.goldenHour)){
+          day_image = "images/noon4.jpg";
+        }else if((now > time_of_day.goldenHour) && (now <= time_of_day.dusk)){
+          day_image = "images/afternoon2.jpg";
+        }else{
+          day_image = "images/evening.jpg"
+        }
+
         data.forEach((item)=>{
           let show = {
             image: item.show.image,
@@ -76,23 +116,39 @@ export class ApiService {
             network: item.show.network ? item.show.network.name:"N/A",
             status: item.show.status,
             summary:item.show.summary,
-            showid:item.show.id
+            showid:item.show.id,
+            id:item.show.id,
+            year:item.show.premiered ? item.show.premiered.split('-')[0] : undefined
           };
 
           shows.push(show);
         })
-        return shows;
+        return {shows:shows,backgroundimage:day_image};
       });
     }
 
-    showDetail(showid):Observable<Show>{
-      return this.http.get(this.domain+'/shows/'+showid+'?embed=nextepisode').map((res:Response)=>{
+    showDetail(showid):Observable<Object>{
+      return this.http.get(this.domain+'/shows/'+showid+'?embed[]=nextepisode&embed[]=episodes&embed[]=seasons').map((res:Response)=>{
         let data = res.json();
-        if(data._embedded){
-          data._embedded.nextepisode.airtime = moment(data._embedded.nextepisode.airtime, 'hh:mm a').format('hh:mm a');
-          data._embedded.nextepisode.airdate = moment(data._embedded.nextepisode.airdate).format('DD MMM, YYYY');
+        let time_of_day = SunCalc.getTimes(new Date(), this.latitude, this.longitude);
+        let now = new Date();
+        let day_image = "";
+        if((now >= time_of_day.sunrise) && (now <= time_of_day.sunriseEnd)){
+          day_image = "images/morning.jpg";
+        }else if((now > time_of_day.sunriseEnd) && (now <= time_of_day.goldenHourEnd)){
+          day_image = "images/afternoon.jpg";
+        }else if((now > time_of_day.goldenHourEnd) && (now <= time_of_day.goldenHour)){
+          day_image = "images/noon4.jpg";
+        }else if((now > time_of_day.goldenHour) && (now <= time_of_day.dusk)){
+          day_image = "images/afternoon2.jpg";
+        }else{
+          day_image = "images/evening.jpg"
         }
-        return data;
+        data.network = data.network ? data.network['name'] : 'No network';
+        data.showname = data['name'];
+        let backgroundimage = data.image ? data.image.original:day_image;
+
+        return {show:data,backgroundimage:backgroundimage};
       });
     }
 
@@ -110,7 +166,7 @@ export class ApiService {
               let airtime = (item.airtime && item.airtime.trim().length > 0) ? item.airtime: "00:00";
               let show = {
                 epsname:item.name,
-                id:this.guid(),
+                id:item.show.id,
                 airtime: moment(airtime, 'hh:mm a').format('hh:mm a'),
                 airtimeunix: moment(airtime, 'hh:mm a').valueOf(),
                 runtime: item.runtime,
@@ -151,10 +207,9 @@ export class ApiService {
               day_image = "images/noon4.jpg";
             }else if((now > time_of_day.goldenHour) && (now <= time_of_day.dusk)){
               day_image = "images/afternoon2.jpg";
-            }else if(now > time_of_day.dusk){
+            }else{
               day_image = "images/evening.jpg"
             }
-            console.log(time_of_day);
             shows.forEach((show)=>{
               if(airtimes_images.indexOf(show.airtimeunix) ==  -1){
                 let image = (show.image && show.image.original) ? show.image.original : day_image;

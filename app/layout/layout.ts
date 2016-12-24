@@ -10,6 +10,7 @@ import {Guide} from "../pages/guide/guide";
 import 'rxjs/Rx';
 import { AngularFire } from 'angularfire2';
 
+import {Router,ActivatedRoute} from "@angular/router";
 
 
 
@@ -38,16 +39,30 @@ export class Layout{
   results:Array<Object>;
   focused:boolean;
   @ViewChild('search_input') search_input:ElementRef;
+  @ViewChild('header') header:ElementRef;
+  fontcolor:string;
+  opaque:boolean;
+  logo:string;
 
-  constructor(private api:ApiService, private eventService:EventService, private sanitizer:DomSanitizer, public af:AngularFire) {
+  constructor(private api:ApiService, private eventService:EventService, private sanitizer:DomSanitizer, public af:AngularFire, public router:Router) {
     this.focused = false;
-    this.af.auth.subscribe((auth) =>{
-       console.log(auth);
-       if(auth.google){
-         this.user = auth.google;
-       }
+    this.results = [];
+    this.logo = '/images/logo.svg';
+    this.api.user.subscribe((user)=>{
+      this.user = user;
+    })
 
-     });
+    this.eventService.background.subscribe((data)=>{
+      if(data['color']){
+        this.fontcolor = data['color'];
+      }
+      if(data['logo']){
+        this.logo = data['logo'];
+      }
+      if(data['opaque'] !== undefined){
+        this.opaque = data['opaque'];
+      }
+    })
 
   }
 
@@ -85,12 +100,23 @@ export class Layout{
     this.search_input.nativeElement.focus();
   }
 
-  searching(){
+  searching(event){
+    console.log(event);
     this.api.search(this.search_input.nativeElement.value).subscribe((response)=>{
-      console.log(response);
-      this.results = response;
+      this.results = response['shows'];
     })
+  }
 
+  search_term(event){
+    this.router.navigateByUrl('/search/'+ event.term);
+  }
+
+  select_show(event){
+    this.router.navigateByUrl('/show/'+ event.show.showid);
+  }
+
+  home(){
+    this.router.navigateByUrl('/');
   }
 
 

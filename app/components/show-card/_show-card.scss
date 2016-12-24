@@ -1,6 +1,34 @@
 .show-card{
+
   .show-image{
     position: relative;
+    &:hover{
+      .action-icons{
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+    .action-icons{
+      position:absolute;
+      top:5px;
+      right:5px;
+      opacity: 0;
+      pointer-events: none;
+      &.unwatch{
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .material-icons{
+        color:#444;
+        @include font-size(16px);
+        cursor: pointer;
+        border-radius: 100%;
+        background-color: #eee;
+        padding:6px;
+        box-shadow: 0 0 3px 2px rgba(0,0,0,.12);
+
+      }
+    }
     &:before {
         position: absolute;
         width: 100%;

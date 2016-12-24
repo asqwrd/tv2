@@ -1,22 +1,14 @@
 <main class="main">
-  <header class="mdl-layout__header">
+  <header class="mdl-layout__header" #header [class.opaque]='opaque'>
     <div class="mdl-layout__header-row">
       <!-- Title -->
       <span class="mdl-layout-title">
-        <div class="logo"></div>
+        <div class="logo" (click)="home()" [ngStyle]="{'background-image':'url('+ logo +')'}"></div>
       </span>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer">
         <div class="search-container">
-          <button component-handler id="search-input" class="search-btn mdl-button mdl-js-button" [class.focused]="focused" (click)="focusInput()">
-            <i class="material-icons">search</i>
-            <input class="search-input" placeholder="Search" (focus)="onFocus()" (blur)="onBlur()" #search_input (input)="searching()"/>
-          </button>
-
-          <ul component-handler class="mdl-menu mdl-js-menu"
-              for="search-input">
-            <li class="mdl-menu__item"  (click)="seach()" *ngFor="let result of results"><img class="result-img" [src]="result.image?.medium" /><span>{{result.showname}}</span></li>
-          </ul>
+          <search-dropdown [shows]="results" [fontcolor]="fontcolor" (selected)="select_show($event)" (search)="search_term($event)"></search-dropdown>
         </div>
       </div>
       <!-- Navigation -->

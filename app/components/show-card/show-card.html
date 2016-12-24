@@ -1,10 +1,14 @@
-<div class="show-card">
+<div class="show-card" (click)="showDetail()">
   <div class="show-image mdl-card mdl-shadow--2dp" [class.no-img]="!show.image" [ngStyle]="{'background-image':'url('+show.image?.original+')'}">
-
+    <div class="action-icons" [class.unwatch]="favorites && favorites.indexOf(show.showid) >= 0">
+      <i class="material-icons" *ngIf="favorites && favorites.indexOf(show.showid) < 0" (click)="watchShow($event)">visibility</i>
+      <i class="material-icons" *ngIf="favorites && favorites.indexOf(show.showid) >= 0" (click)="unwatchShow($event)">visibility_off</i>
+    </div>
   </div>
   <div class="show-info-container">
     <p class="show-info name" [style.color]="fontcolor">{{show?.showname}}</p>
     <p class="show-info network"  [style.color]="fontcolor">{{show?.network}}</p>
-    <p class="show-info"  [style.color]="fontcolor">S {{show?.season}} :  Ep {{show?.epsnumber}} . {{show?.epsname}}</p>
+    <p class="show-info"  *ngIf="season"[style.color]="fontcolor">S {{show?.season}} :  Ep {{show?.epsnumber}} &middot; {{show?.epsname}}</p>
+    <p class="show-info"  *ngIf="status" [style.color]="fontcolor">{{show?.status}}</p>
   </div>
 </div>

@@ -10,6 +10,7 @@ $accentcolor:#add;
 //Component Partial Styles
 
 @import '../app/components/show-card/show-card';
+@import '../app/components/search-dropdown/search-dropdown';
 
 
 //Layouts css
@@ -22,6 +23,8 @@ $accentcolor:#add;
 //Pages Partial Styles
 
 @import '../app/pages/guide/guide';
+@import '../app/pages/show/show';
+@import '../app/pages/search/search';
 
 //General Styles
 *{
@@ -109,14 +112,14 @@ app{
   background-color: #fafafa;
   position: fixed;
   width:100%;
-  top:0;
+  top:-64px;
   left:0;
-  height: 100%;
+  height: calc(100% + 64px);
   z-index: -1;
   will-change: transform;
   .background-color{
     position: absolute;
-    top: 0;
+    top: -64px;
     right: 0;
     bottom: 0;
     left: 0;
