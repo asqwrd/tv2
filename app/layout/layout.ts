@@ -70,19 +70,9 @@ export class Layout{
     this.search = !this.search;
   }
   ngOnInit(){
-    if (navigator.geolocation) {
-      // geolocation is available
-      navigator.geolocation.getCurrentPosition((position)=>{
-        console.log(position);
-        this.api.setCoords(position.coords.latitude,position.coords.longitude)
-      },(error)=>{
-        this.api.setCoords(0,0);
-      });
-    }
-    else {
-      // geolocation is not supported
-      this.api.setCoords(0,0);
-    }
+    this.api.getLocation('layout').subscribe((position)=>{
+      
+    })
   }
 
   loginGoogle(){

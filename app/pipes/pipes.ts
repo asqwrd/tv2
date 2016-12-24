@@ -76,9 +76,18 @@ export class FilterPipe {
   transform( collection: Object[] , filter: Array<string> ) {
     if(filter.length > 0){
       let newcollection = collection.filter((item)=>{
-        return filter.indexOf(item['showid']) >= 0;
+        return (filter.indexOf(item['showid']) >= 0);
       });
-      return newcollection;
+
+      var flags = [], output = [], l = newcollection.length, i;
+      for( i=0; i<l; i++) {
+          if( flags[newcollection[i]['showid']]) continue;
+          flags[newcollection[i]['showid']] = true;
+          output.push(newcollection[i]);
+      }
+
+
+      return output;
     }
     return collection;
   }

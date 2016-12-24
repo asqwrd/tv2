@@ -43,8 +43,10 @@ export class Guide {
     fontcolor:string;
     user:Object;
     favorites:Array<string>;
+    favoritesToday:boolean;
     favoritesRawData:Array<Object>;
     favoritesDB:FirebaseListObservable<any>;
+    favSub:any;
 
     @ViewChild('guide') guide:ElementRef;
     @ViewChild('searchEl') searchEl:ElementRef;
@@ -56,100 +58,141 @@ export class Guide {
 
 
     constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService,public af:AngularFire) {
-        this.router = router;
-        this.search = false;
-        this.date = moment().format('dddd MMM DD hh:mm a');
-        this.time = moment().format('hh:mm a');
-        this.eventService = eventService;
-        this.scroll_id = 0;
-        this.colorthief = new ColorThief();
-        this.fontcolor = "#000";
-        this.backgroundimages = [];
-        this.longitude = this.api.getLong();
-        this.latitude = this.api.getLat();
-        this.backgroundcolors = [];
-        this.user = this.api.getUser();
-        let time_of_day = SunCalc.getTimes(new Date(), this.latitude, this.longitude);
-        let now = new Date();
-        let day_image = "";
-        if((now >= time_of_day.sunrise) && (now <= time_of_day.sunriseEnd)){
-          day_image = "/images/morning.jpg";
-        }else if((now > time_of_day.sunriseEnd) && (now <= time_of_day.goldenHourEnd)){
-          day_image = "/images/afternoon.jpg";
-        }else if((now > time_of_day.goldenHourEnd) && (now <= time_of_day.goldenHour)){
-          day_image = "/images/noon4.jpg";
-        }else if((now > time_of_day.goldenHour) && (now <= time_of_day.dusk)){
-          day_image = "/images/afternoon2.jpg";
-        }else{
-          day_image = "/images/evening.jpg"
-        }
-        if(this.user){
-          this.favoritesDB = this.af.database.list('/favorites', {
-            query: {
-              orderByChild: 'userid',
-              equalTo: this.user['uid'],
-            }
-          })
-          this.favoritesDB.subscribe((data)=>{
+      this.router = router;
+      this.search = false;
+      this.date = moment().format('dddd MMM DD hh:mm a');
+      this.time = moment().format('hh:mm a');
+      this.eventService = eventService;
+      this.scroll_id = 0;
+      this.colorthief = new ColorThief();
+      this.fontcolor = "#000";
+      this.backgroundimages = [];
+      this.backgroundcolors = [];
+      this.user = this.api.getUser();
 
-            this.favorites = [];
-            data.forEach((value)=>{
-              this.favorites.push(value.showid);
+      this.favoritesToday = false;
+
+
+      this.api.getSchedule().subscribe((shows)=>{
+        this.shows = shows['shows'];
+        this.airtimes = shows['airtimes'];
+        let backgrounds = shows['backgroundimages'];
+        this.api.getLocation('guide').subscribe((position)=>{
+          let day_image = this.api.getTimeBg(position.coords.latitude,position.coords.longitude);
+          if(this.user){
+            this.favoritesDB = this.af.database.list('/favorites', {
+              query: {
+                orderByChild: 'userid',
+                equalTo: this.user['uid'],
+              }
             })
-            if(this.favorites.length > 0){
-              this.backgroundimages.unshift(day_image);
-              this.colorthief.getColorFromUrl(this.backgroundimages[0],(color,element)=>{
-                this.backgroundcolors.unshift(color);
-                this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
-                this.changefontcolor(color);
-              });
-
-            }
-          });
-        }else{
-          this.api.user.subscribe((user)=>{
-            this.user = user;
-            console.log(this.user);
-            if(this.user){
-              this.favoritesDB = this.af.database.list('/favorites', {
-                query: {
-                  orderByChild: 'userid',
-                  equalTo: this.user['uid'],
-                }
+            this.favSub = this.favoritesDB.subscribe((data)=>{
+              console.log('cache');
+              this.favorites = [];
+              this.favoritesRawData = data;
+              let add_favimg:any;
+              let add_favcolor:any;
+              data.forEach((value)=>{
+                this.favorites.push(value.showid);
               })
-              this.favoritesDB.subscribe((data)=>{
-                this.favorites = [];
-                this.favoritesRawData = data;
-                data.forEach((value)=>{
-                  this.favorites.push(value.showid);
-                })
-                if(this.favorites.length > 0){
-                  this.backgroundimages.unshift(day_image);
-                  this.colorthief.getColorFromUrl(this.backgroundimages[0],(color,element)=>{
-                    this.backgroundcolors.unshift(color);
-                    this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
-                    this.changefontcolor(color);
-                  });
-                }
+
+              let today_favs = this.shows.filter((show)=>{
+                return this.favorites.indexOf(show.showid) >=0;
               });
-            }
-          })
-        }
+              console.log(today_favs);
+              if(today_favs.length > 0){
+                this.favoritesToday = true;
+                add_favimg = day_image;
+                console.log('add_favimg');
+                this.backgroundimages = [];
+                this.backgroundcolors = [];
+                this.backgroundimages.push(add_favimg);
+                this.backgroundimages = this.backgroundimages.concat(backgrounds);
+                console.log(this.backgroundimages);
 
+                this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
+                  this.backgroundcolors = colors;
+                  console.log(colors);
+                  if(this.guide.nativeElement.scrollTop <= 215){
+                    this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+                    this.changefontcolor(this.backgroundcolors[0]);
+                  }
+                });
+              }else{
+                this.favoritesToday = false;
+                this.backgroundimages = backgrounds;
+                this.colorthief.getColorAsyncArray(backgrounds,(colors)=>{
+                  this.backgroundcolors = colors;
+                  this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+                  this.changefontcolor(this.backgroundcolors[0]);
+                });
 
+              }
+            });
+          }else{
+            this.api.user.subscribe((user)=>{
+              this.user = user;
+              if(this.user){
+                this.favoritesDB = this.af.database.list('/favorites', {
+                  query: {
+                    orderByChild: 'userid',
+                    equalTo: this.user['uid'],
+                  }
+                })
+                this.favSub = this.favoritesDB.subscribe((data)=>{
+                  this.favorites = [];
+                  this.favoritesRawData = data;
+                  data.forEach((value)=>{
+                    this.favorites.push(value.showid);
+                  })
 
-        this.api.getSchedule().subscribe((data)=>{
-          this.shows = data['shows'];
-          this.airtimes = data['airtimes'];
-          this.backgroundimages = this.backgroundimages.concat(data['backgroundimages']);
-          this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
-            this.backgroundcolors = this.backgroundcolors.concat(colors);
-            this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
-            this.changefontcolor(this.backgroundcolors[0]);
-          });
-        });
+                  let today_favs = this.shows.filter((show)=>{
+                    return this.favorites.indexOf(show.showid) >=0;
+                  });
+                  if(today_favs.length > 0){
+                    this.favoritesToday = true;
+                    this.backgroundimages.unshift(day_image);
+                    this.colorthief.getColorFromUrl(this.backgroundimages[0],(color,element)=>{
+                      this.backgroundcolors.unshift(color);
+                      if(this.guide.nativeElement.scrollTop <= 215){
+                        this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+                        this.changefontcolor(color);
+                      }
+                    });
 
+                  }else{
+                    this.favoritesToday = false;
+                    this.backgroundimages.shift();
+                    this.backgroundcolors.shift();
+                    if(this.backgroundcolors.length > 0){
+                      this.backgroundcolor = 'rgb('+  this.backgroundcolors[0][0]+','+  this.backgroundcolors[0][1]+','+  this.backgroundcolors[0][2]+')';
+                      this.changefontcolor(  this.backgroundcolors[0]);
+                    }
+                  }
+                  this.backgroundimages = this.backgroundimages.concat(backgrounds);
+                  this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
+                    if(this.favoritesToday == true){
+                      colors.shift();
+                    }
+                    this.backgroundcolors = this.backgroundcolors.concat(colors);
+                    this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+                    this.changefontcolor(this.backgroundcolors[0]);
+                  });
+                });
+              }else{
+                this.backgroundimages = this.backgroundimages.concat(backgrounds);
+                this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
+                  this.backgroundcolors = this.backgroundcolors.concat(colors);
+                  this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+                  this.changefontcolor(this.backgroundcolors[0]);
+                });
+              }
+            })
+          }
+        })
+      });
     }
+
 
     changefontcolor(rgb:Array<any>){
       let c = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
@@ -169,6 +212,9 @@ export class Guide {
     }
     ngAfterViewInit(){
 
+    }
+    ngOnDestroy(){
+      this.favSub.unsubscribe();
     }
 
     scrolling(e){

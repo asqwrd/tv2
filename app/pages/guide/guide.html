@@ -13,7 +13,7 @@
   </div>
 
   <section class="guide-grid" #guide *ngIf="shows" (scroll)="scrolling($event)">
-    <div class="favorite-shows scroll-groups" *ngIf="(user && favorites) && favorites.length > 0">
+    <div class="favorite-shows scroll-groups" *ngIf="user && favoritesToday">
       <h1 class="favorites-h1" [style.color]="fontcolor"><span>Favorite shows on today</span></h1>
       <ul class="guide-grid-items">
         <li class="guide-grid-item" (click)="select_show(show)" *ngFor="let show of shows | filter:favorites">
