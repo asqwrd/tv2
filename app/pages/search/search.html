@@ -17,7 +17,7 @@
     <div class="search-results">
       <h1 class="search-h1" [style.color]="fontcolor">{{query}}</h1>
       <ul class="search-grid-items">
-        <li class="search-grid-item" (click)="select_show(show)" *ngFor="let show of shows">
+        <li class="search-grid-item" *ngFor="let show of shows">
           <show-card [favorites]="favorites" [show]="show" [fontcolor]="fontcolor" [status]="true" [season]="false" (detail)="goToDetail($event)" (watch)="watch($event)" (unwatch)="unwatch($event)"></show-card>
         </li>
       </ul>
