@@ -27,6 +27,14 @@
       position: relative;
       margin-top: calc(30vw - 64px - 132px);
 
+      .mdl-button--fab{
+        position: absolute;
+        top: -30px;
+        right: 30px;
+        background-color: $accentcolor;
+        color:#fff;
+      }
+
       .show-episodes-container {
         padding: 30px 0;
       }

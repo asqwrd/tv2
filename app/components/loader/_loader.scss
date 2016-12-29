@@ -1,0 +1,115 @@
+.loader-container{
+  position: fixed;
+  top: -64px;
+  width: 100%;
+  height: calc(100% + 64px);
+  z-index: 999999999;
+  background-color: rgba(0, 0, 0, 0.5);
+  .loader{
+    position: absolute;
+    @include centerElement('both');
+
+
+    .loader-svg{
+      width:100px;
+      height: 100px;;
+      @include animation(loading infinite .85s linear);
+    }
+  }
+}
+@-webkit-keyframes loading
+{
+    0%
+    {
+        -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+             -o-transform: scale(.8);
+                transform: scale(.8);
+    }
+    50%
+    {
+        -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+             -o-transform: scale(1);
+                transform: scale(1);
+    }
+    100%
+    {
+        -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+             -o-transform: scale(.8);
+                transform: scale(.8);
+    }
+}
+@-moz-keyframes loading
+{
+    0%
+    {
+        -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+             -o-transform: scale(.8);
+                transform: scale(.8);
+    }
+    50%
+    {
+        -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+             -o-transform: scale(1);
+                transform: scale(1);
+    }
+    100%
+    {
+        -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+             -o-transform: scale(.8);
+                transform: scale(.8);
+    }
+}
+@-o-keyframes loading
+{
+    0%
+    {
+        -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+             -o-transform: scale(.8);
+                transform: scale(.8);
+    }
+    50%
+    {
+        -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+             -o-transform: scale(1);
+                transform: scale(1);
+    }
+    100%
+    {
+        -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+             -o-transform: scale(.8);
+                transform: scale(.8);
+    }
+}
+@keyframes loading
+{
+    0%
+    {
+        -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+             -o-transform: scale(.8);
+                transform: scale(.8);
+    }
+    50%
+    {
+        -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+             -o-transform: scale(1);
+                transform: scale(1);
+    }
+    100%
+    {
+        -webkit-transform: scale(.8);
+            -ms-transform: scale(.8);
+             -o-transform: scale(.8);
+                transform: scale(.8);
+    }
+}

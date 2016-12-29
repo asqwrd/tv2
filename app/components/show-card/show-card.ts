@@ -19,6 +19,7 @@ export class ShowCard {
     @Input() status:boolean;
     @Input() season:boolean;
     @Input() favorites:Array<string>;
+    @Input() showunwatch:boolean;
     detail = new EventEmitter();
     watch = new EventEmitter();
     unwatch = new EventEmitter();

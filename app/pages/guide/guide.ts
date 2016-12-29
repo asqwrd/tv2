@@ -3,7 +3,7 @@ import {Component, Input, ViewChild, NgZone,ElementRef} from "@angular/core";
 import {Show} from "../../classes/show";
 
 
-import {Router} from "@angular/router";
+import {Router,ActivatedRoute} from "@angular/router";
 
 //shared components and service
 import {ApiService} from "../../services/api-service";
@@ -55,11 +55,13 @@ export class Guide {
     @ViewChild('detail') detail:ElementRef;
     latitude:number;
     longitude:number;
+    loading:boolean;
 
 
-    constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService,public af:AngularFire) {
+    constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService,public af:AngularFire, public route:ActivatedRoute) {
       this.router = router;
       this.search = false;
+      this.loading = true;
       this.date = moment().format('dddd MMM DD hh:mm a');
       this.time = moment().format('hh:mm a');
       this.eventService = eventService;
@@ -68,26 +70,23 @@ export class Guide {
       this.fontcolor = "#000";
       this.backgroundimages = [];
       this.backgroundcolors = [];
-      this.user = this.api.getUser();
 
       this.favoritesToday = false;
-
-
-      this.api.getSchedule().subscribe((shows)=>{
-        this.shows = shows['shows'];
-        this.airtimes = shows['airtimes'];
-        let backgrounds = shows['backgroundimages'];
-        this.api.getLocation('guide').subscribe((position)=>{
-          let day_image = this.api.getTimeBg(position.coords.latitude,position.coords.longitude);
+      //this.api.user.subscribe((user)=>{
+        this.user = this.route.snapshot.data['user'];
+        console.log(this.user);
+        this.api.getSchedule().subscribe((shows)=>{
+          this.shows = shows['shows'];
+          this.airtimes = shows['airtimes'];
+          let backgrounds = shows['backgroundimages'];
+          let day_image = shows['dayimage'];
           if(this.user){
-            this.favoritesDB = this.af.database.list('/favorites', {
+            this.af.database.list('/favorites', {
               query: {
                 orderByChild: 'userid',
                 equalTo: this.user['uid'],
               }
-            })
-            this.favSub = this.favoritesDB.subscribe((data)=>{
-              console.log('cache');
+            }).subscribe((data)=>{
               this.favorites = [];
               this.favoritesRawData = data;
               let add_favimg:any;
@@ -99,20 +98,16 @@ export class Guide {
               let today_favs = this.shows.filter((show)=>{
                 return this.favorites.indexOf(show.showid) >=0;
               });
-              console.log(today_favs);
               if(today_favs.length > 0){
                 this.favoritesToday = true;
                 add_favimg = day_image;
-                console.log('add_favimg');
                 this.backgroundimages = [];
                 this.backgroundcolors = [];
                 this.backgroundimages.push(add_favimg);
                 this.backgroundimages = this.backgroundimages.concat(backgrounds);
-                console.log(this.backgroundimages);
 
                 this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
                   this.backgroundcolors = colors;
-                  console.log(colors);
                   if(this.guide.nativeElement.scrollTop <= 215){
                     this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
                     this.changefontcolor(this.backgroundcolors[0]);
@@ -128,69 +123,25 @@ export class Guide {
                 });
 
               }
+            },(error)=>{
+              this.favoritesToday = false;
+              this.backgroundimages = backgrounds;
+              this.colorthief.getColorAsyncArray(backgrounds,(colors)=>{
+                this.backgroundcolors = colors;
+                this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+                this.changefontcolor(this.backgroundcolors[0]);
+              });
             });
           }else{
-            this.api.user.subscribe((user)=>{
-              this.user = user;
-              if(this.user){
-                this.favoritesDB = this.af.database.list('/favorites', {
-                  query: {
-                    orderByChild: 'userid',
-                    equalTo: this.user['uid'],
-                  }
-                })
-                this.favSub = this.favoritesDB.subscribe((data)=>{
-                  this.favorites = [];
-                  this.favoritesRawData = data;
-                  data.forEach((value)=>{
-                    this.favorites.push(value.showid);
-                  })
-
-                  let today_favs = this.shows.filter((show)=>{
-                    return this.favorites.indexOf(show.showid) >=0;
-                  });
-                  if(today_favs.length > 0){
-                    this.favoritesToday = true;
-                    this.backgroundimages.unshift(day_image);
-                    this.colorthief.getColorFromUrl(this.backgroundimages[0],(color,element)=>{
-                      this.backgroundcolors.unshift(color);
-                      if(this.guide.nativeElement.scrollTop <= 215){
-                        this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
-                        this.changefontcolor(color);
-                      }
-                    });
-
-                  }else{
-                    this.favoritesToday = false;
-                    this.backgroundimages.shift();
-                    this.backgroundcolors.shift();
-                    if(this.backgroundcolors.length > 0){
-                      this.backgroundcolor = 'rgb('+  this.backgroundcolors[0][0]+','+  this.backgroundcolors[0][1]+','+  this.backgroundcolors[0][2]+')';
-                      this.changefontcolor(  this.backgroundcolors[0]);
-                    }
-                  }
-                  this.backgroundimages = this.backgroundimages.concat(backgrounds);
-                  this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
-                    if(this.favoritesToday == true){
-                      colors.shift();
-                    }
-                    this.backgroundcolors = this.backgroundcolors.concat(colors);
-                    this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
-                    this.changefontcolor(this.backgroundcolors[0]);
-                  });
-                });
-              }else{
-                this.backgroundimages = this.backgroundimages.concat(backgrounds);
-                this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
-                  this.backgroundcolors = this.backgroundcolors.concat(colors);
-                  this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
-                  this.changefontcolor(this.backgroundcolors[0]);
-                });
-              }
-            })
+            this.backgroundimages = this.backgroundimages.concat(backgrounds);
+            this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
+              this.backgroundcolors = this.backgroundcolors.concat(colors);
+              this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+              this.changefontcolor(this.backgroundcolors[0]);
+            });
           }
-        })
-      });
+        });
+      //})
     }
 
 
@@ -204,17 +155,19 @@ export class Guide {
         this.fontcolor = '#fff';
         logo = '/images/logo-light.svg';
       }
+      this.loading = false;
       this.eventService.changeBackground({color:this.fontcolor,opaque:false,logo:logo});
     }
 
     ngOnInit(){
+      //this.api.getUser();
 
     }
     ngAfterViewInit(){
 
     }
     ngOnDestroy(){
-      this.favSub.unsubscribe();
+      //this.favSub.unsubscribe();
     }
 
     scrolling(e){
@@ -244,13 +197,10 @@ export class Guide {
 
     scrollView(anchor:string,index:number,time:string){
       let anchorTarget:HTMLElement = document.getElementById(anchor);
-      console.log(anchor);
-      console.log(anchorTarget);
         if (anchorTarget !== null) {
           let scroll = anchorTarget.offsetTop -
                     anchorTarget.scrollTop +
                     anchorTarget.clientTop;
-          console.log(scroll);
           this.eventService.smoothScroll(this.guide.nativeElement,scroll,450);
           let showtimes = this.shows.filter((show)=>{
             return show.airtime == time;
@@ -269,16 +219,13 @@ export class Guide {
     }
 
     watch(data){
-      console.log(data);
-      this.favoritesDB.push({userid:this.user['uid'],showid:data.show.showid});
+      this.af.database.list('/favorites').push({userid:this.user['uid'],showid:data.show.showid, show:data.show});
     }
 
     unwatch(data){
-      console.log(data);
       let index = this.favoritesRawData.findIndex((item)=>{
         return item['showid'] == data['show']['showid'];
       });
-      console.log(this.favoritesRawData[index]);
-      this.favoritesDB.remove(this.favoritesRawData[index]['$key']);
+      this.af.database.list('/favorites').remove(this.favoritesRawData[index]['$key']);
     }
 }

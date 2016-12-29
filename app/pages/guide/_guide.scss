@@ -5,28 +5,11 @@
   opacity: 1;
   @include transform(translateY(0%));
   @include transition(all ease .35s);
-  &.search{
-    @include transform(translateY(100px));
-    .search-overlay{
-      opacity: .4;
-      z-index: 1000;
-    }
 
-  }
   &.opacity{
     opacity: 0 !important;
   }
 
-  .search-overlay{
-    position:fixed;
-    width:100%;
-    height: 100%;
-    background: #111;
-    top:0px;
-    z-index: -1;
-    opacity:0;
-    @include transition(opacity ease .2s);
-  }
   .guide-header{
     width:100%;
     height:60px;
@@ -76,9 +59,16 @@
       margin-left: 10px;
       font-size: 32px;
       line-height: 4rem;
-      border-bottom: 3px solid $accentcolor;
       margin-bottom: 40px;
+      &:after {
+        content: '';
+        width: 100px;
+        height: 3px;
+        background: $accentcolor;
+        position: relative;
+        display: block;
       }
+    }
 
     .guide-grid-items{
       width: 100%;
@@ -201,72 +191,4 @@
   	@include transform(translate3d(0,0,0));
   }
 
-  .nav--zahi .nav__item {
-  	width: 2rem;
-  	height: 2rem;
-  }
-
-  .nav--zahi .nav__item::before,
-  .nav--zahi .nav__item::after {
-  	content: '';
-  	position: absolute;
-  }
-
-  .nav--zahi .nav__item:not(:last-child)::before {
-  	top: calc(2rem - 9px);
-  	left: 5px;
-  	width: 2px;
-  	height: calc(2rem - 12px);
-  	background: #98322a;
-  }
-
-  .nav--zahi .nav__item::after {
-  	top: 50%;
-  	left: 0;
-  	width: 12px;
-  	height: 12px;
-  	margin: -5px 0 0 0;
-  	border: 2px solid #98322a;
-  	border-radius: 50%;
-  	background: #f44336;
-  	-webkit-transition: -webkit-transform 0.3s, border-color 0.3s, border-width 0.3s, background 0.3s;
-  	transition: transform 0.3s, border-color 0.3s, border-width 0.3s, background 0.3s;
-    box-sizing: border-box;
-  }
-
-  .nav--zahi .nav__item--current::after {
-  	border-width: 1px;
-  	border-color: #fff;
-  	-webkit-transform: scale3d(1.6,1.6,1);
-  	transform: scale3d(1.6,1.6,1);
-  }
-
-  .nav--zahi .nav__item:not(.nav__item--current):focus::after,
-  .nav--zahi .nav__item:not(.nav__item--current):hover::after {
-  	border-color: #fff;
-  	background: #fff;
-  }
-
-  .nav--zahi .nav__item-title {
-  	font-family: 'Roboto Condensed', sans-serif;
-  	line-height: 1.5;
-  	display: block;
-  	position: relative;
-  	padding: 0 0 0 2.5rem;
-  	white-space: nowrap;
-  	opacity: 0.3;
-  	color: #98322a;
-  	-webkit-transition: opacity 0.3s, color 0.3s;
-  	transition: opacity 0.3s, color 0.3s;
-  }
-
-  .nav--zahi .nav__item:not(.nav__item--current):focus .nav__item-title,
-  .nav--zahi .nav__item:not(.nav__item--current):hover .nav__item-title {
-  	opacity: 0.5;
-  }
-
-  .nav--zahi .nav__item--current .nav__item-title {
-  	opacity: 1;
-  	color: #fff;
-  }
 }

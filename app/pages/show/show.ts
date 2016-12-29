@@ -8,6 +8,8 @@ import {Router,ActivatedRoute} from "@angular/router";
 //shared components and service
 import {ApiService} from "../../services/api-service";
 import {EventService} from "../../services/event-services";
+import { AngularFire,FirebaseListObservable  } from 'angularfire2';
+
 
 
 import {Subject} from "rxjs/Rx";
@@ -32,31 +34,61 @@ export class ShowPage {
     _timeout:any;
     fontcolor:string;
     param:ActivatedRoute;
-    id:string;
+    id:string | number;
     @ViewChild('showdetail') showdetail:ElementRef;
     logo:string;
 
-    constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService, route:ActivatedRoute) {
-        this.router = router;
-        this.eventService = eventService;
-        this.colorthief = new ColorThief();
-        this.fontcolor = "#000";
-        this.id = route.snapshot.params['id'];
-        this.api.showDetail(this.id).subscribe((data)=>{
-          console.log(data);
-          this.show = data['show'];
-          this.backgroundimage = data['backgroundimage'];
-          this.colorthief.getColorAsync(this.backgroundimage,(color,element)=>{
-            this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
-            this.changefontcolor(color);
-            console.log(color);
+    favorites:Array<string>;
+    favoritesRawData:Array<Object>;
+    favoritesDB:FirebaseListObservable<any>;
+    favSub:any;
+    user:Object;
+    loading:boolean;
+
+    constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService, public route:ActivatedRoute,public af:AngularFire) {
+      this.router = router;
+      this.eventService = eventService;
+      this.colorthief = new ColorThief();
+      this.fontcolor = "#000";
+      this.loading = true;
+      this.id = parseInt(this.route.snapshot.params['id']);
+
+      //this.api.user.subscribe((user)=>{
+        this.user = this.route.snapshot.data['user'];
+        console.log(this.route.snapshot.data);
+        if(this.user){
+          console.log(this.user);
+          this.af.database.list('/favorites', {
+            query: {
+              orderByChild: 'userid',
+              equalTo: this.user['uid'],
+            }
+          }).subscribe((data)=>{
+            this.favorites = [];
+            this.favoritesRawData = data;
+            data.forEach((value)=>{
+              this.favorites.push(value.showid);
+            })
+
+          },(error)=>{
 
           });
+        }
+      //})
+      this.api.showDetail(this.id).subscribe((data)=>{
+        console.log(data);
+        this.show = data['show'];
+        this.backgroundimage = data['backgroundimage'];
+        this.colorthief.getColorAsync(this.backgroundimage,(color,element)=>{
+          this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+          this.changefontcolor(color);
 
         });
 
+      });
+
       route.params.subscribe(params => {
-         this.id = decodeURI(params['id']);
+         this.id = parseInt(params['id']);
          this.api.showDetail(this.id).subscribe((data)=>{
            this.show = data['show'];
            this.backgroundimage = data['backgroundimage'];
@@ -82,10 +114,13 @@ export class ShowPage {
         logo = '/images/logo-light.svg';
       }
       this.logo = logo;
+      this.loading = false;
       this.eventService.changeBackground({color:this.fontcolor,opaque:false,logo:logo});
     }
 
     ngOnInit(){
+      //this.api.getUser();
+
     }
     ngAfterViewInit(){
 
@@ -93,9 +128,25 @@ export class ShowPage {
 
     scrolling(e){
       if(this.showdetail.nativeElement.scrollTop >= 260){
-        this.eventService.changeBackground({opaque:true,logo:'/images/logo.svg'});
+        this.eventService.changeBackground({opaque:true,logo:'/images/logo.svg',color:'#000'});
       }else{
-        this.eventService.changeBackground({opaque:false,logo:this.logo});
+        this.eventService.changeBackground({opaque:false,logo:this.logo, color:this.fontcolor});
       }
+    }
+    ngOnDestroy(){
+      /*if(this.favSub){
+        this.favSub.unsubscribe();
+      }*/
+    }
+
+    watch(){
+      this.af.database.list('/favorites').push({userid:this.user['uid'],showid:this.id,show:this.show});
+    }
+
+    unwatch(){
+      let index = this.favoritesRawData.findIndex((item)=>{
+        return item['showid'] == this.id;
+      });
+        this.af.database.list('/favorites').remove(this.favoritesRawData[index]['$key']);
     }
 }

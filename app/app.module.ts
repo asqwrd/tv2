@@ -8,12 +8,15 @@ import { AngularFireModule } from 'angularfire2';
 
 import { App }  from './app';
 import { ShowCard} from './components/show-card/show-card';
+import { Loader} from './components/loader/loader';
 import { SearchDropdown} from './components/search-dropdown/search-dropdown';
 import { SwiperJs} from './directives/swiperjs-directive/swiperjs';
 import { TaggleDirective} from './directives/taggle-directive/taggle-directive';
 import { Colorthief} from './directives/color-thief';
 import { ComponentHandler} from './directives/component-handler';
 
+import { UserResolve, UserAuth} from './services/user-service';
+import { LocationService} from './services/location-service';
 import { ApiService} from './services/api-service';
 import { EventService} from './services/event-services';
 import {
@@ -25,6 +28,7 @@ import {
 } from './pipes/pipes';
 
 import {Guide} from './pages/guide/guide';
+import {Favorites} from './pages/favorites/favorites';
 import {SearchPage} from './pages/search/search';
 import {ShowPage} from './pages/show/show';
 import {Layout} from './layout/layout';
@@ -56,9 +60,11 @@ export const firebaseConfig = {
     App,
     Layout,
     Guide,
+    Favorites,
     SearchPage,
     ShowPage,
     ShowCard,
+    Loader,
     SearchDropdown,
     SwiperJs,
     TaggleDirective,
@@ -79,7 +85,10 @@ export const firebaseConfig = {
   ],
   providers:[
     ApiService,
-    EventService
+    EventService,
+    UserResolve,
+    UserAuth,
+    LocationService
   ],
   bootstrap:    [ App ]
 })

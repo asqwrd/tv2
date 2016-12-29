@@ -1,8 +1,9 @@
 <div class="guide-container" [class.search]="search">
-  <div class="dynamic-background">
+  <loader [show]="loading" loader="guide"></loader>
+  <div class="dynamic-background" [class.opacity]="!backgroundcolor">
     <div class="background-color" [ngStyle]="{'background-color':backgroundcolor}"></div>
 
-    <div class="background-image-container">
+    <div class="background-image-container" >
       <div class="background-images">
         <div class="background-image" *ngFor="let image of backgroundimages; let k = index" [class.show]="scroll_id == k" [ngStyle]="{'background-image':'url('+
         image +')'}"></div>
@@ -12,11 +13,11 @@
 
   </div>
 
-  <section class="guide-grid" #guide *ngIf="shows" (scroll)="scrolling($event)">
+  <section class="guide-grid" #guide *ngIf="shows" (scroll)="scrolling($event)" [hidden]="!backgroundcolor">
     <div class="favorite-shows scroll-groups" *ngIf="user && favoritesToday">
       <h1 class="favorites-h1" [style.color]="fontcolor"><span>Favorite shows on today</span></h1>
       <ul class="guide-grid-items">
-        <li class="guide-grid-item" (click)="select_show(show)" *ngFor="let show of shows | filter:favorites">
+        <li class="guide-grid-item" *ngFor="let show of shows | filter:favorites">
           <show-card [favorites]="favorites" [show]="show" [fontcolor]="fontcolor" (detail)="goToDetail($event)" (watch)="watch($event)" (unwatch)="unwatch($event)"></show-card>
         </li>
       </ul>
@@ -26,7 +27,7 @@
       <div class="show-groups-wrapper">
         <h1 class="time-h1" [style.color]="fontcolor">{{show.key}}</h1>
         <ul class="guide-grid-items">
-          <li class="guide-grid-item" (click)="select_show(show)" *ngFor="let show of show.value">
+          <li class="guide-grid-item" *ngFor="let show of show.value">
             <show-card [favorites]="favorites" [show]="show" [fontcolor]="fontcolor" (detail)="goToDetail($event)" (watch)="watch($event)" (unwatch)="unwatch($event)"></show-card>
           </li>
         </ul>

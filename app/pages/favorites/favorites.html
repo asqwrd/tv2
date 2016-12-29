@@ -1,6 +1,5 @@
-<div class="search-page-container">
-  <loader [show]="loading" loader="search"></loader>
-
+<div class="favorites-page-container">
+  <loader [show]="loading" loader="favorites"></loader>
   <div class="dynamic-background">
     <div class="background-color" [ngStyle]="{'background-color':backgroundcolor}"></div>
 
@@ -13,12 +12,12 @@
     </div>
 
   </div>
-  <div class="search-grid">
-    <div class="search-results">
-      <h1 class="search-h1" [style.color]="fontcolor">{{query}}</h1>
-      <ul class="search-grid-items">
-        <li class="search-grid-item" (click)="select_show(show)" *ngFor="let show of shows">
-          <show-card [favorites]="favorites" [show]="show" [fontcolor]="fontcolor" [status]="true" [season]="false" (detail)="goToDetail($event)" (watch)="watch($event)" (unwatch)="unwatch($event)"></show-card>
+  <div class="favorites-grid"  *ngIf="favoritesArr">
+    <div class="favorites-results">
+      <h1 class="favorites-h1" [style.color]="fontcolor">Shows you are watching</h1>
+      <ul class="favorites-grid-items">
+        <li class="favorites-grid-item" (click)="select_show(show)" *ngFor="let show of favoritesArr | orderBy:'showname'">
+          <show-card [showunwatch]="true" [show]="show" [fontcolor]="fontcolor" [status]="true" [season]="false" (detail)="goToDetail($event)" (unwatch)="unwatch($event)"></show-card>
         </li>
       </ul>
     </div>

@@ -1,11 +1,14 @@
-.search-page-container{
+.favorites-page-container{
   position:relative;
   height:calc(100% - 64px);
   margin-top: 64px;
   opacity: 1;
   @include transform(translateY(0%));
   @include transition(all ease .35s);
-  .search-grid{
+  &.loading{
+    opacity: 0;
+  }
+  .favorites-grid{
     width:100%;
     height: 100%;
     overflow: auto;
@@ -23,7 +26,7 @@
       }
     }
 
-    .search-results {
+    .favorites-results {
       width: 100%;
       position: relative;
       max-width: 917px;
@@ -33,7 +36,7 @@
     }
 
 
-    .search-h1 {
+    .favorites-h1 {
       display: inline-block;
       margin-left: 10px;
       font-size: 32px;
@@ -50,9 +53,9 @@
       }
     }
 
-    .search-grid-items{
+    .favorites-grid-items{
       width: 100%;
-      .search-grid-item{
+      .favorites-grid-item{
         width:209px;
         height: 209px;
         position: relative;

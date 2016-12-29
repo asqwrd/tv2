@@ -1,4 +1,6 @@
 <div class="show-page-container">
+  <loader [show]="loading" loader="show"></loader>
+
   <div class="dynamic-background">
     <div class="background-color" [ngStyle]="{'background-color':backgroundcolor}"></div>
 
@@ -12,6 +14,12 @@
   </div>
   <div class="show-detail-container" *ngIf="show" #showdetail (scroll)="scrolling($event)">
     <div class="show-detail-content">
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" (click)="watch()" *ngIf="user && (favorites && favorites.indexOf(id) < 0)">
+        <i class="material-icons">visibility</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" (click)="unwatch()" *ngIf="user && (favorites && favorites.indexOf(id) >=0)">
+        <i class="material-icons">visibility_off</i>
+      </button>
       <div class="show-info-container">
         <div class="show-image" [ngStyle]="{'background-image':'url('+show?.image?.original+')'}" [class.no-img]="!show?.image"></div>
         <div class="show-info-content">

@@ -8,6 +8,7 @@ import {Router,ActivatedRoute} from "@angular/router";
 //shared components and service
 import {ApiService} from "../../services/api-service";
 import {EventService} from "../../services/event-services";
+import { AngularFire,FirebaseListObservable  } from 'angularfire2';
 
 
 import {Subject} from "rxjs/Rx";
@@ -34,25 +35,50 @@ export class SearchPage {
     fontcolor:string;
     param:ActivatedRoute;
     query:string;
+    user:Object;
+    favorites:Array<string>;
+    favoritesToday:boolean;
+    favoritesRawData:Array<Object>;
+    favoritesDB:FirebaseListObservable<any>;
+    favSub:any;
+    loading:boolean;
 
-    constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService, route:ActivatedRoute) {
-        this.router = router;
-        this.eventService = eventService;
-        this.colorthief = new ColorThief();
-        this.fontcolor = "#000";
-        this.query = decodeURI(route.snapshot.params['query']);
-        this.api.search(this.query).subscribe((data)=>{
-          console.log(data);
-          this.shows = data['shows'];
-          this.backgroundimage = data['backgroundimage'];
-          this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
-            this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
-            this.changefontcolor(color);
-            console.log(color);
 
-          });
+    constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService, route:ActivatedRoute, public af:AngularFire) {
+      this.router = router;
+      this.eventService = eventService;
+      this.colorthief = new ColorThief();
+      this.fontcolor = "#000";
+      this.loading = true;
+      this.query = decodeURI(route.snapshot.params['query']);
+      this.user = route.snapshot.data['user'];
+      if(this.user){
+        this.af.database.list('/favorites', {
+          query: {
+            orderByChild: 'userid',
+            equalTo: this.user['uid'],
+          }
+        }).subscribe((data)=>{
+          this.favorites = [];
+          this.favoritesRawData = data;
+          data.forEach((value)=>{
+            this.favorites.push(value.showid);
+          })
+          console.log(this.favorites);
+
+        },(error)=>{
 
         });
+      }
+      this.api.search(this.query).subscribe((data)=>{
+        console.log(data);
+        this.shows = data['shows'];
+        this.backgroundimage = data['backgroundimage'];
+        this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
+          this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+          this.changefontcolor(color);
+
+      });
 
       route.params.subscribe(params => {
          this.query = decodeURI(params['query']);
@@ -65,9 +91,14 @@ export class SearchPage {
 
            });
 
-         });
-      });
+          });
+        });
 
+      });
+    }
+
+    ngOnDestroy(){
+      //this.favSub.unsubscribe();
     }
 
     changefontcolor(rgb:Array<any>){
@@ -80,6 +111,7 @@ export class SearchPage {
         this.fontcolor = '#fff';
         logo = '/images/logo-light.svg';
       }
+      this.loading = false;
       this.eventService.changeBackground({color:this.fontcolor,opaque:false,logo:logo});
     }
 
@@ -92,5 +124,18 @@ export class SearchPage {
     goToDetail(event){
       let id = event.show.showid;
       this.router.navigateByUrl('/show/'+ id);
+    }
+    watch(data){
+      console.log(data);
+      this.af.database.list('/favorites').push({userid:this.user['uid'],showid:data.show.showid,show:data.show});
+    }
+
+    unwatch(data){
+      console.log(data);
+      let index = this.favoritesRawData.findIndex((item)=>{
+        return item['showid'] == data['show']['showid'];
+      });
+      console.log(this.favoritesRawData[index]);
+      this.af.database.list('/favorites').remove(this.favoritesRawData[index]['$key']);
     }
 }

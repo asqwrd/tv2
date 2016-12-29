@@ -1,4 +1,10 @@
 <main class="main">
+  <div class="main-loader" [class.hide]="loader == false">
+    <div class="img-container">
+      <img class="loader-img" src="/images/loader.gif" />
+      <img class="logo" src="/images/logo-light.svg" />
+    </div>
+  </div>
   <header class="mdl-layout__header" #header [class.opaque]='opaque'>
     <div class="mdl-layout__header-row">
       <!-- Title -->
@@ -13,15 +19,18 @@
       </div>
       <!-- Navigation -->
       <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" [routerLink]="['/favorites']" *ngIf="user">
+          <i class="material-icons" [style.color]="fontcolor">visibility</i>
+        </a>
         <a class="mdl-navigation__link" *ngIf="!user">
           <button component-handler id="header-login" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">account_circle</i>
+            <i class="material-icons" [style.color]="fontcolor">account_circle</i>
           </button>
 
           <ul component-handler class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
               for="header-login">
             <li class="mdl-menu__item"  (click)="loginGoogle()"><img class="google-img" src="images/new-google-favicon.svg" /><span>Google</span></li>
-            <li class="mdl-menu__item"><img class="facebook-img" src="images/social-facebook.png" /><span>Facebook</span></li>
+            <li class="mdl-menu__item" (click)="loginFacebook()"><img class="facebook-img" src="images/social-facebook.png" /><span>Facebook</span></li>
           </ul>
         </a>
         <a class="mdl-navigation__link"  *ngIf="user">
@@ -31,7 +40,7 @@
 
           <ul component-handler class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
               for="header-login">
-            <li class="mdl-menu__item"><span>Sign Out</span></li>
+            <li class="mdl-menu__item" (click)="logout()"><span>Sign Out</span></li>
           </ul>
         </a>
       </nav>

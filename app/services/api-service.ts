@@ -10,6 +10,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs/Subject';
+import { Router,Resolve, ActivatedRouteSnapshot,CanActivate } from '@angular/router';
+
 
 import { AngularFire, FirebaseListObservable,AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -30,46 +32,58 @@ export class ApiService {
     latitude:number;
     longitude:number;
     location:Object;
-    af:AngularFire;
     user = new Subject();
     currentUser:Object;
+    favorites_subject = new Subject();
 
-    constructor(private http:Http,eventService:EventService,af:AngularFire) {
+    constructor(private http:Http,eventService:EventService,public af:AngularFire,private router:Router) {
         this.headers.append('Content-Type', 'application/json');
         this.domain = 'http://api.tvmaze.com';
         this.eventService = eventService;
         this.latitude = 0;
         this.longitude = 0;
-        this.af = af;
-        this.af.auth.subscribe((auth) =>{
-          if(auth.google){
-            this.currentUser = auth.google;
-            this.user.next(auth.google);
-          }
 
-        });
+    }
+
+    ngOnInit(){
+
+    }
+    getAuth(){
+      let sub = this.af.auth.subscribe((auth) =>{
+        console.log(auth);
+        if(auth.google){
+          this.currentUser = auth.google;
+          this.user.next(auth.google);
+        }
+
+      });
+      return this.createObservable(sub);
     }
 
     getLocation(where:string = "api-service"):Observable<any>{
-      console.log(where);
       if ((window.navigator && window.navigator.geolocation) && !this.location) {
         // geolocation is available
         return  Observable.create((observer) => {
-          window.navigator.geolocation.getCurrentPosition((position)=>{
-            this.location = position;
-            observer.next(position);
-            //this.api.setCoords(position.coords.latitude,position.coords.longitude)
-          },(error)=>{
-            this.location = {
-                coords:{
-                latitude:0,
-                longitude:0
+
+            window.navigator.geolocation.getCurrentPosition((position)=>{
+                observer.next(position);
+                observer.complete()
+              //this.api.setCoords(position.coords.latitude,position.coords.longitude)
+            },(error)=>{
+              console.log(error);
+              this.location = {
+                  coords:{
+                  latitude:0,
+                  longitude:0
+                }
               }
-            }
-            observer.next(this.location);
-          })
-        });
-      }else {
+              observer.next(this.location);
+              observer.complete();
+
+            },{enableHighAccuracy:false})
+          });
+
+      }/*else {
         // geolocation is not supported
         if(!this.location){
           this.location = {
@@ -80,7 +94,7 @@ export class ApiService {
           }
         }
         return  this.createObservable(this.location);
-      }
+      }*/
     }
 
 
@@ -88,14 +102,63 @@ export class ApiService {
       this.af.auth.login({
         provider: AuthProviders.Google,
         method: AuthMethods.Popup,
-      })
+      }).then((auth)=>{
+        this.af.auth.subscribe(auth => {
+          console.log(auth);
+            if(!auth){
+              this.router.navigateByUrl('/');
+              location.reload();
+            }else{
+              location.reload();
+            }
+        });
+      });
+    }
+
+    loginFacebook(){
+      this.af.auth.login({
+        provider: AuthProviders.Facebook,
+        method: AuthMethods.Popup,
+      }).then((auth)=>{
+        this.af.auth.subscribe(auth => {
+            if(!auth){
+              this.router.navigateByUrl('/');
+              location.reload();
+            }
+        });
+      });
+    }
+
+    logout(){
+      this.af.auth.logout().then((auth)=>{
+        this.router.navigateByUrl('/');
+        location.reload();
+      });
     }
 
     setUser(user){
       this.user = user;
     }
-    getUser():Object{
-      return this.currentUser;
+    getUser(){
+      if(this.currentUser){
+        this.user.next(this.currentUser);
+      }else if(this.af.auth){
+        this.af.auth.subscribe((auth) =>{
+          console.log(auth);
+          if(auth &&auth.google){
+            this.currentUser = auth.google;
+            this.user.next(auth.google);
+          }else if(auth && auth.facebook){
+            this.user.next(auth.facebook);
+          }else{
+            this.user.next(null);
+          }
+
+        });
+
+      }else{
+        this.user.next(null);
+      }
     }
 
     getTimeBg(latitude,longitude):string{
@@ -160,6 +223,38 @@ export class ApiService {
       });
     }
 
+    getFavorites(userid){
+      let favoritesDb = this.af.database.list('/favorites', {
+        query: {
+          orderByChild: 'userid',
+          equalTo: userid,
+        }
+      })
+      let sub = favoritesDb.subscribe((data)=>{
+        let favorites = [];
+        let favs = data;
+        favs.forEach((item)=>{
+          this.http.get(this.domain+'/shows/'+item.showid).subscribe((res:Response)=>{
+            let data = res.json();
+            let show = {
+              image: data.image,
+              showname: data.name,
+              network: data.network ? data.network.name:"N/A",
+              status: data.status,
+              summary:data.summary,
+              showid:data.id,
+              id:data.id,
+              year:data.premiered ? data.premiered.split('-')[0] : undefined
+            };
+            favorites.push(show);
+            this.favorites_subject.next({favorites:favorites, total_favorites:favs.length,db:favoritesDb,rawData:favs, subcribed:sub});
+          })
+        })
+      },(error)=>{
+        this.router.navigateByUrl('/');
+      })
+    }
+
     getSchedule() : Observable<Object>{
       if(!this.guide){
         return this.http.get(this.domain+'/schedule?country=US').map((res:Response)=>{
@@ -171,6 +266,7 @@ export class ApiService {
               let airtimes = [];
               let airtimesunix = [];
               let backgroundimages = [];
+              console.log('api guide');
 
               data.forEach((item)=>{
                 let airtime = (item.airtime && item.airtime.trim().length > 0) ? item.airtime: "00:00";
@@ -221,8 +317,10 @@ export class ApiService {
               let guide ={
                 shows: shows,
                 airtimes:airtimes,
-                backgroundimages:backgroundimages
+                backgroundimages:backgroundimages,
+                dayimage:day_image
               }
+              console.log(guide);
               this.guide = guide;
               return this.guide;
             })
@@ -232,7 +330,7 @@ export class ApiService {
       }
     }
 
-    private createObservable(data: any) : Observable<any> {
+   createObservable(data: any) : Observable<any> {
         return Observable.create((observer: Observer<any>) => {
             observer.next(data);
             observer.complete();

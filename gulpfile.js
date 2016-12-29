@@ -103,8 +103,7 @@ gulp.task('scripts', function() {
         'node_modules/zone.js/dist/zone.js',
         'node_modules/reflect-metadata/Reflect.js',
         'node_modules/systemjs/dist/system.src.js',
-        'node_modules/material-design-lite/material.min.js',
-        'node_modules/getmdl-select/getmdl-select.min.js'
+        'node_modules/material-design-lite/material.min.js'
     ])
         .pipe(concat('all.js'))
         .pipe(uglify({

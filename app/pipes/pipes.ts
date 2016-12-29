@@ -4,27 +4,22 @@ import {Http, Headers, Response}                from '@angular/http';
 
 declare var moment;
 @Pipe({
-    name: "orderby",
+    name: "orderBy",
     pure:true
 })
 export class OrderByPipe implements PipeTransform{
-    transform(array: Array<string>): Array<string> {
-        if(array instanceof Array) {
-            array.sort((a:any, b:any) => {
-                if (a.index >= 0 && b.index >= 0) {
-                    if (parseInt(a.index) < parseInt(b.index)) {
-                        return -1;
-                    } else if (parseInt(a.index) > parseInt(b.index)) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                }
-            });
-            return array;
-        }
-        return;
-    }
+  transform(array: Array<Object>, order:string): Array<Object> {
+    array.sort((a:any, b:any) => {
+      if (a[order] < b[order])
+        return -1;
+
+      if (a[order] > b[order])
+        return 1;
+
+      return 0;
+    });
+    return array;
+  }
 }
 
 @Pipe({
