@@ -8,7 +8,8 @@
     "build-watch": "gulp",
     "sass": "gulp styles",
     "scripts": "gulp scripts",
-    "serve": "serve"
+    "serve": "serve",
+    "postinstall":"rm -rf node_modules/angularfire2/node_modules/rxjs"
   },
   "license": "private",
   "dependencies": {
@@ -23,10 +24,9 @@
     "@angular/router": "~3.3.0",
     "@angular/upgrade": "~2.3.0",
     "angular-in-memory-web-api": "~0.1.17",
-    "angularfire2": "^2.0.0-beta.6",
+    "angularfire2": "next",
     "core-js": "^2.4.1",
     "firebase": "^3.6.4",
-    "getmdl-select": "^1.0.4",
     "material-design-lite": "^1.1.3",
     "node-reset-scss": "^1.0.1",
     "reflect-metadata": "^0.1.8",
