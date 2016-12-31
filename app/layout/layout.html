@@ -20,7 +20,8 @@
       <!-- Navigation -->
       <nav class="mdl-navigation">
         <a class="mdl-navigation__link" [routerLink]="['/favorites']" *ngIf="user">
-          <i class="material-icons" [style.color]="fontcolor">visibility</i>
+          <i class="material-icons" id="watch-icon" [style.color]="fontcolor">visibility</i>
+          <div class="mdl-tooltip" data-mdl-for="watch-icon">View shows you are watching</div>
         </a>
         <a class="mdl-navigation__link" *ngIf="!user">
           <button component-handler id="header-login" class="mdl-button mdl-js-button mdl-button--icon">

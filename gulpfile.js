@@ -15,6 +15,7 @@ var sassInheritance = require('gulp-sass-inheritance');
 var gulpif = require('gulp-if');
 var filter = require('gulp-filter');
 var cached = require('gulp-cached');
+var pump = require('pump');
 
 const vendor_path = findup('/tv2');
 const libs = findup('libs');
@@ -90,12 +91,10 @@ gulp.task('vendors_dev',function(){
 
 
 //bundles and minifies all 3rd party plugins
-gulp.task('scripts', function() {
+gulp.task('scripts', function(cb) {
+   pump([
     gulp.src([
-        libs + '/taggle/taggle.js',
         libs + '/moment/moment.min.js',
-        libs + '/autocomplete/auto-complete.min.js',
-        libs + '/autocomplete/auto-complete.min.js',
         libs + '/swiperjs/swiper.min.js',
         libs + '/color-thief.js',
         libs + '/suncalc.js',
@@ -104,15 +103,16 @@ gulp.task('scripts', function() {
         'node_modules/reflect-metadata/Reflect.js',
         'node_modules/systemjs/dist/system.src.js',
         'node_modules/material-design-lite/material.min.js'
-    ])
-        .pipe(concat('all.js'))
-        .pipe(uglify({
+    ]),
+    concat('all.js'),
+    uglify({
             mangle:true,
             compress : { screw_ie8 : true },
             comments: false
-        }))
+        }),
         //.pipe(gzip())
-        .pipe(gulp.dest('script'))
+        gulp.dest('script')
+    ],cb)
 });
 
 
