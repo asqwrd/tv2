@@ -45,16 +45,20 @@ export class SwiperJs implements OnInit{
 
     }
     ngAfterViewInit(){
-      this.swiper = new Swiper(this.el.nativeElement, {
-       nextButton: this.next? this.next:false,
-       prevButton: this.prev? this.prev:false,
-       spaceBetween: 20,
-       slidesPerView: 'auto',
-       freeMode: true,
-       mousewheelControl: true,
-       mousewheelForceToAxis:true,
-       scrollbar: this.scrollbar ? this.scrollbar:false,
-       scrollbarHide: true,
-     });
+    //  setTimeout(()=>{
+        this.swiper = new Swiper(this.el.nativeElement, {
+         spaceBetween: 0,
+         slidesPerView: 'auto',
+         speed:500,
+         freeMode: true,
+         mousewheelControl: true,
+         mousewheelForceToAxis:true,
+         mousewheelSensitivity:.5,
+         scrollbar: this.scrollbar ? this.scrollbar:null,
+         scrollbarHide: true,
+         observer:true
+       });
+      //},1000);
+
     }
 }

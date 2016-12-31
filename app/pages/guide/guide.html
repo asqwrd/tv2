@@ -33,10 +33,22 @@
         </ul>
       </div>
     </div>
-    <nav class="nav nav--ubax">
+    <!--<nav class="nav nav--ubax">
       <button (click)="scrollView('time_'+j,j,time)" class="nav__item" [class.nav__item--current]="scroll_id == j" *ngFor="let time of airtimes; let j = index" [style.background]="fontcolor">
         <span class="nav__item-title" [style.color]="fontcolor">{{time}}</span>
       </button>
-    </nav>
+    </nav>-->
   </section>
+  <footer class="airtimes" [class.opacity]="!backgroundcolor">
+    <!-- Slider main container -->
+  <div class="swiper-container" swiperjs [scrollbar]="scrollbar">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+          <!-- Slides -->
+          <div class="swiper-slide" (click)="scrollView('time_'+j,j,time)" [class.active]="scroll_id == j" *ngFor="let time of airtimes; let j = index"><span class="time">{{time}}</span></div>
+      </div>
+
+       <div class="swiper-scrollbar" #scrollbar></div>
+  </div>
+  </footer>
 </div>
