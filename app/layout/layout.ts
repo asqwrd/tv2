@@ -48,7 +48,7 @@ export class Layout{
   constructor(private api:ApiService, private eventService:EventService, private sanitizer:DomSanitizer, public af:AngularFire, public router:Router, public route:ActivatedRoute) {
     this.focused = false;
     this.results = [];
-    this.logo = '/images/logo.svg';
+    this.logo = 'images/logo.svg';
     this.loader = true;
     this.user = this.route.snapshot.data['user'];
 

@@ -106,12 +106,12 @@ export class ShowPage {
     changefontcolor(rgb:Array<any>){
       let c = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
       let o = Math.round(((parseInt(rgb[0]) * 299) + (parseInt(rgb[1]) * 587) + (parseInt(rgb[2]) * 114)) / 1000);
-      let logo = '/images/logo.svg';
+      let logo = 'images/logo.svg';
       if(o > 125){
         this.fontcolor = '#000';
       }else{
         this.fontcolor = '#fff';
-        logo = '/images/logo-light.svg';
+        logo = 'images/logo-light.svg';
       }
       this.logo = logo;
       this.loading = false;
@@ -128,7 +128,7 @@ export class ShowPage {
 
     scrolling(e){
       if(this.showdetail.nativeElement.scrollTop >= 260){
-        this.eventService.changeBackground({opaque:true,logo:'/images/logo.svg',color:'#000'});
+        this.eventService.changeBackground({opaque:true,logo:'images/logo.svg',color:'#000'});
       }else{
         this.eventService.changeBackground({opaque:false,logo:this.logo, color:this.fontcolor});
       }

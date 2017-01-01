@@ -100,7 +100,7 @@
         background-size: cover;
         background-position: center;
         &.no-img{
-          background-image:url('../images/no-img.svg') !important;
+          background-image:url('..images/no-img.svg') !important;
           background-size: contain;
           background-repeat: no-repeat;
         }

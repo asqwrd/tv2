@@ -83,7 +83,7 @@ export class ApiService {
             },{enableHighAccuracy:false})
           });
 
-      }/*else {
+      }else {
         // geolocation is not supported
         if(!this.location){
           this.location = {
@@ -94,7 +94,7 @@ export class ApiService {
           }
         }
         return  this.createObservable(this.location);
-      }*/
+      }
     }
 
 
@@ -166,15 +166,15 @@ export class ApiService {
       let now = new Date();
       let day_image = "";
       if((now >= time_of_day.sunrise) && (now <= time_of_day.sunriseEnd)){
-        day_image = "/images/morning.jpg";
+        day_image = "images/morning.jpg";
       }else if((now > time_of_day.sunriseEnd) && (now <= time_of_day.goldenHourEnd)){
-        day_image = "/images/afternoon.jpg";
+        day_image = "images/afternoon.jpg";
       }else if((now > time_of_day.goldenHourEnd) && (now <= time_of_day.goldenHour)){
-        day_image = "/images/noon4.jpg";
+        day_image = "images/noon4.jpg";
       }else if((now > time_of_day.goldenHour) && (now <= time_of_day.dusk)){
-        day_image = "/images/afternoon2.jpg";
+        day_image = "images/afternoon2.jpg";
       }else{
-        day_image = "/images/evening.jpg"
+        day_image = "images/evening.jpg"
       }
       return day_image;
     }
