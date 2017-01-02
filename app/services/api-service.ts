@@ -199,7 +199,7 @@ export class ApiService {
           data.forEach((item)=>{
             if(item.image){
               item.image.original = "//"+item.image.original.replace(/.*?:\/\//g, "");
-              item.image.medium = "//"+item.medium.original.replace(/.*?:\/\//g, "");
+              item.image.medium = "//"+item.image.medium.replace(/.*?:\/\//g, "");
             }
             let show = {
               image: item.show.image,
@@ -234,7 +234,7 @@ export class ApiService {
           data.showname = data['name'];
           if(data.image){
             data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");
-            data.image.medium = "//"+data.medium.original.replace(/.*?:\/\//g, "");
+            data.image.medium = "//"+data.image.medium.replace(/.*?:\/\//g, "");
           }
           let backgroundimage = data.image ? data.image.original:day_image;
 
@@ -258,7 +258,7 @@ export class ApiService {
             let data = res.json();
             if(data.image){
               data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");
-              data.image.medium = "//"+data.medium.original.replace(/.*?:\/\//g, "");
+              data.image.medium = "//"+data.image.medium.replace(/.*?:\/\//g, "");
             }
             let show = {
               image: data.image,
@@ -300,7 +300,7 @@ export class ApiService {
                 let airtime = (item.airtime && item.airtime.trim().length > 0) ? item.airtime: "00:00";
                 if(item.image){
                   item.image.original = "//"+item.image.original.replace(/.*?:\/\//g, "");
-                  item.image.medium = "//"+item.medium.original.replace(/.*?:\/\//g, "");
+                  item.image.medium = "//"+item.image.medium.replace(/.*?:\/\//g, "");
                 }
                 let show = {
                   epsname:item.name,
