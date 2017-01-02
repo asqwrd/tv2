@@ -1,5 +1,8 @@
-const app = require('express')();
+const app = require('express')()
+, server = require('http').createServer(app)
 const got = require('got');
+
+
 
 const redirect = (url, res) => got(url, {json: true})
     .then(response => res.json(response.body))
