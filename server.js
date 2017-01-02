@@ -29,12 +29,9 @@ var lex = require('letsencrypt-express').create({
 })
 
 
-require('http').createServer(lex.middleware(require('redirect-https')())).listen(3000, function () {
+/*require('http').createServer(lex.middleware(require('redirect-https')())).listen(3000, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
-});
-
-const server = require('https').createServer(lex.httpsOptions, lex.middleware(app));
-
+});*/
 
 const redirect = (url, res) => got(url, {json: true})
     .then(response => res.json(response.body))
@@ -80,6 +77,9 @@ app.get('/api/schedule', (req, res) => {
 
 
 //lex.onRequest = app;
+
+const server = require('https').createServer(lex.httpsOptions, lex.middleware(app));
+
 
 server.listen(3001, function () {
   console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
