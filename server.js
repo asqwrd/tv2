@@ -18,6 +18,7 @@ function approveDomains(opts, certs, cb) {
     opts.domains = ['ajibade.me']
   }
 
+
   cb(null, { options: opts, certs: certs });
 }
 
@@ -31,9 +32,9 @@ var lex = require('letsencrypt-express').create({
 })
 
 
-/*require('http').createServer(lex.middleware(require('redirect-https')())).listen(3000, function () {
+require('http').createServer(lex.middleware(require('redirect-https')())).listen(3000, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
-});*/
+});
 
 const redirect = (url, res) => got(url, {json: true})
     .then(response => res.json(response.body))
