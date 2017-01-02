@@ -1,6 +1,5 @@
 
 const app = require('express')();
-const server = require('https').createServer(lex.httpsOptions, lex.middleware(app));
 const got = require('got');
 function approveDomains(opts, certs, cb) {
   // This is where you check your database and associated
@@ -29,9 +28,13 @@ var lex = require('letsencrypt-express').create({
 
 })
 
+
 require('http').createServer(lex.middleware(require('redirect-https')())).listen(80, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
+
+const server = require('https').createServer(lex.httpsOptions, lex.middleware(app));
+
 
 const redirect = (url, res) => got(url, {json: true})
     .then(response => res.json(response.body))
