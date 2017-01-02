@@ -39,6 +39,9 @@ export class ApiService {
     constructor(private http:Http,eventService:EventService,public af:AngularFire,private router:Router) {
         this.headers.append('Content-Type', 'application/json');
         this.domain = 'http://api.tvmaze.com';
+        if(window.location.protocol == "https"){
+          this.domain = 'https://tvmaze-https-tcwlcawmcs.now.sh';
+        }
         this.eventService = eventService;
         this.latitude = 0;
         this.longitude = 0;
