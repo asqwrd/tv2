@@ -1,8 +1,7 @@
 const fs = require('fs');
 
 const hskey = fs.readFileSync('/etc/letsencrypt/live/ajibade.me/privkey.pem');
-const hscert = fs.readFileSync('/etc/letsencrypt/live/ajibade.me/fullchain.
-pem');
+const hscert = fs.readFileSync('/etc/letsencrypt/live/ajibade.me/fullchain.pem');
 const options = {
     key: hskey,
     cert: hscert
