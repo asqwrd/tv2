@@ -35,11 +35,18 @@ export class ApiService {
     user = new Subject();
     currentUser:Object;
     favorites_subject = new Subject();
+    ishttp:boolean;
 
     constructor(private http:Http,eventService:EventService,public af:AngularFire,private router:Router) {
         this.headers.append('Content-Type', 'application/json');
+        this.ishttp = false;
+        if(window.location.protocol == "http:" || window.location.protocol == "http"){
+          this.domain = "http://api.tvmaze.com";
+          this.ishttp = true;
+        }else{
+          this.domain = '//'+window.location.hostname + ':3001/api';
+        }
 
-        this.domain = '//'+window.location.hostname + ':3001/api';
         this.eventService = eventService;
         this.latitude = 0;
         this.longitude = 0;
@@ -190,6 +197,10 @@ export class ApiService {
           let day_image = this.getTimeBg(position.coords.latitude,position.coords.longitude);
 
           data.forEach((item)=>{
+            if(item.image){
+              item.image.original = "//"+item.image.original.replace(/.*?:\/\//g, "");
+              item.image.medium = "//"+item.medium.original.replace(/.*?:\/\//g, "");
+            }
             let show = {
               image: item.show.image,
               showname: item.show.name,
@@ -209,7 +220,11 @@ export class ApiService {
     }
 
     showDetail(showid):Observable<Object>{
-      return this.http.get(this.domain+'/shows/'+showid).map((res:Response)=>{
+      let append = '';
+      if(this.ishttp){
+        append = '?embed[]=nextepisode&embed[]=episodes&embed[]=seasons';
+      }
+      return this.http.get(this.domain+'/shows/'+showid +''+ append).map((res:Response)=>{
         let data = res.json();
         return data;
       }).flatMap((data)=>{
@@ -217,6 +232,10 @@ export class ApiService {
           let day_image = this.getTimeBg(position.coords.latitude,position.coords.longitude);
           data.network = data.network ? data.network['name'] : 'No network';
           data.showname = data['name'];
+          if(data.image){
+            data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");
+            data.image.medium = "//"+data.medium.original.replace(/.*?:\/\//g, "");
+          }
           let backgroundimage = data.image ? data.image.original:day_image;
 
           return {show:data,backgroundimage:backgroundimage};
@@ -237,6 +256,10 @@ export class ApiService {
         favs.forEach((item)=>{
           this.http.get(this.domain+'/favorites/'+item.showid).subscribe((res:Response)=>{
             let data = res.json();
+            if(data.image){
+              data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");
+              data.image.medium = "//"+data.medium.original.replace(/.*?:\/\//g, "");
+            }
             let show = {
               image: data.image,
               showname: data.name,
@@ -257,8 +280,12 @@ export class ApiService {
     }
 
     getSchedule() : Observable<Object>{
+      let append = '';
+      if(this.ishttp){
+        append = '?country=US';
+      }
       if(!this.guide){
-        return this.http.get(this.domain+'/schedule').map((res:Response)=>{
+        return this.http.get(this.domain+'/schedule' + append).map((res:Response)=>{
             let data = res.json();
             return data;
           }).flatMap((data)=>{
@@ -271,6 +298,10 @@ export class ApiService {
 
               data.forEach((item)=>{
                 let airtime = (item.airtime && item.airtime.trim().length > 0) ? item.airtime: "00:00";
+                if(item.image){
+                  item.image.original = "//"+item.image.original.replace(/.*?:\/\//g, "");
+                  item.image.medium = "//"+item.medium.original.replace(/.*?:\/\//g, "");
+                }
                 let show = {
                   epsname:item.name,
                   id:item.show.id,
