@@ -91,6 +91,7 @@ export class ShowPage {
          this.id = parseInt(params['id']);
          this.api.showDetail(this.id).subscribe((data)=>{
            this.show = data['show'];
+           this.showdetail.nativeElement.scrollTop = 0;
            this.backgroundimage = data['backgroundimage'];
            this.colorthief.getColorAsync(this.backgroundimage,(color,element)=>{
              this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';

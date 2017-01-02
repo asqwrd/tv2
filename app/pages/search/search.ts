@@ -43,6 +43,8 @@ export class SearchPage {
     favSub:any;
     loading:boolean;
 
+    @ViewChild('searchgrid') searchgrid:ElementRef;
+
 
     constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService, route:ActivatedRoute, public af:AngularFire) {
       this.router = router;
@@ -84,6 +86,7 @@ export class SearchPage {
          this.query = decodeURI(params['query']);
          this.api.search(this.query).subscribe((data)=>{
            this.shows = data['shows'];
+           this.searchgrid.nativeElement.scrollTop = 0;
            this.backgroundimage = data['backgroundimage'];
            this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
              this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';

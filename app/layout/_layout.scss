@@ -45,6 +45,28 @@
         width: 32px;
         font-size: 32px;
       }
+
+      &.sign-in-btn{
+        width: auto;
+        border-radius: 0;
+        background: transparent;
+        @include font-size(16px);
+        .material-icons{
+          position: relative;
+          display: inline-block;
+          @include font-size(16px);
+          top: initial;
+          left: initial;
+          @include transform(none);
+          vertical-align: middle;
+          width: auto;
+        }
+        .sign-in-span{
+          display: inline-block;
+          vertical-align: middle;
+          text-transform: none;
+        }
+      }
     }
 
     .material-icons{

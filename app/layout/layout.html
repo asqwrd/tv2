@@ -24,8 +24,8 @@
           <div class="mdl-tooltip" data-mdl-for="watch-icon">View shows you are watching</div>
         </a>
         <a class="mdl-navigation__link" *ngIf="!user">
-          <button component-handler id="header-login" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons" [style.color]="fontcolor">account_circle</i>
+          <button component-handler id="header-login" class="sign-in-btn mdl-button mdl-js-button mdl-button--icon">
+            <span class="sign-in-span" [style.color]="fontcolor">Sign in</span><i class="material-icons" [style.color]="fontcolor">arrow_drop_down</i>
           </button>
 
           <ul component-handler class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
