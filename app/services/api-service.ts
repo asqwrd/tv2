@@ -39,7 +39,7 @@ export class ApiService {
     constructor(private http:Http,eventService:EventService,public af:AngularFire,private router:Router) {
         this.headers.append('Content-Type', 'application/json');
 
-        this.domain = '//' + window.location.hostname + ':3001/api';
+        this.domain = '//127.0.0.1:3001/api';
         this.eventService = eventService;
         this.latitude = 0;
         this.longitude = 0;
