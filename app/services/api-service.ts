@@ -132,6 +132,8 @@ export class ApiService {
             if(!auth){
               this.router.navigateByUrl('/');
               location.reload();
+            }else{
+              location.reload();
             }
         });
       });
@@ -253,27 +255,32 @@ export class ApiService {
       let sub = favoritesDb.subscribe((data)=>{
         let favorites = [];
         let favs = data;
-        favs.forEach((item)=>{
-          this.http.get(this.domain+'/favorites/'+item.showid).subscribe((res:Response)=>{
-            let data = res.json();
-            if(data.image){
-              data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");
-              data.image.medium = "//"+data.image.medium.replace(/.*?:\/\//g, "");
-            }
-            let show = {
-              image: data.image,
-              showname: data.name,
-              network: data.network ? data.network.name:"N/A",
-              status: data.status,
-              summary:data.summary,
-              showid:data.id,
-              id:data.id,
-              year:data.premiered ? data.premiered.split('-')[0] : undefined
-            };
-            favorites.push(show);
-            this.favorites_subject.next({favorites:favorites, total_favorites:favs.length,db:favoritesDb,rawData:favs, subcribed:sub});
+        if(favs.length > 0){
+          favs.forEach((item)=>{
+            this.http.get(this.domain+'/favorites/'+item.showid).subscribe((res:Response)=>{
+              let data = res.json();
+              if(data.image){
+                data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");
+                data.image.medium = "//"+data.image.medium.replace(/.*?:\/\//g, "");
+              }
+              let show = {
+                image: data.image,
+                showname: data.name,
+                network: data.network ? data.network.name:"N/A",
+                status: data.status,
+                summary:data.summary,
+                showid:data.id,
+                id:data.id,
+                year:data.premiered ? data.premiered.split('-')[0] : undefined
+              };
+              favorites.push(show);
+              this.favorites_subject.next({favorites:favorites, total_favorites:favs.length,db:favoritesDb,rawData:favs, subcribed:sub});
+            })
           })
-        })
+        }else{
+          this.favorites_subject.next({favorites:[], total_favorites:0,db:favoritesDb,rawData:favs, subcribed:sub});
+        }
+
       },(error)=>{
         this.router.navigateByUrl('/');
       })

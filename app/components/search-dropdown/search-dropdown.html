@@ -2,7 +2,7 @@
   <div class="form-select">
     <i class="material-icons" [style.color]="fontcolor">search</i>
     <input placeholder="Search" class="search-dropdown-input" type="text" (keydown)="keypress($event)" (input)="filter_list($event)" autocomplete="off" #inputElement (focus)="onFocus()" (blur)="onBlur()" [style.color]="fontcolor"/>
-    <ul (mouseenter)="onMouseEnter()" (keydown)="keypress($event)" (mouseleave)="onMouseLeave()" class="styled-options filter" #selectOptions (focus)="onFocus()" (blur)="onBlur()" tabindex="1">
+    <ul (mouseenter)="onMouseEnter()" (keydown)="keypress($event)" (mouseleave)="onMouseLeave()"[hidden]="shows.length == 0" class="styled-options filter" #selectOptions (focus)="onFocus()" (blur)="onBlur()" tabindex="1">
         <li  *ngFor="let show of shows; let i = index" class="dropdown-option" (click)="selectOption($event,show,i)">{{show.showname}} <span *ngIf="show?.year">({{show.year}})</span></li>
         <li *ngIf="(shows && shows.length == 0)" class="option-empty dropdown-option">No shows found.</li>
     </ul>
