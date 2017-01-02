@@ -33,8 +33,6 @@ require('http').createServer(lex.middleware(require('redirect-https')())).listen
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
-var server = require('http').createServer(app);
-
 const redirect = (url, res) => got(url, {json: true})
     .then(response => res.json(response.body))
     .catch(error => {
