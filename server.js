@@ -10,15 +10,11 @@ const options = {
 const app = require('express')();
 const https = require('https');
 const got = require('got');
-var server = require('http').createServer(app);
-
 
 const PROD_MODE = process.argv[2];
 console.log(PROD_MODE);
+const server = https.createServer(options, app);
 
-if(PROD_MODE == 'PROD_MODE'){
-  server = https.createServer(options, app);
-}
 
 
 
