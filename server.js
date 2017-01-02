@@ -1,41 +1,26 @@
-'use strict';
+const fs = require('fs');
 
+const hskey = fs.readFileSync('/etc/letsencrypt/live/ajibade.me/privkey.pem');
+const hscert = fs.readFileSync('/etc/letsencrypt/live/ajibade.me/fullchain.
+pem');
+const options = {
+    key: hskey,
+    cert: hscert
+};
 const app = require('express')();
+const https = require('https');
 const got = require('got');
-function approveDomains(opts, certs, cb) {
-  // This is where you check your database and associated
-  // email addresses with domains and agreements and such
+var server = require('http').createServer(app);
 
 
-  // The domains being approved for the first time are listed in opts.domains
-  // Certs being renewed are listed in certs.altnames
-  if (certs) {
-    opts.domains = certs.altnames;
-  }
-  else {
-    opts.email = 'asqwrd@gmail.com';
-    opts.agreeTos = true;
-    opts.domains = ['ajibade.me']
-  }
+const PROD_MODE = process.argv[2];
+console.log(PROD_MODE);
 
-
-  cb(null, { options: opts, certs: certs });
+if(PROD_MODE == 'PROD_MODE'){
+  server = https.createServer(options, app);
 }
 
 
-var lex = require('letsencrypt-express').create({
-  server: 'https://acme-staging.api.letsencrypt.org/directory',
-  challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) },
-  store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' }),
-  sni: require('le-sni-auto').create({}), 
-  approveDomains: approveDomains
-
-})
-
-
-require('http').createServer(lex.middleware(require('redirect-https')())).listen(3000, function () {
-  console.log("Listening for ACME http-01 challenges on", this.address());
-});
 
 const redirect = (url, res) => got(url, {json: true})
     .then(response => res.json(response.body))
@@ -72,19 +57,8 @@ app.get('/api/schedule', (req, res) => {
     redirect('http://api.tvmaze.com/schedule?country=US', res);
 });
 
-/*server.listen(3001, function (){
+server.listen(3001, function (){
   var host = server.address().address;
   var port = server.address().port;
   console.log('app listening at //%s:%s', host, port);
-});*/
-
-
-
-//lex.onRequest = app;
-
-const server = require('https').createServer(lex.httpsOptions, lex.middleware(app));
-
-
-server.listen(3001, function () {
-  console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
