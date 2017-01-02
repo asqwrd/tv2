@@ -80,23 +80,24 @@ export class SearchPage {
           this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
           this.changefontcolor(color);
 
-      });
-
-      route.params.subscribe(params => {
-         this.query = decodeURI(params['query']);
-         this.api.search(this.query).subscribe((data)=>{
-           this.shows = data['shows'];
-           this.searchgrid.nativeElement.scrollTop = 0;
-           this.backgroundimage = data['backgroundimage'];
-           this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
-             this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
-             this.changefontcolor(color);
-
-           });
-
-          });
         });
 
+      });
+      route.params.subscribe(params => {
+        this.query = decodeURI(params['query']);
+        this.api.search(this.query).subscribe((data)=>{
+          this.shows = data['shows'];
+          if(this.searchgrid){
+            this.searchgrid.nativeElement.scrollTop = 0;
+          }
+          this.backgroundimage = data['backgroundimage'];
+          this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
+            this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+            this.changefontcolor(color);
+
+          });
+
+        });
       });
     }
 

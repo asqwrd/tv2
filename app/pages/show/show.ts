@@ -88,18 +88,20 @@ export class ShowPage {
       });
 
       route.params.subscribe(params => {
-         this.id = parseInt(params['id']);
-         this.api.showDetail(this.id).subscribe((data)=>{
-           this.show = data['show'];
-           this.showdetail.nativeElement.scrollTop = 0;
-           this.backgroundimage = data['backgroundimage'];
-           this.colorthief.getColorAsync(this.backgroundimage,(color,element)=>{
-             this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
-             this.changefontcolor(color);
+        this.id = parseInt(params['id']);
+        this.api.showDetail(this.id).subscribe((data)=>{
+          this.show = data['show'];
+          if(this.showdetail){
+            this.showdetail.nativeElement.scrollTop = 0;
+          }
+          this.backgroundimage = data['backgroundimage'];
+          this.colorthief.getColorAsync(this.backgroundimage,(color,element)=>{
+            this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+            this.changefontcolor(color);
 
-           });
+          });
 
-         });
+        });
       });
 
     }
