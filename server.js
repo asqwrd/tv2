@@ -21,7 +21,7 @@ function approveDomains(opts, certs, cb) {
 
 
 var lex = require('letsencrypt-express').create({
-  server: 'staging',
+  server: 'https://acme-staging.api.letsencrypt.org/directory',
   challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) },
   store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' }),
   approveDomains: approveDomains
