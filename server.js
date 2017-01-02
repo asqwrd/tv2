@@ -36,4 +36,8 @@ app.get('/api/schedule', (req, res) => {
     redirect('http://api.tvmaze.com/schedule?country=US', res);
 });
 
-app.listen(3001);
+var server = app.listen(3001, function (){
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('app listening at //%s:%s', host, port);
+});
