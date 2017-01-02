@@ -7,6 +7,7 @@ app/**/*.metadata.json
 app/**/*.map
 script/**/*.gz
 script/**/*.js
+script/**/*.map
 npm-debug.log
 css/
 

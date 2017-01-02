@@ -1,6 +1,23 @@
-const app = require('express')()
-, server = require('http').createServer(app)
+const fs = require('fs');
+
+const hskey = fs.readFileSync('hacksparrow-key.pem');
+const hscert = fs.readFileSync('hacksparrow-cert.pem');
+const options = {
+    key: hskey,
+    cert: hscert
+};
+const app = require('express')();
+const https = require('https');
 const got = require('got');
+var server = require('http').createServer(app);
+
+
+const PROD_MODE = process.argv[2];
+console.log(PROD_MODE);
+
+if(PROD_MODE == 'PROD_MODE'){
+  server = https.createServer(options, app);
+}
 
 
 
