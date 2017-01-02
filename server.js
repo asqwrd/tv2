@@ -27,6 +27,7 @@ var lex = require('letsencrypt-express').create({
   server: 'https://acme-staging.api.letsencrypt.org/directory',
   challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) },
   store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' }),
+  sni: require('le-sni-auto').create({}), 
   approveDomains: approveDomains
 
 })
