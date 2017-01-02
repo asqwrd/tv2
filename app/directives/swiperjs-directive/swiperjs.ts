@@ -54,6 +54,7 @@ export class SwiperJs implements OnInit{
          mousewheelControl: true,
          mousewheelForceToAxis:true,
          mousewheelSensitivity:.5,
+         mousewheelInvert:true,
          scrollbar: this.scrollbar ? this.scrollbar:null,
          scrollbarHide: true,
          observer:true
