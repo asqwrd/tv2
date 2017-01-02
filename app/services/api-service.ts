@@ -298,7 +298,7 @@ export class ApiService {
 
               data.forEach((item)=>{
                 let airtime = (item.airtime && item.airtime.trim().length > 0) ? item.airtime: "00:00";
-                if(item.image){
+                if(item.show.image){
                   item.show.image.original = "//"+item.show.image.original.replace(/.*?:\/\//g, "");
                   item.show.image.medium = "//"+item.show.image.medium.replace(/.*?:\/\//g, "");
                 }
