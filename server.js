@@ -29,7 +29,7 @@ var lex = require('letsencrypt-express').create({
 })
 
 
-require('http').createServer(lex.middleware(require('redirect-https')())).listen(80, function () {
+require('http').createServer(lex.middleware(require('redirect-https')())).listen(3000, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
 
