@@ -8,6 +8,16 @@
   &.loading{
     opacity: 0;
   }
+
+  .no-favorites{
+    @include font-size(40px);
+    position: absolute;
+    width: 70%;
+    text-align: center;
+    font-weight: 300;
+    display: inline-block;
+    @include centerElement('both');
+  }
   .favorites-grid{
     width:100%;
     height: 100%;
