@@ -38,10 +38,8 @@ export class ApiService {
 
     constructor(private http:Http,eventService:EventService,public af:AngularFire,private router:Router) {
         this.headers.append('Content-Type', 'application/json');
-        this.domain = 'http://api.tvmaze.com';
-        if(window.location.protocol == "https:" || window.location.protocol == "https"){
-          this.domain = 'https://tvmaze-https-tcwlcawmcs.now.sh';
-        }
+
+        this.domain = '//' + window.location.hostname + ':3001/api';
         this.eventService = eventService;
         this.latitude = 0;
         this.longitude = 0;
@@ -211,7 +209,7 @@ export class ApiService {
     }
 
     showDetail(showid):Observable<Object>{
-      return this.http.get(this.domain+'/shows/'+showid+'?embed[]=nextepisode&embed[]=episodes&embed[]=seasons').map((res:Response)=>{
+      return this.http.get(this.domain+'/shows/'+showid).map((res:Response)=>{
         let data = res.json();
         return data;
       }).flatMap((data)=>{
@@ -237,7 +235,7 @@ export class ApiService {
         let favorites = [];
         let favs = data;
         favs.forEach((item)=>{
-          this.http.get(this.domain+'/shows/'+item.showid).subscribe((res:Response)=>{
+          this.http.get(this.domain+'/favorites/'+item.showid).subscribe((res:Response)=>{
             let data = res.json();
             let show = {
               image: data.image,
@@ -260,7 +258,7 @@ export class ApiService {
 
     getSchedule() : Observable<Object>{
       if(!this.guide){
-        return this.http.get(this.domain+'/schedule?country=US').map((res:Response)=>{
+        return this.http.get(this.domain+'/schedule').map((res:Response)=>{
             let data = res.json();
             return data;
           }).flatMap((data)=>{
