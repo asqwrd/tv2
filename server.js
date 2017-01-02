@@ -9,6 +9,17 @@ const options = {
 const app = require('express')();
 const https = require('https');
 const got = require('got');
+var lex = require('letsencrypt-express').create({
+
+  server: 'staging'
+
+, email: 'asqwrd@gmail.com'
+
+, agreeTos: true
+
+, approveDomains: [ 'ajibade.me' ]
+
+})
 var server = require('http').createServer(app);
 
 
@@ -56,8 +67,17 @@ app.get('/api/schedule', (req, res) => {
     redirect('http://api.tvmaze.com/schedule?country=US', res);
 });
 
-server.listen(3001, function (){
+/*server.listen(3001, function (){
   var host = server.address().address;
   var port = server.address().port;
   console.log('app listening at //%s:%s', host, port);
+});*/
+
+
+
+//lex.onRequest = app;
+
+lex.listen(3001, function () {
+  var protocol = ('requestCert' in this) ? 'https': 'http';
+  console.log("Listening at " + protocol + '://localhost:' + this.address().port);
 });
