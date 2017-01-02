@@ -1,3 +1,4 @@
+'use strict';
 
 const app = require('express')();
 const got = require('got');
@@ -21,7 +22,7 @@ function approveDomains(opts, certs, cb) {
 
 
 var lex = require('letsencrypt-express').create({
-  server: 'https://acme-staging.api.letsencrypt.org/directory',
+  server: 'https://acme-v01.api.letsencrypt.org/directory',
   challenges: { 'http-01': require('le-challenge-fs').create({ webrootPath: '/tmp/acme-challenges' }) },
   store: require('le-store-certbot').create({ webrootPath: '/tmp/acme-challenges' }),
   approveDomains: approveDomains

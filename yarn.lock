@@ -2566,7 +2566,7 @@ letsencrypt-express@^2.0.5:
     localhost.daplie.com-certificates "^1.2.3"
     redirect-https "^1.1.0"
 
-letsencrypt@^2.1.0:
+letsencrypt@^2.1.0, letsencrypt@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/letsencrypt/-/letsencrypt-2.1.8.tgz#981ae1415b9fb372ae15f1156d5d32b7dcc78bdd"
   dependencies:
