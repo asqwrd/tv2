@@ -257,7 +257,12 @@ export class ApiService {
         let favs = data;
         if(favs.length > 0){
           favs.forEach((item)=>{
-            this.http.get(this.domain+'/favorites/'+item.showid).subscribe((res:Response)=>{
+            let fav_var = 'shows';
+            if(!this.ishttp){
+              fav_var = 'favorites'
+              
+            }
+            this.http.get(this.domain+'/'+fav_var+'/'+item.showid).subscribe((res:Response)=>{
               let data = res.json();
               if(data.image){
                 data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");

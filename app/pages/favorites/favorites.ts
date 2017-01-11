@@ -47,6 +47,7 @@ export class Favorites {
     favoritesDB:FirebaseListObservable<any>;
     favSub:any;
     loading:boolean;
+    gradient:string;
 
     @ViewChild('favorites') favorites:ElementRef;
     @ViewChild('searchEl') searchEl:ElementRef;
@@ -86,7 +87,8 @@ export class Favorites {
             let position = this.route.snapshot.data['position'];
             this.backgroundimage = this.api.getTimeBg(position.coords.latitude,position.coords.longitude);
             this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
-              this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+              this.backgroundcolor = 'rgba('+color[0]+','+color[1]+','+color[2]+',1)';
+              this.gradient = 'rgba('+color[0]+','+color[1]+','+color[2]+',0)';
               this.changefontcolor(color);
 
             });

@@ -9,7 +9,7 @@
         <div class="background-image show" [ngStyle]="{'background-image':'url('+
         backgroundimage +')'}"></div>
       </div>
-      <div class="background-gradient" [ngStyle]="{'background':'linear-gradient(to top,'+ backgroundcolor +', rgba(14, 14, 12, 0)), linear-gradient(to right, ' + backgroundcolor + ', rgba(14, 14, 12, 0))'}"></div>
+      <div class="background-gradient" [ngStyle]="{'background':'linear-gradient(to top,'+ backgroundcolor +','+gradient+'), linear-gradient(to right, ' + backgroundcolor + ','+gradient+')'}"></div>
     </div>
   </div>
   <div class="show-detail-container" *ngIf="show" #showdetail (scroll)="scrolling($event)">

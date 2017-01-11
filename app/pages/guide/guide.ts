@@ -37,6 +37,7 @@ export class Guide {
     scroll_id:string | number;
     backgroundimages:Array<string>;
     backgroundcolor:string;
+    gradient:string;
     backgroundcolors:Array<string[]>;
     colorthief:any;
     _timeout:any;
@@ -109,7 +110,8 @@ export class Guide {
                 this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
                   this.backgroundcolors = colors;
                   if(this.guide.nativeElement.scrollTop <= 215){
-                    this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+                    this.backgroundcolor = 'rgba('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+',1)';
+                    this.gradient = 'rgba('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+',0)';
                     this.changefontcolor(this.backgroundcolors[0]);
                   }
                 });
@@ -118,7 +120,8 @@ export class Guide {
                 this.backgroundimages = backgrounds;
                 this.colorthief.getColorAsyncArray(backgrounds,(colors)=>{
                   this.backgroundcolors = colors;
-                  this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+                  this.backgroundcolor = 'rgba('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+',1)';
+                  this.gradient = 'rgba('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+',0)';
                   this.changefontcolor(this.backgroundcolors[0]);
                 });
 
@@ -128,7 +131,9 @@ export class Guide {
               this.backgroundimages = backgrounds;
               this.colorthief.getColorAsyncArray(backgrounds,(colors)=>{
                 this.backgroundcolors = colors;
-                this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+                this.backgroundcolor = 'rgba('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+',1)';
+                this.changefontcolor(this.backgroundcolors[0]);
+                this.gradient = 'rgba('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+',0)';
                 this.changefontcolor(this.backgroundcolors[0]);
               });
             });
@@ -136,7 +141,9 @@ export class Guide {
             this.backgroundimages = this.backgroundimages.concat(backgrounds);
             this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
               this.backgroundcolors = this.backgroundcolors.concat(colors);
-              this.backgroundcolor = 'rgb('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+')';
+              this.backgroundcolor = 'rgba('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+',1)';
+              this.gradient = 'rgba('+this.backgroundcolors[0][0]+','+this.backgroundcolors[0][1]+','+this.backgroundcolors[0][2]+',0)';
+
               this.changefontcolor(this.backgroundcolors[0]);
             });
           }
@@ -186,7 +193,8 @@ export class Guide {
                 return show.airtime == this.airtimes[index];
 
               });
-              this.backgroundcolor = 'rgb('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+')';
+              this.backgroundcolor = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',1)';
+              this.gradient = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',0)';
               this.scroll_id = index;
               this.changefontcolor(this.backgroundcolors[index]);
             }
@@ -206,7 +214,8 @@ export class Guide {
             return show.airtime == time;
 
           });
-          this.backgroundcolor = 'rgb('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+')';
+          this.backgroundcolor = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',1)';
+          this.gradient = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',0)';
           this.scroll_id = index;
           this.changefontcolor(this.backgroundcolors[index]);
 

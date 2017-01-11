@@ -8,7 +8,7 @@
         <div class="background-image show" [ngStyle]="{'background-image':'url('+
         backgroundimage +')'}"></div>
       </div>
-      <div class="background-gradient" [ngStyle]="{'background':'linear-gradient(to top,'+ backgroundcolor +', rgba(14, 14, 12, 0)), linear-gradient(to right, ' + backgroundcolor + ', rgba(14, 14, 12, 0))'}"></div>
+      <div class="background-gradient" [ngStyle]="{'background':'linear-gradient(to top,'+ backgroundcolor +','+gradient+'), linear-gradient(to right, ' + backgroundcolor + ','+gradient+')'}"></div>
     </div>
 
   </div>
@@ -22,6 +22,6 @@
       </ul>
     </div>
   </div>
-  <h1 class="no-favorites" [style.color]="fontcolor">You have not added any shows to watch.  Click the <i class="material-icons">visibility</i> icon on a show thumbnail or on a show's page.</h1>
+  <h1 class="no-favorites" [style.color]="fontcolor" *ngIf="!favoritesArr || (favoritesArr && favoritesArr.length == 0)">You have not added any shows to watch.  Click the <i class="material-icons">visibility</i> icon on a show thumbnail or on a show's page.</h1>
 
 </div>

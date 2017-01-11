@@ -42,6 +42,7 @@ export class SearchPage {
     favoritesDB:FirebaseListObservable<any>;
     favSub:any;
     loading:boolean;
+    gradient:string;
 
     @ViewChild('searchgrid') searchgrid:ElementRef;
 
@@ -77,7 +78,8 @@ export class SearchPage {
         this.shows = data['shows'];
         this.backgroundimage = data['backgroundimage'];
         this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
-          this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+          this.backgroundcolor = 'rgba('+color[0]+','+color[1]+','+color[2]+',1)';
+          this.gradient = 'rgba('+color[0]+','+color[1]+','+color[2]+',0)';
           this.changefontcolor(color);
 
         });
@@ -92,7 +94,8 @@ export class SearchPage {
           }
           this.backgroundimage = data['backgroundimage'];
           this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
-            this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+            this.backgroundcolor = 'rgba('+color[0]+','+color[1]+','+color[2]+',1)';
+            this.gradient = 'rgba('+color[0]+','+color[1]+','+color[2]+',0)';
             this.changefontcolor(color);
 
           });

@@ -44,6 +44,7 @@ export class ShowPage {
     favSub:any;
     user:Object;
     loading:boolean;
+    gradient:string;
 
     constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService, public route:ActivatedRoute,public af:AngularFire) {
       this.router = router;
@@ -80,7 +81,8 @@ export class ShowPage {
         this.show = data['show'];
         this.backgroundimage = data['backgroundimage'];
         this.colorthief.getColorAsync(this.backgroundimage,(color,element)=>{
-          this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+          this.backgroundcolor = 'rgba('+color[0]+','+color[1]+','+color[2]+',1)';
+          this.gradient = 'rgba('+color[0]+','+color[1]+','+color[2]+',0)';
           this.changefontcolor(color);
 
         });
@@ -96,7 +98,8 @@ export class ShowPage {
           }
           this.backgroundimage = data['backgroundimage'];
           this.colorthief.getColorAsync(this.backgroundimage,(color,element)=>{
-            this.backgroundcolor = 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+            this.backgroundcolor = 'rgba('+color[0]+','+color[1]+','+color[2]+',1)';
+            this.gradient = 'rgba('+color[0]+','+color[1]+','+color[2]+',0)';
             this.changefontcolor(color);
 
           });
