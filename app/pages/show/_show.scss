@@ -115,6 +115,9 @@
       padding:50px 0;
       .show-detail-content{
         width:100%;
+        .mdl-button--fab{
+          top: 230px;
+        }
         .show-info-container{
           flex-wrap: wrap;
           .show-image{
