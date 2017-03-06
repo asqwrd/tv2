@@ -58,7 +58,6 @@ export class ApiService {
     }
     getAuth(){
       let sub = this.af.auth.subscribe((auth) =>{
-        console.log(auth);
         if(auth.google){
           this.currentUser = auth.google;
           this.user.next(auth.google);
@@ -78,7 +77,6 @@ export class ApiService {
                 observer.complete()
               //this.api.setCoords(position.coords.latitude,position.coords.longitude)
             },(error)=>{
-              console.log(error);
               this.location = {
                   coords:{
                   latitude:0,
@@ -112,7 +110,6 @@ export class ApiService {
         method: AuthMethods.Popup,
       }).then((auth)=>{
         this.af.auth.subscribe(auth => {
-          console.log(auth);
             if(!auth){
               this.router.navigateByUrl('/');
               location.reload();
@@ -154,7 +151,6 @@ export class ApiService {
         this.user.next(this.currentUser);
       }else if(this.af.auth){
         this.af.auth.subscribe((auth) =>{
-          console.log(auth);
           if(auth &&auth.google){
             this.currentUser = auth.google;
             this.user.next(auth.google);
@@ -260,7 +256,7 @@ export class ApiService {
             let fav_var = 'shows';
             if(!this.ishttp){
               fav_var = 'favorites'
-              
+
             }
             this.http.get(this.domain+'/'+fav_var+'/'+item.showid).subscribe((res:Response)=>{
               let data = res.json();
@@ -306,7 +302,6 @@ export class ApiService {
               let airtimes = [];
               let airtimesunix = [];
               let backgroundimages = [];
-              console.log('api guide');
 
               data.forEach((item)=>{
                 let airtime = (item.airtime && item.airtime.trim().length > 0) ? item.airtime: "00:00";
@@ -364,7 +359,6 @@ export class ApiService {
                 backgroundimages:backgroundimages,
                 dayimage:day_image
               }
-              console.log(guide);
               this.guide = guide;
               return this.guide;
             })

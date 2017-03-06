@@ -12,10 +12,14 @@ export const LayoutRoutes: Routes = [
     {
       path: "",
       component: Guide,
+      data:{
+        route:'guide'
+      },
       resolve:{
         position:LocationService,
         user:UserResolve
       }
+
     },
     {
       path: "search/:query",
@@ -23,6 +27,9 @@ export const LayoutRoutes: Routes = [
       resolve:{
         position:LocationService,
         user:UserResolve
+      },
+      data:{
+        route:'search'
       }
     },
     {
@@ -31,6 +38,9 @@ export const LayoutRoutes: Routes = [
       resolve:{
         position:LocationService,
         user:UserResolve
+      },
+      data:{
+        route:'show'
       }
     },
     {
@@ -39,6 +49,9 @@ export const LayoutRoutes: Routes = [
       resolve:{
         position:LocationService,
         user:UserResolve
+      },
+      data:{
+        route:'favorites'
       },
       canActivate:[UserAuth]
     },

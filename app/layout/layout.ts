@@ -44,6 +44,8 @@ export class Layout{
   opaque:boolean;
   logo:string;
   loader:boolean;
+  icon:string;
+  page:string;
 
   constructor(private api:ApiService, private eventService:EventService, private sanitizer:DomSanitizer, public af:AngularFire, public router:Router, public route:ActivatedRoute) {
     this.focused = false;
@@ -51,6 +53,12 @@ export class Layout{
     this.logo = 'images/logo.svg';
     this.loader = true;
     this.user = this.route.snapshot.data['user'];
+    this.page = this.route.snapshot.children[0].data['route'];
+    this.router.events.subscribe((data)=>{
+      console.log(this.route.snapshot.data);
+      this.page = this.route.snapshot.children[0].data['route'];
+    })
+
 
     this.eventService.background.subscribe((data)=>{
       if(data['color']){
@@ -72,7 +80,10 @@ export class Layout{
   }
 
   ngOnInit(){
-    console.log(this.route.snapshot.data);
+
+  }
+  ngAfterViewInit(){
+
   }
 
   loginGoogle(){
@@ -99,7 +110,6 @@ export class Layout{
   }
 
   searching(event){
-    console.log(event);
     this.api.search(this.search_input.nativeElement.value).subscribe((response)=>{
       this.results = response['shows'];
     })
@@ -107,14 +117,17 @@ export class Layout{
 
   search_term(event){
     this.router.navigateByUrl('/search/'+ event.term);
+    this.icon = 'arrow_back'
   }
 
   select_show(event){
     this.router.navigateByUrl('/show/'+ event.show.showid);
+    this.icon = 'arrow_back'
   }
 
   home(){
     this.router.navigateByUrl('/');
+    this.icon = undefined;
   }
 
 

@@ -75,7 +75,6 @@ export class Guide {
       this.favoritesToday = false;
       //this.api.user.subscribe((user)=>{
         this.user = this.route.snapshot.data['user'];
-        console.log(this.user);
         this.api.getSchedule().subscribe((shows)=>{
           this.shows = shows['shows'];
           this.airtimes = shows['airtimes'];

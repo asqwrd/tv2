@@ -32,6 +32,9 @@
       padding:10px;
       color:#aaa;
       @include transition(all ease .2s);
+      .time{
+        height: auto;
+      }
       cursor: pointer;
       &.active {
         color: #000;

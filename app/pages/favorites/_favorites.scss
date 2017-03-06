@@ -75,3 +75,13 @@
     }
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .favorites-page-container{
+    .favorites-grid{
+      .favorites-h1 {
+        font-size: 20px;
+      }
+    }
+  }
+}

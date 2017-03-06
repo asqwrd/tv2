@@ -24,6 +24,7 @@ import {ActivatedRoute} from "@angular/router";
 export class SearchDropdown {
     @Input() shows:Array<Show>;
     @Input() fontcolor:string;
+    @Input() icon:string;
     selected = new EventEmitter();
     search = new EventEmitter();
     @ViewChild('selectOptions') selectOptions:ElementRef;

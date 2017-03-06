@@ -6,7 +6,12 @@
     </div>
   </div>
   <header class="mdl-layout__header" #header [class.opaque]='opaque'>
-    <div class="mdl-layout__header-row">
+    <div class="mobile">
+      <div class="search-container">
+        <search-dropdown [shows]="results" (selected)="select_show($event)" (search)="search_term($event)"></search-dropdown>
+      </div>
+    </div>
+    <div class="mdl-layout__header-row desktop">
       <!-- Title -->
       <span class="mdl-layout-title">
         <div class="logo" (click)="home()" [ngStyle]="{'background-image':'url('+ logo +')'}"></div>
@@ -57,4 +62,13 @@
   <section class="content">
     <router-outlet></router-outlet>
   </section>
+  <nav class="mobile-nav" [class.guide]="page == 'guide'">
+    <a class="buttons exit" *ngIf="user" (click)="logout()"><i class="material-icons">exit_to_app</i></a>
+    <a class="buttons favorites"  [routerLink]="['/favorites']"><i class="material-icons">visibility</i></a>
+    <a class="buttons home" (click)="home()"><i class="material-icons">home</i></a>
+    <a class="buttons"  *ngIf="user" [style.background-image]="'url('+user?.photoURL+')'"></a>
+    <a class="buttons" *ngIf="!user" (click)="loginGoogle()"><i class="material-icons">face</i></a>
+    <a class="buttons" *ngIf="!user" (click)="loginFacebook()"><i class="material-icons">face</i></a>
+    <a class="buttons" ><i class="material-icons">menu</i></a>
+  </nav>
 </main>

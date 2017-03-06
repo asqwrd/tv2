@@ -108,3 +108,24 @@
     }
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .show-page-container{
+    .show-detail-container{
+      padding:50px 0;
+      .show-detail-content{
+        width:100%;
+        .show-info-container{
+          flex-wrap: wrap;
+          .show-image{
+            width:100%;
+          }
+          .show-info-content{
+            width:100%;
+          }
+        }
+      }
+    }
+
+  }
+}

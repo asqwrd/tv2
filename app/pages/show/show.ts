@@ -56,9 +56,7 @@ export class ShowPage {
 
       //this.api.user.subscribe((user)=>{
         this.user = this.route.snapshot.data['user'];
-        console.log(this.route.snapshot.data);
         if(this.user){
-          console.log(this.user);
           this.af.database.list('/favorites', {
             query: {
               orderByChild: 'userid',
@@ -77,7 +75,6 @@ export class ShowPage {
         }
       //})
       this.api.showDetail(this.id).subscribe((data)=>{
-        console.log(data);
         this.show = data['show'];
         this.backgroundimage = data['backgroundimage'];
         this.colorthief.getColorAsync(this.backgroundimage,(color,element)=>{
