@@ -203,6 +203,9 @@
       align-items: center;
       justify-content: center;
       color: #fff;
+      .material-icons{
+        pointer-events: none;
+      }
       &.exit{
         background:#DB4437;
       }
