@@ -2,9 +2,11 @@ const fs = require('fs');
 
 const hskey = fs.readFileSync('/etc/letsencrypt/live/ajibade.me/privkey.pem');
 const hscert = fs.readFileSync('/etc/letsencrypt/live/ajibade.me/fullchain.pem');
+const hschain = fs.readFileSync('/etc/letsencrypt/live/ajibade.me/chain.pem');
 const options = {
     key: hskey,
-    cert: hscert
+    cert: hscert,
+    ca: hschain
 };
 const app = require('express')();
 const https = require('https');
