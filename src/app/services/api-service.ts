@@ -342,6 +342,10 @@ export class ApiService {
                 dayimage:day_image
               }
               this.guide = guide;
+              let time = 2.16 * 10000000;
+              setInterval(()=>{
+                this.guide = undefined;
+              },time);
               return this.guide;
             })
           });

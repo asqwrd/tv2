@@ -20,7 +20,6 @@ export class UserResolve implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot) {
      // should return an observable
     return this.af.authState.map((auth)=>{
-      console.log(auth);
       if(auth){
         return auth;
       }else{

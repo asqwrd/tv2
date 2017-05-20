@@ -141,11 +141,9 @@ export class Favorites {
     }
 
     unwatch(data){
-      console.log(data);
       let index = this.favoritesRawData.findIndex((item)=>{
         return item['showid'] == data['show']['showid'];
       });
-      console.log(this.favoritesRawData[index]);
       this.afDB.list('/favorites').remove(this.favoritesRawData[index]['$key']);
     }
 }

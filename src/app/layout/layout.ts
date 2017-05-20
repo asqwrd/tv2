@@ -54,7 +54,6 @@ export class Layout{
     this.user = this.route.snapshot.data['user'];
     this.page = this.route.snapshot.children[0].data['route'];
     this.router.events.subscribe((data)=>{
-      console.log(this.route.snapshot.data);
       this.page = this.route.snapshot.children[0].data['route'];
     })
 

@@ -67,14 +67,12 @@ export class SearchPage {
           data.forEach((value)=>{
             this.favorites.push(value.showid);
           })
-          console.log(this.favorites);
 
         },(error)=>{
 
         });
       }
       this.api.search(this.query).subscribe((data)=>{
-        console.log(data);
         this.shows = data['shows'];
         this.backgroundimage = data['backgroundimage'];
         this.colorthief.getColorFromUrl(this.backgroundimage,(color,element)=>{
@@ -133,16 +131,13 @@ export class SearchPage {
       this.router.navigateByUrl('/show/'+ id);
     }
     watch(data){
-      console.log(data);
       this.afDB.list('/favorites').push({userid:this.user['uid'],showid:data.show.showid,show:data.show});
     }
 
     unwatch(data){
-      console.log(data);
       let index = this.favoritesRawData.findIndex((item)=>{
         return item['showid'] == data['show']['showid'];
       });
-      console.log(this.favoritesRawData[index]);
       this.afDB.list('/favorites').remove(this.favoritesRawData[index]['$key']);
     }
 }
