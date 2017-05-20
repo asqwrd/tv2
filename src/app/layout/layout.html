@@ -1,0 +1,74 @@
+<main class="main">
+  <div class="main-loader" [class.hide]="loader == false">
+    <div class="img-container">
+      <img class="loader-img" src="dist/images/loader.gif" />
+      <img class="logo" src="dist/images/logo-light.svg" />
+    </div>
+  </div>
+  <header class="mdl-layout__header" #header [class.opaque]='opaque'>
+    <div class="mobile">
+      <div class="search-container">
+        <search-dropdown [shows]="results" (selected)="select_show($event)" (search)="search_term($event)"></search-dropdown>
+      </div>
+    </div>
+    <div class="mdl-layout__header-row desktop">
+      <!-- Title -->
+      <span class="mdl-layout-title">
+        <div class="logo" (click)="home()" [ngStyle]="{'background-image':'url('+ logo +')'}"></div>
+      </span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer">
+        <div class="search-container">
+          <search-dropdown [shows]="results" [fontcolor]="fontcolor" (selected)="select_show($event)" (search)="search_term($event)"></search-dropdown>
+        </div>
+      </div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" title="View shows you are watching" [routerLink]="['/favorites']" *ngIf="user">
+          <i class="material-icons" [style.color]="fontcolor">visibility</i>
+        </a>
+        <a class="mdl-navigation__link" *ngIf="!user">
+          <button component-handler id="header-login" class="sign-in-btn mdl-button mdl-js-button mdl-button--icon">
+            <span class="sign-in-span" [style.color]="fontcolor">Sign in</span><i class="material-icons" [style.color]="fontcolor">arrow_drop_down</i>
+          </button>
+
+          <ul component-handler class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+              for="header-login">
+            <li class="mdl-menu__item"  (click)="loginGoogle()"><img class="google-img" src="dist/images/new-google-favicon.svg" /><span>Google</span></li>
+            <li class="mdl-menu__item" (click)="loginFacebook()"><img class="facebook-img" src="dist/images/social-facebook.png" /><span>Facebook</span></li>
+          </ul>
+        </a>
+        <a class="mdl-navigation__link"  *ngIf="user">
+          <button component-handler id="header-login" class="mdl-button mdl-js-button mdl-button--icon">
+            <img class="header-avatar" [src]="user?.photoURL" />
+          </button>
+
+          <ul component-handler class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+              for="header-login">
+            <li class="mdl-menu__item" (click)="logout()"><span>Sign Out</span></li>
+          </ul>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+ <!--<header class="guide-header">
+   <div class="logo">
+   </div>
+   <span class="date-time">{{date}}</span>
+ </header>
+ <div class="search-overlay"></div>
+ -->
+  <section class="content">
+    <router-outlet></router-outlet>
+  </section>
+  <nav class="mobile-nav" [class.guide]="page == 'guide'">
+    <a class="buttons exit" *ngIf="user" (click)="logout()"><i class="material-icons">exit_to_app</i></a>
+    <a class="buttons favorites"  [routerLink]="['/favorites']"><i class="material-icons">visibility</i></a>
+    <a class="buttons home" (click)="home()"><i class="material-icons">home</i></a>
+    <a class="buttons"  *ngIf="user" [style.background-image]="'url('+user?.photoURL+')'"></a>
+    <a class="buttons" *ngIf="!user" (click)="loginGoogle()"><i class="material-icons">face</i></a>
+    <a class="buttons" *ngIf="!user" (click)="loginFacebook()"><i class="material-icons">face</i></a>
+    <a class="buttons" ><i class="material-icons">menu</i></a>
+  </nav>
+</main>
