@@ -51,6 +51,8 @@
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "~2.2.0"
+    "typescript": "~2.2.0",
+    "gulp-shell": "^0.5.2",
+    "run-sequence": "^1.1.5"
   }
 }
