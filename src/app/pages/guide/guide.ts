@@ -57,6 +57,7 @@ export class Guide {
     latitude:number;
     longitude:number;
     loading:boolean;
+    prevent_scroll:boolean;
 
 
     constructor(private zone:NgZone,private eventService:EventService,router:Router,private api:ApiService,public afDB:AngularFireDatabase, public route:ActivatedRoute) {
@@ -174,38 +175,36 @@ export class Guide {
     }
 
     scrolling(e){
-      if(this._timeout){ //if there is already a timeout in process cancel it
-          window.clearTimeout(this._timeout);
-        }
-        this._timeout = setTimeout(() => {
-          this._timeout = undefined;
-          let anchorTarget =[].slice.call( document.querySelectorAll('.scroll-groups'));
-          anchorTarget.forEach((element,index)=>{
-            let scroll = element.offsetTop -
-                      element.scrollTop +
-                      element.clientTop - 164;
-            if(this.guide.nativeElement.scrollTop >= scroll){
-              let shows = this.shows.filter((show)=>{
-                return show.airtime == this.airtimes[index];
+        if(this._timeout){ //if there is already a timeout in process cancel it
+            window.clearTimeout(this._timeout);
+          }
+          this._timeout = setTimeout(() => {
+            this._timeout = undefined;
+            let anchorTarget =[].slice.call( document.querySelectorAll('.scroll-groups.show-groups'));
+            anchorTarget.forEach((element,index)=>{
+              let scroll = element.offsetTop -
+                        element.scrollTop +
+                        element.clientTop - 164;
+              if(this.guide.nativeElement.scrollTop >= scroll){
+                let shows = this.shows.filter((show)=>{
+                  return show.airtime == this.airtimes[index];
 
-              });
-              this.backgroundcolor = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',1)';
-              this.gradient = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',0)';
-              this.scroll_id = index;
-              this.changefontcolor(this.backgroundcolors[index]);
-            }
-          });
-        },500);
+                });
+                this.backgroundcolor = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',1)';
+                this.gradient = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',0)';
+                this.scroll_id = index;
+                this.changefontcolor(this.backgroundcolors[index]);
+              }
+            });
+          },500);
     }
 
 
     scrollView(anchor:string,index:number,time:string){
+      this.prevent_scroll = true;
       let anchorTarget:HTMLElement = document.getElementById(anchor);
         if (anchorTarget !== null) {
-          let scroll = anchorTarget.offsetTop -
-                    anchorTarget.scrollTop +
-                    anchorTarget.clientTop;
-          this.eventService.smoothScroll(this.guide.nativeElement,scroll,450);
+          this.eventService.smoothScroll(this.guide.nativeElement,anchorTarget,450);
           let showtimes = this.shows.filter((show)=>{
             return show.airtime == time;
 
