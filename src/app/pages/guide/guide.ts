@@ -8,7 +8,7 @@ import {Router,ActivatedRoute} from "@angular/router";
 //shared components and service
 import {ApiService} from "../../services/api-service";
 import {EventService} from "../../services/event-services";
-import { AngularFireDatabase,FirebaseListObservable  } from 'angularfire2/database';
+import { AngularFireDatabase,AngularFireList  } from 'angularfire2/database';
 
 
 
@@ -45,8 +45,8 @@ export class Guide {
     user:Object;
     favorites:Array<string>;
     favoritesToday:boolean;
-    favoritesRawData:Array<Object>;
-    favoritesDB:FirebaseListObservable<any>;
+    favoritesRawData:any;
+    favoritesDB:AngularFireList<any>;
     favSub:any;
 
     @ViewChild('guide') guide:ElementRef;
@@ -81,19 +81,15 @@ export class Guide {
           let backgrounds = shows['backgroundimages'];
           let day_image = shows['dayimage'];
           if(this.user){
-            this.afDB.list('/favorites', {
-              query: {
-                orderByChild: 'userid',
-                equalTo: this.user['providerData']['uid'],
-              }
-            }).subscribe((data)=>{
+            this.api.getUserFavorites(this.user['uid']).subscribe((data)=>{
               this.favorites = [];
               this.favoritesRawData = data;
               let add_favimg:any;
               let add_favcolor:any;
               data.forEach((value)=>{
-                this.favorites.push(value.showid);
+                this.favorites.push(value['showid']);
               })
+
 
               let today_favs = this.shows.filter((show)=>{
                 return this.favorites.indexOf(show.showid) >=0;
@@ -126,6 +122,7 @@ export class Guide {
 
               }
             },(error)=>{
+              console.log(error);
               this.favoritesToday = false;
               this.backgroundimages = backgrounds;
               this.colorthief.getColorAsyncArray(backgrounds,(colors)=>{
@@ -234,6 +231,7 @@ export class Guide {
       let index = this.favoritesRawData.findIndex((item)=>{
         return item['showid'] == data['show']['showid'];
       });
-      this.afDB.list('/favorites').remove(this.favoritesRawData[index]['$key']);
+      console.log(this.favoritesRawData[index]);
+      this.afDB.list('/favorites').remove(this.favoritesRawData[index].key);
     }
 }

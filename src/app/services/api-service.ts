@@ -13,7 +13,7 @@ import { Subject } from 'rxjs/Subject';
 import { Router,Resolve, ActivatedRouteSnapshot,CanActivate } from '@angular/router';
 
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
@@ -210,7 +210,7 @@ export class ApiService {
       }).flatMap((data)=>{
         return this.getLocation().map((position)=>{
           let day_image = this.getTimeBg(position.coords.latitude,position.coords.longitude);
-          data.network = data.network ? data.network['name'] : 'No network';
+          data.network = data.network ? data.network['name'] : 'N/A';
           data.showname = data['name'];
           if(data.image){
             data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");
@@ -224,12 +224,7 @@ export class ApiService {
     }
 
     getFavorites(userid){
-      let favoritesDb = this.afDB.list('/favorites', {
-        query: {
-          orderByChild: 'userid',
-          equalTo: userid,
-        }
-      })
+      let favoritesDb = this.getUserFavorites(userid);
       let sub = favoritesDb.subscribe((data)=>{
         let favorites = [];
         let favs = data;
@@ -240,7 +235,7 @@ export class ApiService {
               fav_var = 'favorites'
 
             }
-            this.http.get(this.domain+'/'+fav_var+'/'+item.showid).subscribe((res:Response)=>{
+            this.http.get(this.domain+'/'+fav_var+'/'+item['showid']).subscribe((res:Response)=>{
               let data = res.json();
               if(data.image){
                 data.image.original = "//"+data.image.original.replace(/.*?:\/\//g, "");
@@ -301,7 +296,7 @@ export class ApiService {
                   epsnumber: item.number,
                   image: item.show.image,
                   showname: item.show.name,
-                  network: item.show.network.name,
+                  network: item.show.network ? item.show.network.name: "N/A",
                   status: item.show.status,
                   summary:item.show.summary,
                   showid:item.show.id
@@ -352,6 +347,18 @@ export class ApiService {
       }else{
         return this.createObservable(this.guide);
       }
+    }
+
+    getUserFavorites(userid): Observable<any>{
+      return this.afDB.list<any>('/favorites', ref => ref.orderByChild('userid').equalTo(userid)).snapshotChanges().map((actions)=>{
+        let data =[];
+        actions.forEach(action => {
+            let item = action.payload.val();
+            item['key'] = action.key;
+            data.push(item);
+          });
+          return data;
+        })
     }
 
    createObservable(data: any) : Observable<any> {

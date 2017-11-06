@@ -8,7 +8,7 @@ import {Router,ActivatedRoute} from "@angular/router";
 //shared components and service
 import {ApiService} from "../../services/api-service";
 import {EventService} from "../../services/event-services";
-import { AngularFireDatabase,FirebaseListObservable  } from 'angularfire2/database';
+import { AngularFireDatabase,AngularFireList  } from 'angularfire2/database';
 
 
 
@@ -44,7 +44,7 @@ export class Favorites {
     favoritesArr:Array<Object>;
     favoritesToday:boolean;
     favoritesRawData:Array<Object>;
-    favoritesDB:FirebaseListObservable<any>;
+    favoritesDB:AngularFireList<any>;
     favSub:any;
     loading:boolean;
     gradient:string;
@@ -73,7 +73,7 @@ export class Favorites {
 
       //this.api.user.subscribe((user)=>{
         this.user = this.route.snapshot.data['user'];
-        this.api.getFavorites(this.user['providerData']['uid']);
+        this.api.getFavorites(this.user['uid']);
         this.api.favorites_subject.subscribe((data)=>{
           let count = data['total_favorites'];
           let favorites = data['favorites'];
@@ -144,6 +144,6 @@ export class Favorites {
       let index = this.favoritesRawData.findIndex((item)=>{
         return item['showid'] == data['show']['showid'];
       });
-      this.afDB.list('/favorites').remove(this.favoritesRawData[index]['$key']);
+      this.afDB.list('/favorites').remove(this.favoritesRawData[index]['key']);
     }
 }

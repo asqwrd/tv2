@@ -8,7 +8,7 @@ import {Router,ActivatedRoute} from "@angular/router";
 //shared components and service
 import {ApiService} from "../../services/api-service";
 import {EventService} from "../../services/event-services";
-import { AngularFireDatabase,FirebaseListObservable  } from 'angularfire2/database';
+import { AngularFireDatabase,AngularFireList  } from 'angularfire2/database';
 
 
 import {Subject} from "rxjs/Rx";
@@ -39,7 +39,7 @@ export class SearchPage {
     favorites:Array<string>;
     favoritesToday:boolean;
     favoritesRawData:Array<Object>;
-    favoritesDB:FirebaseListObservable<any>;
+    favoritesDB:AngularFireList<any>;
     favSub:any;
     loading:boolean;
     gradient:string;
@@ -56,16 +56,11 @@ export class SearchPage {
       this.query = decodeURI(route.snapshot.params['query']);
       this.user = route.snapshot.data['user'];
       if(this.user){
-        this.afDB.list('/favorites', {
-          query: {
-            orderByChild: 'userid',
-            equalTo: this.user['providerData']['uid'],
-          }
-        }).subscribe((data)=>{
+        this.api.getUserFavorites(this.user['uid']).subscribe((data)=>{
           this.favorites = [];
           this.favoritesRawData = data;
           data.forEach((value)=>{
-            this.favorites.push(value.showid);
+            this.favorites.push(value['showid']);
           })
 
         },(error)=>{
@@ -138,6 +133,6 @@ export class SearchPage {
       let index = this.favoritesRawData.findIndex((item)=>{
         return item['showid'] == data['show']['showid'];
       });
-      this.afDB.list('/favorites').remove(this.favoritesRawData[index]['$key']);
+      this.afDB.list('/favorites').remove(this.favoritesRawData[index]['key']);
     }
 }

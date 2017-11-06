@@ -1,7 +1,6 @@
 
 var gulp = require('gulp');
 var shell = require('gulp-shell');
-var runSequence = require('run-sequence');
 
 
 
@@ -10,7 +9,7 @@ gulp.task('build',function(){
   target_directory = process.cwd();
   return gulp.src('.')
   .pipe(shell([
-    '"' + target_directory + '/node_modules/.bin/ng" build --aot --prod -oh'
+    '"' + target_directory + '/node_modules/.bin/ng" build --aot --prod -oh --sm'
   ],{cwd:'./src'}))
 });
 
