@@ -14,7 +14,7 @@
   </div>
 
   <section class="guide-grid" #guide *ngIf="shows" (scroll)="scrolling($event)" [hidden]="!backgroundcolor">
-    <div class="favorite-shows scroll-groups" *ngIf="user && favoritesToday">
+    <div id="time_0" class="favorite-shows scroll-groups" *ngIf="user && favoritesToday">
       <h1 class="favorites-h1" [style.color]="fontcolor"><span>Favorite shows on today</span></h1>
       <ul class="guide-grid-items">
         <li class="guide-grid-item" *ngFor="let show of shows | filter:favorites">
@@ -23,7 +23,7 @@
       </ul>
 
     </div>
-    <div id="time_{{i}}" class="show-groups scroll-groups" [style.margin-bottom]="(i == (airtimes.length - 1) && show.value.length < 4) ? '250px': '100px'" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
+    <div id="time_{{favorites && favorites.length > 0 ? i+1 : i}}" class="show-groups scroll-groups" [style.margin-bottom]="(i == (airtimes.length - 1) && show.value.length < 4) ? '250px': '100px'" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
       <div class="show-groups-wrapper">
         <h1 class="time-h1" [style.color]="fontcolor">{{show.key}}</h1>
         <ul class="guide-grid-items">
@@ -33,11 +33,6 @@
         </ul>
       </div>
     </div>
-    <!--<nav class="nav nav--ubax">
-      <button (click)="scrollView('time_'+j,j,time)" class="nav__item" [class.nav__item--current]="scroll_id == j" *ngFor="let time of airtimes; let j = index" [style.background]="fontcolor">
-        <span class="nav__item-title" [style.color]="fontcolor">{{time}}</span>
-      </button>
-    </nav>-->
   </section>
   <footer class="airtimes" [class.opacity]="!backgroundcolor">
     <!-- Slider main container -->

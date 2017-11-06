@@ -97,11 +97,13 @@ export class Guide {
               });
               if(today_favs.length > 0){
                 this.favoritesToday = true;
+
                 add_favimg = day_image;
                 this.backgroundimages = [];
                 this.backgroundcolors = [];
                 this.backgroundimages.push(add_favimg);
                 this.backgroundimages = this.backgroundimages.concat(backgrounds);
+                this.airtimes = ['Favorites', ...this.airtimes];
 
                 this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
                   this.backgroundcolors = colors;
@@ -180,7 +182,7 @@ export class Guide {
           }
           this._timeout = setTimeout(() => {
             this._timeout = undefined;
-            let anchorTarget =[].slice.call( document.querySelectorAll('.scroll-groups.show-groups'));
+            let anchorTarget =[].slice.call( document.querySelectorAll('.scroll-groups'));
             anchorTarget.forEach((element,index)=>{
               let scroll = element.offsetTop -
                         element.scrollTop +
@@ -209,10 +211,10 @@ export class Guide {
             return show.airtime == time;
 
           });
-          this.backgroundcolor = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',1)';
-          this.gradient = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',0)';
-          this.scroll_id = index;
-          this.changefontcolor(this.backgroundcolors[index]);
+        //  this.backgroundcolor = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',1)';
+          //this.gradient = 'rgba('+this.backgroundcolors[index][0]+','+this.backgroundcolors[index][1]+','+this.backgroundcolors[index][2]+',0)';
+          //this.scroll_id = index;
+          //this.changefontcolor(this.backgroundcolors[index]);
 
         }
     }

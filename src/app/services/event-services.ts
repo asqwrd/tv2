@@ -47,8 +47,7 @@ export class EventService {
     var distance = endLocation - startLocation;
     var increments = distance/(duration/16);
     var stopAnimation;
-    console.log("anchor", anchor,)
-    console.log(increments,"dis",distance,'dur',duration);
+  
 
     // Scroll the page by an increment, and check if it's time to stop
     var animateScroll = function () {
