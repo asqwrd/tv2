@@ -49,7 +49,7 @@ export class Layout{
   constructor(private api:ApiService, private eventService:EventService, private sanitizer:DomSanitizer,  public router:Router, public route:ActivatedRoute) {
     this.focused = false;
     this.results = [];
-    this.logo = 'dist/images/logo.svg';
+    this.logo = 'images/logo.svg';
     this.loader = true;
     this.user = this.route.snapshot.data['user'];
     this.page = this.route.snapshot.children[0].data['route'];
