@@ -23,7 +23,7 @@
       </ul>
 
     </div>
-    <div id="time_{{favorites && favorites.length > 0 ? i+1 : i}}" class="show-groups scroll-groups" [style.margin-bottom]="(i == (airtimes.length - 1) && show.value.length < 4) ? '250px': '100px'" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
+    <div id="time_{{favoritesToday == true ? i+1 : i}}" class="show-groups scroll-groups" [style.margin-bottom]="(i == (airtimes.length - 1) && show.value.length < 4) ? '250px': '100px'" *ngFor="let show of shows | groupBy: 'airtime'; let i = index">
       <div class="show-groups-wrapper">
         <h1 class="time-h1" [style.color]="fontcolor">{{show.key}}</h1>
         <ul class="guide-grid-items">

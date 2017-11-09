@@ -78,7 +78,6 @@ export class Guide {
         this.user = this.route.snapshot.data['user'];
         this.api.getSchedule().subscribe((shows)=>{
           this.shows = shows['shows'];
-          this.airtimes = shows['airtimes'];
           let backgrounds = shows['backgroundimages'];
           let day_image = shows['dayimage'];
           if(this.user){
@@ -103,7 +102,7 @@ export class Guide {
                 this.backgroundcolors = [];
                 this.backgroundimages.push(add_favimg);
                 this.backgroundimages = this.backgroundimages.concat(backgrounds);
-                this.airtimes = ['Favorites', ...this.airtimes];
+                this.airtimes = ['Favorites', ...shows['airtimes']];
 
                 this.colorthief.getColorAsyncArray(this.backgroundimages,(colors)=>{
                   this.backgroundcolors = colors;
@@ -115,6 +114,7 @@ export class Guide {
                 });
               }else{
                 this.favoritesToday = false;
+                this.airtimes = shows['airtimes'];
                 this.backgroundimages = backgrounds;
                 this.colorthief.getColorAsyncArray(backgrounds,(colors)=>{
                   this.backgroundcolors = colors;
@@ -233,6 +233,10 @@ export class Guide {
         return item['showid'] == data['show']['showid'];
       });
       console.log(this.favoritesRawData[index]);
+      let today_favs = this.shows.filter((show)=>{
+        return this.favorites.indexOf(show.showid) >=0;
+      });
+
       this.afDB.list('/favorites').remove(this.favoritesRawData[index].key);
     }
 }
