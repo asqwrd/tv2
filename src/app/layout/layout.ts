@@ -48,7 +48,6 @@ export class Layout{
 
   constructor(private api:ApiService, private eventService:EventService, private sanitizer:DomSanitizer,  public router:Router, public route:ActivatedRoute) {
     this.focused = false;
-    window.location.href = "http://awaritv.ajibade.me";
     this.results = [];
     this.logo = 'images/logo.svg';
     this.loader = true;
